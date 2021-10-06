@@ -1,0 +1,686 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Ubuntu en un Macbook Pro 6,2 - Aitor Lozano</title>
+<meta name="description" content="Con la nueva versión de MacOS Mojave, mi MacbookPro de mediadios de 2010 dejará de tener soporte por parte de Apple. Hasta mucho ha tardado la gran manzana en jubilarlo.  No tengo planes de dejar de utilizar el portátil, así que (mientras Nvidia me deje) Linux se encargará de mantenerlo funcionando.  Distribución de Linux  Hay distribuciones de Linux para aburrir. En DistroWatch mantienen un ranking de popularidad por distribuciones que puede ser una guía más que interesante. En los últimos años las distribuciones basadas en Arch con una instalación guiada (como Manjaro o AntergOS) han subido bastante. Su actualización continua o distribución Rolling Release es estupenda para utilizar siempre la última versión del software, pero puede ser un arma de doble filo en lo que a drivers se refiere. Para mi gusto, la configuración inicial requiere un esfuerzo que no me merece la pena.  Aprovechando las nuevas versiones de elementary OS 5.0 Juno y Ubuntu 18.10, me animé a probar ambas distribuciones en el portátil. elementary OS ha crecido sin parar en los últimos años, pero tuve algunos problemas gráficos al intentar utilizar Unity3D. Finalmente, las mejoras de rendimiento de Ubuntu 18.10 hacen que sea mi opción preferida por el momento.    Resolución de problemas  No todo fue bonito tras la instalación, así que ahí van los problemas que me encontré durante la instalación.  Nvidia drivers + EFI boot  Instalar los drivers y reiniciar el equipo daban como resultado un pantallazo negro eterno y costó lo suyo dar con la solución.  Instalamos los drivers propietarios y no reiniciamos.    Buscamos los identificadores del bus PCI-E, que serán el primer ‘display’ y la entrada justo antes. En mi caso, segundo y tercer dispositivos:  ~$ sudo lshw -businfo -class bridge -class display  Bus info          Device      Class       Description ===================================================== pci@0000:00:00.0   bridge    Core Processor DRAM Controller pci@0000:00:01.0   bridge    Core Processor PCI Express x16 Root Po pci@0000:01:00.0   display   GT216M [GeForce GT 330M] pci@0000:00:02.0   display   Core Processor Integrated Graphics Con pci@0000:00:1c.0   bridge    5 Series/3400 Series Chipset PCI Expre pci@0000:00:1c.1   bridge    5 Series/3400 Series Chipset PCI Expre pci@0000:00:1c.2   bridge    5 Series/3400 Series Chipset PCI Expre pci@0000:00:1c.3   bridge    5 Series/3400 Series Chipset PCI Expre pci@0000:00:1e.0   bridge    82801 Mobile PCI Bridge pci@0000:00:1f.0   bridge    HM55 Chipset LPC Interface Controller pci@0000:ff:00.0   bridge    Core Processor QuickPath Architecture pci@0000:ff:00.1   bridge    Core Processor QuickPath Architecture pci@0000:ff:02.0   bridge    Core Processor QPI Link 0 pci@0000:ff:02.1   bridge    1st Generation Core i3/5/7 Processor Q pci@0000:ff:02.2   bridge    1st Generation Core i3/5/7 Processor R pci@0000:ff:02.3   bridge    1st Generation Core i3/5/7 Processor R   Creamos el fichero siguiente fichero para forzar el inicio del bus en el arranque EFI:  ~$ sudo nano /etc/grub.d/01_enable_vga.conf  cat &lt;&lt; EOF setpci -s &quot;00:01.0&quot; 3e.b=8 setpci -s &quot;01:00.0&quot; 04.b=7 EOF   Cambiamos permisos y actualizamos grub:  ~$ sudo chmod 755 /etc/grub.d/01_enable_vga.conf ~$ sudo update-grub   Al reiniciar el equipo el driver de Nvidia debería funcionar correctamente.  Iluminación del teclado  La solución es plug &amp; play:  ~$ sudo apt install pommed ~$ sudo service pommed start   Ventiladores y control de temperatura  mbpfan lleva bastantes años funcionando. En el mismo repositorio están las instrucciones para su instalación. Esta es la configuración que por ahora me funciona bien:  ~$ sudo vim /etc/mbpfan.conf  [general] min_fan_speed = 3200 #max_fan_speed = 6200 low_temp = 50 high_temp = 60 max_temp = 86 polling_interval = 5   Soporte 7-zip  Y ya que estamos, podemos añadir soporte para ficheros 7-zip:  sudo apt-get install p7zip-full">
+
+
+  <meta name="author" content="Aitor Lozano">
+  
+  <meta property="article:author" content="Aitor Lozano">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Aitor Lozano">
+<meta property="og:title" content="Ubuntu en un Macbook Pro 6,2">
+<meta property="og:url" content="http://localhost:4000/guide/ubuntu-mbpro/">
+
+
+  <meta property="og:description" content="Con la nueva versión de MacOS Mojave, mi MacbookPro de mediadios de 2010 dejará de tener soporte por parte de Apple. Hasta mucho ha tardado la gran manzana en jubilarlo.  No tengo planes de dejar de utilizar el portátil, así que (mientras Nvidia me deje) Linux se encargará de mantenerlo funcionando.  Distribución de Linux  Hay distribuciones de Linux para aburrir. En DistroWatch mantienen un ranking de popularidad por distribuciones que puede ser una guía más que interesante. En los últimos años las distribuciones basadas en Arch con una instalación guiada (como Manjaro o AntergOS) han subido bastante. Su actualización continua o distribución Rolling Release es estupenda para utilizar siempre la última versión del software, pero puede ser un arma de doble filo en lo que a drivers se refiere. Para mi gusto, la configuración inicial requiere un esfuerzo que no me merece la pena.  Aprovechando las nuevas versiones de elementary OS 5.0 Juno y Ubuntu 18.10, me animé a probar ambas distribuciones en el portátil. elementary OS ha crecido sin parar en los últimos años, pero tuve algunos problemas gráficos al intentar utilizar Unity3D. Finalmente, las mejoras de rendimiento de Ubuntu 18.10 hacen que sea mi opción preferida por el momento.    Resolución de problemas  No todo fue bonito tras la instalación, así que ahí van los problemas que me encontré durante la instalación.  Nvidia drivers + EFI boot  Instalar los drivers y reiniciar el equipo daban como resultado un pantallazo negro eterno y costó lo suyo dar con la solución.  Instalamos los drivers propietarios y no reiniciamos.    Buscamos los identificadores del bus PCI-E, que serán el primer ‘display’ y la entrada justo antes. En mi caso, segundo y tercer dispositivos:  ~$ sudo lshw -businfo -class bridge -class display  Bus info          Device      Class       Description ===================================================== pci@0000:00:00.0   bridge    Core Processor DRAM Controller pci@0000:00:01.0   bridge    Core Processor PCI Express x16 Root Po pci@0000:01:00.0   display   GT216M [GeForce GT 330M] pci@0000:00:02.0   display   Core Processor Integrated Graphics Con pci@0000:00:1c.0   bridge    5 Series/3400 Series Chipset PCI Expre pci@0000:00:1c.1   bridge    5 Series/3400 Series Chipset PCI Expre pci@0000:00:1c.2   bridge    5 Series/3400 Series Chipset PCI Expre pci@0000:00:1c.3   bridge    5 Series/3400 Series Chipset PCI Expre pci@0000:00:1e.0   bridge    82801 Mobile PCI Bridge pci@0000:00:1f.0   bridge    HM55 Chipset LPC Interface Controller pci@0000:ff:00.0   bridge    Core Processor QuickPath Architecture pci@0000:ff:00.1   bridge    Core Processor QuickPath Architecture pci@0000:ff:02.0   bridge    Core Processor QPI Link 0 pci@0000:ff:02.1   bridge    1st Generation Core i3/5/7 Processor Q pci@0000:ff:02.2   bridge    1st Generation Core i3/5/7 Processor R pci@0000:ff:02.3   bridge    1st Generation Core i3/5/7 Processor R   Creamos el fichero siguiente fichero para forzar el inicio del bus en el arranque EFI:  ~$ sudo nano /etc/grub.d/01_enable_vga.conf  cat &lt;&lt; EOF setpci -s &quot;00:01.0&quot; 3e.b=8 setpci -s &quot;01:00.0&quot; 04.b=7 EOF   Cambiamos permisos y actualizamos grub:  ~$ sudo chmod 755 /etc/grub.d/01_enable_vga.conf ~$ sudo update-grub   Al reiniciar el equipo el driver de Nvidia debería funcionar correctamente.  Iluminación del teclado  La solución es plug &amp; play:  ~$ sudo apt install pommed ~$ sudo service pommed start   Ventiladores y control de temperatura  mbpfan lleva bastantes años funcionando. En el mismo repositorio están las instrucciones para su instalación. Esta es la configuración que por ahora me funciona bien:  ~$ sudo vim /etc/mbpfan.conf  [general] min_fan_speed = 3200 #max_fan_speed = 6200 low_temp = 50 high_temp = 60 max_temp = 86 polling_interval = 5   Soporte 7-zip  Y ya que estamos, podemos añadir soporte para ficheros 7-zip:  sudo apt-get install p7zip-full">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2018-10-22T00:00:00+01:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/guide/ubuntu-mbpro/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": null,
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Aitor Lozano Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Aitor Lozano
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/">About me</a>
+            </li><li class="masthead__menu-item">
+              <a href="/posts/">Posts</a>
+            </li><li class="masthead__menu-item">
+              <a href="/ulpgc/">ULPGC</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="http://localhost:4000/">
+        <img src="/assets/images/bio-photo.jpg" alt="Aitor Lozano" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">Aitor Lozano</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Unity3D Developer @ PlayMedusa</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+        
+          
+            <li><a href="https://aitorlozano.com" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Website</span></a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/AikeLB" rel="nofollow noopener noreferrer me"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i><span class="label">Twitter</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/aikelb" rel="nofollow noopener noreferrer me"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+  
+  </div>
+
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Ubuntu en un Macbook Pro 6,2">
+    <meta itemprop="description" content="Con la nueva versión de MacOS Mojave, mi MacbookPro de mediadios de 2010 dejará de tener soporte por parte de Apple. Hasta mucho ha tardado la gran manzana en jubilarlo.No tengo planes de dejar de utilizar el portátil, así que (mientras Nvidia me deje) Linux se encargará de mantenerlo funcionando.Distribución de LinuxHay distribuciones de Linux para aburrir. En DistroWatch mantienen un ranking de popularidad por distribuciones que puede ser una guía más que interesante. En los últimos años las distribuciones basadas en Arch con una instalación guiada (como Manjaro o AntergOS) han subido bastante. Su actualización continua o distribución Rolling Release es estupenda para utilizar siempre la última versión del software, pero puede ser un arma de doble filo en lo que a drivers se refiere. Para mi gusto, la configuración inicial requiere un esfuerzo que no me merece la pena.Aprovechando las nuevas versiones de elementary OS 5.0 Juno y Ubuntu 18.10, me animé a probar ambas distribuciones en el portátil. elementary OS ha crecido sin parar en los últimos años, pero tuve algunos problemas gráficos al intentar utilizar Unity3D. Finalmente, las mejoras de rendimiento de Ubuntu 18.10 hacen que sea mi opción preferida por el momento.Resolución de problemasNo todo fue bonito tras la instalación, así que ahí van los problemas que me encontré durante la instalación.Nvidia drivers + EFI bootInstalar los drivers y reiniciar el equipo daban como resultado un pantallazo negro eterno y costó lo suyo dar con la solución.Instalamos los drivers propietarios y no reiniciamos.Buscamos los identificadores del bus PCI-E, que serán el primer ‘display’ y la entrada justo antes. En mi caso, segundo y tercer dispositivos:~$ sudo lshw -businfo -class bridge -class displayBus info          Device      Class       Description=====================================================pci@0000:00:00.0   bridge    Core Processor DRAM Controllerpci@0000:00:01.0   bridge    Core Processor PCI Express x16 Root Popci@0000:01:00.0   display   GT216M [GeForce GT 330M]pci@0000:00:02.0   display   Core Processor Integrated Graphics Conpci@0000:00:1c.0   bridge    5 Series/3400 Series Chipset PCI Exprepci@0000:00:1c.1   bridge    5 Series/3400 Series Chipset PCI Exprepci@0000:00:1c.2   bridge    5 Series/3400 Series Chipset PCI Exprepci@0000:00:1c.3   bridge    5 Series/3400 Series Chipset PCI Exprepci@0000:00:1e.0   bridge    82801 Mobile PCI Bridgepci@0000:00:1f.0   bridge    HM55 Chipset LPC Interface Controllerpci@0000:ff:00.0   bridge    Core Processor QuickPath Architecturepci@0000:ff:00.1   bridge    Core Processor QuickPath Architecturepci@0000:ff:02.0   bridge    Core Processor QPI Link 0pci@0000:ff:02.1   bridge    1st Generation Core i3/5/7 Processor Qpci@0000:ff:02.2   bridge    1st Generation Core i3/5/7 Processor Rpci@0000:ff:02.3   bridge    1st Generation Core i3/5/7 Processor RCreamos el fichero siguiente fichero para forzar el inicio del bus en el arranque EFI:~$ sudo nano /etc/grub.d/01_enable_vga.confcat &lt;&lt; EOFsetpci -s &quot;00:01.0&quot; 3e.b=8setpci -s &quot;01:00.0&quot; 04.b=7EOFCambiamos permisos y actualizamos grub:~$ sudo chmod 755 /etc/grub.d/01_enable_vga.conf~$ sudo update-grubAl reiniciar el equipo el driver de Nvidia debería funcionar correctamente.Iluminación del tecladoLa solución es plug &amp; play:~$ sudo apt install pommed~$ sudo service pommed startVentiladores y control de temperaturambpfan lleva bastantes años funcionando. En el mismo repositorio están las instrucciones para su instalación. Esta es la configuración que por ahora me funciona bien:~$ sudo vim /etc/mbpfan.conf[general]min_fan_speed = 3200#max_fan_speed = 6200low_temp = 50high_temp = 60max_temp = 86polling_interval = 5Soporte 7-zipY ya que estamos, podemos añadir soporte para ficheros 7-zip:sudo apt-get install p7zip-full">
+    <meta itemprop="datePublished" content="2018-10-22T00:00:00+01:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="http://localhost:4000/guide/ubuntu-mbpro/" class="u-url" itemprop="url">Ubuntu en un Macbook Pro 6,2
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          2 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+        <p>Con la nueva versión de MacOS Mojave, mi MacbookPro de mediadios de 2010 dejará de tener soporte por parte de Apple. Hasta mucho ha tardado la gran manzana en jubilarlo.</p>
+
+<p>No tengo planes de dejar de utilizar el portátil, así que (mientras Nvidia me deje) Linux se encargará de mantenerlo funcionando.</p>
+
+<h2 id="distribución-de-linux">Distribución de Linux</h2>
+
+<p>Hay distribuciones de Linux para aburrir. En <a href="https://distrowatch.com/?language=ES">DistroWatch</a> mantienen un ranking de popularidad por distribuciones que puede ser una guía más que interesante. En los últimos años las distribuciones basadas en Arch con una instalación guiada (como Manjaro o AntergOS) han subido bastante. Su actualización continua o distribución Rolling Release es estupenda para utilizar siempre la última versión del software, pero puede ser un arma de doble filo en lo que a drivers se refiere. Para mi gusto, la configuración inicial requiere un esfuerzo que no me merece la pena.</p>
+
+<p>Aprovechando las nuevas versiones de <a href="https://elementary.io/es/">elementary OS 5.0 Juno</a> y <a href="https://www.ubuntu.com/">Ubuntu 18.10</a>, me animé a probar ambas distribuciones en el portátil. elementary OS ha crecido sin parar en los últimos años, pero tuve algunos problemas gráficos al intentar utilizar Unity3D. Finalmente, las <a href="https://www.omgubuntu.co.uk/2018/10/ubuntu-18-10-released-review">mejoras de rendimiento</a> de Ubuntu 18.10 hacen que sea mi opción preferida por el momento.</p>
+
+<p><img src="/assets/img/posts/ubuntu1810_lg.png" alt="Desktop screenshot" title="Ubuntu 18.10 - MacbookPro 6,2" /></p>
+
+<h2 id="resolución-de-problemas">Resolución de problemas</h2>
+
+<p>No todo fue bonito tras la instalación, así que ahí van los problemas que me encontré durante la instalación.</p>
+
+<h2 id="nvidia-drivers--efi-boot">Nvidia drivers + EFI boot</h2>
+
+<p>Instalar los drivers y reiniciar el equipo daban como resultado un pantallazo negro eterno y costó lo suyo dar con la <a href="https://askubuntu.com/questions/264247/proprietary-nvidia-drivers-with-efi-on-mac-to-prevent-overheating">solución</a>.</p>
+
+<p>Instalamos los drivers propietarios y no reiniciamos.</p>
+
+<p class="center-image"><img src="/assets/img/posts/additional-drivers_sm.png" alt="Software &amp; Updates" /></p>
+
+<p>Buscamos los identificadores del bus PCI-E, que serán el primer ‘display’ y la entrada justo antes. En mi caso, segundo y tercer dispositivos:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~<span class="nv">$ </span><span class="nb">sudo </span>lshw <span class="nt">-businfo</span> <span class="nt">-class</span> bridge <span class="nt">-class</span> display
+
+Bus info          Device      Class       Description
+<span class="o">=====================================================</span>
+pci@0000:00:00.0   bridge    Core Processor DRAM Controller
+pci@0000:00:01.0   bridge    Core Processor PCI Express x16 Root Po
+pci@0000:01:00.0   display   GT216M <span class="o">[</span>GeForce GT 330M]
+pci@0000:00:02.0   display   Core Processor Integrated Graphics Con
+pci@0000:00:1c.0   bridge    5 Series/3400 Series Chipset PCI Expre
+pci@0000:00:1c.1   bridge    5 Series/3400 Series Chipset PCI Expre
+pci@0000:00:1c.2   bridge    5 Series/3400 Series Chipset PCI Expre
+pci@0000:00:1c.3   bridge    5 Series/3400 Series Chipset PCI Expre
+pci@0000:00:1e.0   bridge    82801 Mobile PCI Bridge
+pci@0000:00:1f.0   bridge    HM55 Chipset LPC Interface Controller
+pci@0000:ff:00.0   bridge    Core Processor QuickPath Architecture
+pci@0000:ff:00.1   bridge    Core Processor QuickPath Architecture
+pci@0000:ff:02.0   bridge    Core Processor QPI Link 0
+pci@0000:ff:02.1   bridge    1st Generation Core i3/5/7 Processor Q
+pci@0000:ff:02.2   bridge    1st Generation Core i3/5/7 Processor R
+pci@0000:ff:02.3   bridge    1st Generation Core i3/5/7 Processor R
+</code></pre></div></div>
+
+<p>Creamos el fichero siguiente fichero para forzar el inicio del bus en el arranque EFI:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~<span class="nv">$ </span><span class="nb">sudo </span>nano /etc/grub.d/01_enable_vga.conf
+
+<span class="nb">cat</span> <span class="o">&lt;&lt;</span> <span class="no">EOF</span><span class="sh">
+setpci -s "00:01.0" 3e.b=8
+setpci -s "01:00.0" 04.b=7
+</span><span class="no">EOF
+</span></code></pre></div></div>
+
+<p>Cambiamos permisos y actualizamos grub:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~<span class="nv">$ </span><span class="nb">sudo chmod </span>755 /etc/grub.d/01_enable_vga.conf
+~<span class="nv">$ </span><span class="nb">sudo </span>update-grub
+</code></pre></div></div>
+
+<p>Al reiniciar el equipo el driver de Nvidia debería funcionar correctamente.</p>
+
+<h2 id="iluminación-del-teclado">Iluminación del teclado</h2>
+
+<p>La solución es plug &amp; play:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~<span class="nv">$ </span><span class="nb">sudo </span>apt <span class="nb">install </span>pommed
+~<span class="nv">$ </span><span class="nb">sudo </span>service pommed start
+</code></pre></div></div>
+
+<h2 id="ventiladores-y-control-de-temperatura">Ventiladores y control de temperatura</h2>
+
+<p><a href="https://github.com/dgraziotin/mbpfan">mbpfan</a> lleva bastantes años funcionando. En el mismo repositorio están las instrucciones para su instalación. Esta es la configuración que por ahora me funciona bien:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~<span class="nv">$ </span><span class="nb">sudo </span>vim /etc/mbpfan.conf
+
+<span class="o">[</span>general]
+min_fan_speed <span class="o">=</span> 3200
+<span class="c">#max_fan_speed = 6200</span>
+low_temp <span class="o">=</span> 50
+high_temp <span class="o">=</span> 60
+max_temp <span class="o">=</span> 86
+polling_interval <span class="o">=</span> 5
+</code></pre></div></div>
+
+<h2 id="soporte-7-zip">Soporte 7-zip</h2>
+
+<p>Y ya que estamos, podemos añadir soporte para ficheros 7-zip:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt-get <span class="nb">install </span>p7zip-full
+</code></pre></div></div>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#guide" class="page__taxonomy-item p-category" rel="tag">Guide</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2018-10-22T00:00:00+01:00">October 22, 2018</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Ubuntu+en+un+Macbook+Pro+6%2C2%20http%3A%2F%2Flocalhost%3A4000%2Fguide%2Fubuntu-mbpro%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fguide%2Fubuntu-mbpro%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fguide%2Fubuntu-mbpro%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/resource/codigos-de-caracteres/" class="pagination--pager" title="Códigos de caracteres
+">Previous</a>
+    
+    
+      <a href="/software/davinci-resolve/" class="pagination--pager" title="Edición de video y VFX
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">You May Also Enjoy</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/guide/serve-unity-webgl-using-nginx/" rel="permalink">Servir build WebGL de Unity utilizando NGINX
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          less than 1 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Nota rápida para evitar problemas a la hora de servir una build WebGL con compresión utilizando NGINX.
+El resumen es que tenemos estalecer los tipos MIME par...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/guide/migrando-a-easyengine-v4/" rel="permalink">Migrando a easyengine v4
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          3 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">¡easyengine se ha actualizado y ahora funciona con docker!
+Es una actualización muy potente, pero que cambia mucho la forma de trabajar (especialmente con la...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/guide/intellisense-unity-linux/" rel="permalink">Intellisense en Ubuntu con Unity 2018+
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          less than 1 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Mientras utilizaba VSCode con Unity en Ubuntu 18.10 como editor principal, al llegar las últimas actualizaciones dejó de funcionar el autocompletado con un f...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/guide/l2tp-ubuntu/" rel="permalink">L2TP IPsec VPN en Ubuntu
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          less than 1 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Hace poco tuve que conectarme a una VPN bajo el protocolo L2TP mientras trabajaba en Ubuntu. Por defecto este protocolo no está soportado en Ubuntu 18.10, pe...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+          <li><a href="https://twitter.com/AikeLB" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+        
+      
+        
+          <li><a href="https://github.com/aikelb" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2021 Aitor Lozano. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,7 @@
+main:
+  - title: "About me"
+    url: /
+  - title: "Posts"
+    url: /posts/
+  - title: "ULPGC"
+    url: /ulpgc/

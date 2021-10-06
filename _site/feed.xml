@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-10-06T18:34:50+01:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Aitor Lozano</title><subtitle>Unity3D developer @ PlayMedusa.</subtitle><author><name>Aitor Lozano</name></author><entry><title type="html">Servir build WebGL de Unity utilizando NGINX</title><link href="http://localhost:4000/guide/serve-unity-webgl-using-nginx/" rel="alternate" type="text/html" title="Servir build WebGL de Unity utilizando NGINX" /><published>2021-01-12T00:00:00+00:00</published><updated>2021-01-12T00:00:00+00:00</updated><id>http://localhost:4000/guide/serve-unity-webgl-using-nginx</id><content type="html" xml:base="http://localhost:4000/guide/serve-unity-webgl-using-nginx/">&lt;p&gt;Nota rápida para evitar problemas a la hora de servir una build WebGL con compresión utilizando NGINX.
+El resumen es que tenemos estalecer los tipos MIME para cada tipo de fichero y la codificación correcta.&lt;/p&gt;
+
+&lt;p&gt;Con este fragmento debería ser suficiente, estableciendo correctamente el valor de la variable root.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;location / {
+  
+  root /var/www/site.com/htdocs;
+  
+  index  index.html index.htm;
+  autoindex on;
+  autoindex_localtime on;
+           
+  location ~* ^.*\.(js)$ {
+    types {}
+    default_type application/javascript;
+  }
+           
+  location ~* ^.*\.(wasm)$ {
+    types {}
+    default_type application/wasm;
+  }
+  location ~* ^.*\.(wasm.gz)$ {
+    gunzip on;
+    gzip off;
+    types {}
+    default_type application/wasm;
+    add_header Content-Encoding gzip;
+  }
+  location ~* ^.*\.(framework.js.gz|js.gz)$ {
+    gunzip on;
+    gzip off;
+    types {}
+    default_type application/javascript;
+    add_header Content-Encoding gzip;
+  }
+           
+  location ~* ^.*\.(data.gz|symbols.json.gz)$ {
+    gunzip on;
+    gzip off;
+    types {}
+    default_type application/octet-stream;
+    add_header Content-Encoding gzip;
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;¡Gracias a los foros de Unity!&lt;/p&gt;</content><author><name>Aitor Lozano</name></author><category term="Guide" /><summary type="html">Nota rápida para evitar problemas a la hora de servir una build WebGL con compresión utilizando NGINX. El resumen es que tenemos estalecer los tipos MIME para cada tipo de fichero y la codificación correcta.</summary></entry><entry><title type="html">Migrando a easyengine v4</title><link href="http://localhost:4000/guide/migrando-a-easyengine-v4/" rel="alternate" type="text/html" title="Migrando a easyengine v4" /><published>2019-02-14T00:00:00+00:00</published><updated>2019-02-14T00:00:00+00:00</updated><id>http://localhost:4000/guide/migrando-a-easyengine-v4</id><content type="html" xml:base="http://localhost:4000/guide/migrando-a-easyengine-v4/">&lt;p&gt;¡&lt;a href=&quot;https://easyengine.io/&quot;&gt;easyengine&lt;/a&gt; se ha actualizado y ahora funciona con docker!
+Es una actualización muy potente, pero que cambia mucho la forma de trabajar (especialmente con la base de datos).&lt;/p&gt;
+
+&lt;p&gt;Empecemos con la migración a otro servidor paso a paso.&lt;/p&gt;
+
+&lt;h1 id=&quot;paso-1-exportar-el-contenido-y-la-base-de-datos&quot;&gt;Paso 1: Exportar el contenido y la base de datos.&lt;/h1&gt;
+
+&lt;p&gt;Todo el contenido relevante de un sitio web wordpress (entradas, plugins, temas, imágenes…) está almacenado dentro del directorio &lt;strong&gt;wp-content&lt;/strong&gt;.
+Lo podemos comprimir utilizando &lt;em&gt;tar&lt;/em&gt; fácilmente:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;tar -zcvf ~/site_name.tar.gz ./wp-content
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Es importante el directorio desde el que hacemos la compresión, ya que al descomprimir mantendrá todas los directorios tal cual se han comprimido.&lt;/p&gt;
+
+&lt;p&gt;Lo siguiente es exportar la BBDD. Es bastante fácil utilizando el usuario root, y ya que estamos, lo comprimimos:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo mysqldump -u root dbname &amp;gt; dbname.sql
+tar -zcvf dbname.sql.tar.gz dbname.sql
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h1 id=&quot;paso-2-copiar-el-contenido-al-servidor-nuevo&quot;&gt;Paso 2: Copiar el contenido al servidor nuevo&lt;/h1&gt;
+
+&lt;p&gt;Esto podemos hacerlo como más cómodo nos sea. Hay quien prefiere rsync, o ftp. Para mi lo más fácil es scp:
+Desde el servidor nuevo podríamos hacer:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;scp user@oldserver.com:~/*.tar.gz .
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h1 id=&quot;paso-3-instalar-easyengine-y-crear-el-sitio-web&quot;&gt;Paso 3: Instalar easyengine y crear el sitio web&lt;/h1&gt;
+
+&lt;p&gt;Como indican en la web de easyengine, su instalación es muy sencilla:&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;wget -qO ee rt.cx/ee4 &amp;amp;&amp;amp; sudo bash ee
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Cuando termine, podremos crear el sitio web con cache en una línea:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ee site create domain.com --type=wp --cache=wpredis
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h1 id=&quot;paso-4-restauramos-los-datos&quot;&gt;Paso 4: Restauramos los datos&lt;/h1&gt;
+&lt;p&gt;Empezamos descomprimiendo el contenido del sitio en su nuevo directorio y actualizando los permisos de la carpeta:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cd opt/easyengine/sites/domain.com/app/htdocs
+tar -zxvf archive_name.tar.gz
+chown -R www-data:www-data wp-content
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Restaurar la BBDD tiene truco. Ya no podemos acceder a mysql como en el servidor anterior porque ahora es un contenedor de docker.
+Lo primero que necesitamos es obtener el identificador del container:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# docker ps
+CONTAINER ID        IMAGE                           COMMAND                  CREATED             STATUS              PORTS                                      NAMES
+f3c3a1fc727c        easyengine/mariadb:v4.0.0       &quot;docker-entrypoint.s…&quot;   3 minutes ago       Up 3 minutes        3306/tcp                                   services_global-db_1
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;En el listado buscamos el id del contenedor de mariadb.
+No sabemos cual es la contraseña de root de la base de datos, pero podemos conectarnos al contenedor con los datos del blog que acabamos de montar con algo de este estilo:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;docker exec -i f3c3a1fc727c mysql -udbuser -pdbpass --database=dbname &amp;lt; dump.sql
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Si por lo que fuera, necesitamos acceder a la BBDD como root, podemos usar:&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;docker exec -it f3c3a1fc727c bash -c &apos;mysql -uroot -p${MYSQL_ROOT_PASSWORD}&apos;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Y no estaría de más limpiar el historial de comandos que contiene la contraseña de las BBDD:&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;history -c
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h1 id=&quot;paso-5-activamos-el-ssl&quot;&gt;Paso 5: Activamos el SSL&lt;/h1&gt;
+
+&lt;p&gt;Una vez hayamos cambiado el dominio y se haya propagado por los servidores de DNS, podremos activar el SSL con letsencrypt:&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ee site update example.com --ssl=le
+
+# O si queremos * subdominios:
+# ee site update example.com --ssl=le --wildcard
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h1 id=&quot;otros-comandos-y-resolución-de-problemas&quot;&gt;Otros comandos y resolución de problemas&lt;/h1&gt;
+
+&lt;h2 id=&quot;renovación-de-caché&quot;&gt;Renovación de caché&lt;/h2&gt;
+&lt;p&gt;Si necesitamos forzar una renovación de la caché y no podemos acceder al panel de admin, podemos relanzar el servicio de redis con:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ee service restart redis
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;reinicios-del-servidor&quot;&gt;Reinicios del servidor&lt;/h2&gt;
+&lt;p&gt;Hay veces que al reiniciar el servidor la BBDD o algún otro servicio de easyengine no arranca correctamente.
+Es un bug conocido, por ahora una forma de evitarlo es reiniciando de nuevo o ejecutando:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ee service enable db --force
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;redirecciones-www&quot;&gt;Redirecciones www&lt;/h2&gt;
+&lt;p&gt;Por algún motivo aunque tengamos bien configurado el subdominio www, nginx no hace bien la redirección para servirlo. Especialmente cuando hay varias páginas en un mismo servidor.
+Esto puede ser porque falte el fichero en el servicio de nginx-proxy que resuelve esta redirección.
+El archivo debe estar en la ruta &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/opt/easyengine/services/nginx-proxy/conf.d/domain.com-redirect.conf&lt;/code&gt; y su contenido debería ser:&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;server {
+  listen  80;
+  server_name  www.domain.com;
+  return  301 http://domain.com$request_uri;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Una vez lo tengamos, con recargar el servicio debería bastar:&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ee service reload nginx-proxy
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;error-nginx-emerg-host-not-found-in-upstream&quot;&gt;Error nginx: [emerg] host not found in upstream&lt;/h2&gt;
+&lt;p&gt;Este problema se puede dar por dos motivos:&lt;/p&gt;
+&lt;h3 id=&quot;1-nginx-intenta-lanzarse-y-la-dependencia-php-fpm-no-está-en-marcha&quot;&gt;1. Nginx intenta lanzarse y la dependencia php-fpm no está en marcha.&lt;/h3&gt;
+&lt;p&gt;En el docker-compose de cada sitio se establece esa dependencia, pero durante el arranque a veces puede fallar el inicio de una de las dependencias. La solución más rápida es desactivar y volver a activar el sitio. De esta forma easyengine parará y elminará todas las instancias de docker y las volverá a lanzar en el orden correcto.&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ee site disable domain.com
+ee site enable domain.com
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h3 id=&quot;2-no-se-puede-resolver-las-dns-del-dominio&quot;&gt;2. No se puede resolver las dns del dominio.&lt;/h3&gt;
+&lt;p&gt;En las últimas versiones de Nginx, la validación de las dns del dominio pueden comprobarse por IPv6. 
+Para arreglarlo, simplemente hay que configurar correctamente un registro AAAA apuntando a la IPv6 de nuestro servidor en @.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://venturedawn.com/blogging/migrate-wordpress-easyengine-v4/2667/&quot;&gt;Fuente&lt;/a&gt;.
+&lt;a href=&quot;https://community.easyengine.io/t/502-bad-gateway-error-after-server-reboot/11717/3&quot;&gt;Error 502&lt;/a&gt;&lt;/p&gt;</content><author><name>Aitor Lozano</name></author><category term="Guide" /><summary type="html">¡easyengine se ha actualizado y ahora funciona con docker! Es una actualización muy potente, pero que cambia mucho la forma de trabajar (especialmente con la base de datos).</summary></entry><entry><title type="html">Intellisense en Ubuntu con Unity 2018+</title><link href="http://localhost:4000/guide/intellisense-unity-linux/" rel="alternate" type="text/html" title="Intellisense en Ubuntu con Unity 2018+" /><published>2019-02-13T00:00:00+00:00</published><updated>2019-02-13T00:00:00+00:00</updated><id>http://localhost:4000/guide/intellisense-unity-linux</id><content type="html" xml:base="http://localhost:4000/guide/intellisense-unity-linux/">&lt;p&gt;Mientras utilizaba VSCode con Unity en Ubuntu 18.10 como editor principal, al llegar las últimas actualizaciones dejó de funcionar el autocompletado con un fantástico:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;The reference assemblies for framework &quot;.NETFramework,Version=v3.5&quot; were not found.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Al parecer la última versión no se instala correctamente como dependencia desde VSCode, así que instalar la última versión de .NET o bien vamos a su &lt;a href=&quot;http://www.mono-project.com/download/stable/&quot;&gt;web&lt;/a&gt; o lo instalamos desde terminal con:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
+
+echo &quot;deb https://download.mono-project.com/repo/ubuntu stable-bionic main&quot; | sudo tee /etc/apt/sources.list.d/mono-official-stable.list
+
+sudo apt update
+
+sudo apt-get install mono-devel
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://k00d14.wordpress.com/2018/06/21/got-intellisense-for-unity-and-c-working-on-linux/&quot;&gt;Fuente&lt;/a&gt;.&lt;/p&gt;</content><author><name>Aitor Lozano</name></author><category term="Guide" /><summary type="html">Mientras utilizaba VSCode con Unity en Ubuntu 18.10 como editor principal, al llegar las últimas actualizaciones dejó de funcionar el autocompletado con un fantástico:</summary></entry><entry><title type="html">L2TP IPsec VPN en Ubuntu</title><link href="http://localhost:4000/guide/l2tp-ubuntu/" rel="alternate" type="text/html" title="L2TP IPsec VPN en Ubuntu" /><published>2019-02-01T00:00:00+00:00</published><updated>2019-02-01T00:00:00+00:00</updated><id>http://localhost:4000/guide/l2tp-ubuntu</id><content type="html" xml:base="http://localhost:4000/guide/l2tp-ubuntu/">&lt;p&gt;Hace poco tuve que conectarme a una VPN bajo el protocolo L2TP mientras trabajaba en Ubuntu. Por defecto este protocolo no está soportado en Ubuntu 18.10, pero se puede instalar desde el repositorio &lt;em&gt;main&lt;/em&gt; con un simple:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo apt install network-manager-l2tp-gnome
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Después de instalar este paquete podremos configurar este tipo de conexiones desde el panel de red. Aun así, tiene algo de truco: los algoritmos de conexión no se configuran automáticamente. Bajo la pestaña avanzada podemos configurarlo con:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Phase1 Algorithms: 3des-sha1-modp1024&lt;/li&gt;
+  &lt;li&gt;Phase2 Algorithms: 3des-sha1&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://blog.valerauko.net/2018/05/19/ubuntu-18-04-l2tp-ipsec-vpn/&quot;&gt;Fuente&lt;/a&gt;.&lt;/p&gt;</content><author><name>Aitor Lozano</name></author><category term="Guide" /><summary type="html">Hace poco tuve que conectarme a una VPN bajo el protocolo L2TP mientras trabajaba en Ubuntu. Por defecto este protocolo no está soportado en Ubuntu 18.10, pero se puede instalar desde el repositorio main con un simple:</summary></entry><entry><title type="html">Typora - editor markdown</title><link href="http://localhost:4000/software/typora-editor/" rel="alternate" type="text/html" title="Typora - editor markdown" /><published>2018-11-10T00:00:00+00:00</published><updated>2018-11-10T00:00:00+00:00</updated><id>http://localhost:4000/software/typora-editor</id><content type="html" xml:base="http://localhost:4000/software/typora-editor/">&lt;p&gt;Typora es un Editor de texto minimalista mediante markdown. Aparte de la edición, una de las cosas más interesantes es la variedad de formatos a los que exporta: PDF, HTML, docx, OpenOffice, LaTeX, MediaWiki, Epub.&lt;/p&gt;
+
+&lt;p&gt;Es gratuito mientras esté en beta y además es multiplataforma. Además de los &lt;a href=&quot;https://mega.nz/#!hIhC2CRL!NQkjrzYK7Q8RHDFVGPMe9VM25XoVj4dwrLgl29OrSHs&quot;&gt;binarios para cada plataforma&lt;/a&gt; también podemos instalarlo en linux desde respositorio.&lt;/p&gt;
+
+&lt;p class=&quot;center-image&quot;&gt;&lt;img src=&quot;/assets/img/posts/typora-linux.jpg&quot; alt=&quot;Instalacion de typora en linux&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://typora.io/&quot;&gt;https://typora.io/&lt;/a&gt;&lt;/p&gt;</content><author><name>Aitor Lozano</name></author><category term="Software" /><summary type="html">Typora es un Editor de texto minimalista mediante markdown. Aparte de la edición, una de las cosas más interesantes es la variedad de formatos a los que exporta: PDF, HTML, docx, OpenOffice, LaTeX, MediaWiki, Epub. Es gratuito mientras esté en beta y además es multiplataforma. Además de los binarios para cada plataforma también podemos instalarlo en linux desde respositorio. https://typora.io/</summary></entry><entry><title type="html">XnConvert</title><link href="http://localhost:4000/software/xn-convert/" rel="alternate" type="text/html" title="XnConvert" /><published>2018-10-29T00:00:00+00:00</published><updated>2018-10-29T00:00:00+00:00</updated><id>http://localhost:4000/software/xn-convert</id><content type="html" xml:base="http://localhost:4000/software/xn-convert/">&lt;p&gt;&lt;a href=&quot;https://www.xnview.com/en/xnconvert/&quot;&gt;XnConvert&lt;/a&gt; es un procesador de imágenes gratuito y multiplataforma que permite aplicar acciones a lotes de imágenes. Entre las acciones podemos encontrar:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Máscaras&lt;/li&gt;
+  &lt;li&gt;Recortes&lt;/li&gt;
+  &lt;li&gt;Reescalado&lt;/li&gt;
+  &lt;li&gt;Extracción de canales&lt;/li&gt;
+  &lt;li&gt;Rotación&lt;/li&gt;
+  &lt;li&gt;Establecer DPI&lt;/li&gt;
+  &lt;li&gt;Reemplazar color&lt;/li&gt;
+  &lt;li&gt;Marca de agua&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/posts/xn-screenshot.jpg&quot; alt=&quot;XN Screenshot&quot; class=&quot;center-image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Es bastante versátil y soporta más de 70 formatos de imágenes. Además, en la página de &lt;a href=&quot;https://www.xnview.com/en/&quot;&gt;XnSoft&lt;/a&gt; tienen más herramientas relacionadas con el tratamiento de imágenes.&lt;/p&gt;
+
+&lt;p&gt;No podemos olvidarnos de &lt;a href=&quot;https://www.imagemagick.org/script/index.php&quot;&gt;Imagemagick&lt;/a&gt;, que es una herramienta similar que podemos utilizar desde la línea de comandos. Es cierto que en el día a día es más cómodo utilizar un programa de escritorio, pero como herramienta de desarrollo es tremendamente útil.&lt;/p&gt;</content><author><name>Aitor Lozano</name></author><category term="Software" /><summary type="html">XnConvert es un procesador de imágenes gratuito y multiplataforma que permite aplicar acciones a lotes de imágenes. Entre las acciones podemos encontrar:</summary></entry><entry><title type="html">Edición de video y VFX</title><link href="http://localhost:4000/software/davinci-resolve/" rel="alternate" type="text/html" title="Edición de video y VFX" /><published>2018-10-29T00:00:00+00:00</published><updated>2018-10-29T00:00:00+00:00</updated><id>http://localhost:4000/software/davinci-resolve</id><content type="html" xml:base="http://localhost:4000/software/davinci-resolve/">&lt;p&gt;La comodidad que ofrece la Creative Suite de Adobe es difícil de igualar, pero el precio es una barrera de entrada importante. Su modelo basado en suscripción lo hace menos atractivo aún, así que no me ha quedado otra que buscar alternativas.&lt;/p&gt;
+
+&lt;h2 id=&quot;editores-de-video&quot;&gt;Editores de video&lt;/h2&gt;
+
+&lt;p&gt;Hay bastantes opciones open source. &lt;a href=&quot;https://kdenlive.org/en/&quot;&gt;Kdenlive&lt;/a&gt;, Pitivi o &lt;a href=&quot;https://www.blender.org/&quot;&gt;Blender&lt;/a&gt; (y plugins como &lt;a href=&quot;https://github.com/GDquest/Blender-power-sequencer&quot;&gt;Power Sequencer&lt;/a&gt;) pueden ser opciones totalmente válidas. Mi opción preferida es DaVinci Resolve.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/posts/davinci-resolve15.jpg&quot; alt=&quot;Davinci Resolve&quot; class=&quot;center-image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;La única pega que le he encontrado es que no es Open Source, de resto, es una herramienta estupenda. La interfaz de usuario, la estabilidad y características que ofrece en su versión gratuita es completísima.&lt;/p&gt;
+
+&lt;h2 id=&quot;vfx&quot;&gt;VFX&lt;/h2&gt;
+
+&lt;p&gt;Aquí no he encontrado tantas alternativas, pero Natron lo tiene todo: open source, multiplatforma y un estándar de la industria:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/posts/natron.jpg&quot; alt=&quot;Natron&quot; class=&quot;center-image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Aún no he podido probarlo, pero su editor basado en nodos pinta genial. ¡Espero poder utilizarlo y que no sea un infierno!&lt;/p&gt;
+
+&lt;h2 id=&quot;formatos-de-vídeo&quot;&gt;Formatos de vídeo&lt;/h2&gt;
+&lt;p&gt;Los formatos de salida de DaVinci Resolve están algo limitados, pero no es nada que no podamos arreglar con programas como &lt;strong&gt;&lt;a href=&quot;http://ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt;&lt;/strong&gt; o &lt;strong&gt;&lt;a href=&quot;https://handbrake.fr/&quot;&gt;HandBrake&lt;/a&gt;&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;FFmpeg es un framework multimedia que nos deja hacer casi de todo con casi cualquier formato de vídeo o audio, y como no, es multiplataforma. Muchísimos programas lo utilizan  en background para hacer esas conversiones.&lt;/p&gt;
+
+&lt;p&gt;Por otro lado HandBrake probablemente sea uno de esos programas que utiliza FFmpeg de fondo, dándonos las comodidas de un programa de escritorio.
+Cuál usar dependerá probablemente de la plataforma y las necesidades del momento.&lt;/p&gt;
+
+&lt;p&gt;Ambos gratuitos y open source.&lt;/p&gt;</content><author><name>Aitor Lozano</name></author><category term="Software" /><summary type="html">La comodidad que ofrece la Creative Suite de Adobe es difícil de igualar, pero el precio es una barrera de entrada importante. Su modelo basado en suscripción lo hace menos atractivo aún, así que no me ha quedado otra que buscar alternativas.</summary></entry><entry><title type="html">Ubuntu en un Macbook Pro 6,2</title><link href="http://localhost:4000/guide/ubuntu-mbpro/" rel="alternate" type="text/html" title="Ubuntu en un Macbook Pro 6,2" /><published>2018-10-22T00:00:00+01:00</published><updated>2018-10-22T00:00:00+01:00</updated><id>http://localhost:4000/guide/ubuntu-mbpro</id><content type="html" xml:base="http://localhost:4000/guide/ubuntu-mbpro/">&lt;p&gt;Con la nueva versión de MacOS Mojave, mi MacbookPro de mediadios de 2010 dejará de tener soporte por parte de Apple. Hasta mucho ha tardado la gran manzana en jubilarlo.&lt;/p&gt;
+
+&lt;p&gt;No tengo planes de dejar de utilizar el portátil, así que (mientras Nvidia me deje) Linux se encargará de mantenerlo funcionando.&lt;/p&gt;
+
+&lt;h2 id=&quot;distribución-de-linux&quot;&gt;Distribución de Linux&lt;/h2&gt;
+
+&lt;p&gt;Hay distribuciones de Linux para aburrir. En &lt;a href=&quot;https://distrowatch.com/?language=ES&quot;&gt;DistroWatch&lt;/a&gt; mantienen un ranking de popularidad por distribuciones que puede ser una guía más que interesante. En los últimos años las distribuciones basadas en Arch con una instalación guiada (como Manjaro o AntergOS) han subido bastante. Su actualización continua o distribución Rolling Release es estupenda para utilizar siempre la última versión del software, pero puede ser un arma de doble filo en lo que a drivers se refiere. Para mi gusto, la configuración inicial requiere un esfuerzo que no me merece la pena.&lt;/p&gt;
+
+&lt;p&gt;Aprovechando las nuevas versiones de &lt;a href=&quot;https://elementary.io/es/&quot;&gt;elementary OS 5.0 Juno&lt;/a&gt; y &lt;a href=&quot;https://www.ubuntu.com/&quot;&gt;Ubuntu 18.10&lt;/a&gt;, me animé a probar ambas distribuciones en el portátil. elementary OS ha crecido sin parar en los últimos años, pero tuve algunos problemas gráficos al intentar utilizar Unity3D. Finalmente, las &lt;a href=&quot;https://www.omgubuntu.co.uk/2018/10/ubuntu-18-10-released-review&quot;&gt;mejoras de rendimiento&lt;/a&gt; de Ubuntu 18.10 hacen que sea mi opción preferida por el momento.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/posts/ubuntu1810_lg.png&quot; alt=&quot;Desktop screenshot&quot; title=&quot;Ubuntu 18.10 - MacbookPro 6,2&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;resolución-de-problemas&quot;&gt;Resolución de problemas&lt;/h2&gt;
+
+&lt;p&gt;No todo fue bonito tras la instalación, así que ahí van los problemas que me encontré durante la instalación.&lt;/p&gt;
+
+&lt;h2 id=&quot;nvidia-drivers--efi-boot&quot;&gt;Nvidia drivers + EFI boot&lt;/h2&gt;
+
+&lt;p&gt;Instalar los drivers y reiniciar el equipo daban como resultado un pantallazo negro eterno y costó lo suyo dar con la &lt;a href=&quot;https://askubuntu.com/questions/264247/proprietary-nvidia-drivers-with-efi-on-mac-to-prevent-overheating&quot;&gt;solución&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Instalamos los drivers propietarios y no reiniciamos.&lt;/p&gt;
+
+&lt;p class=&quot;center-image&quot;&gt;&lt;img src=&quot;/assets/img/posts/additional-drivers_sm.png&quot; alt=&quot;Software &amp;amp; Updates&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Buscamos los identificadores del bus PCI-E, que serán el primer ‘display’ y la entrada justo antes. En mi caso, segundo y tercer dispositivos:&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;~&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;lshw &lt;span class=&quot;nt&quot;&gt;-businfo&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-class&lt;/span&gt; bridge &lt;span class=&quot;nt&quot;&gt;-class&lt;/span&gt; display
+
+Bus info          Device      Class       Description
+&lt;span class=&quot;o&quot;&gt;=====================================================&lt;/span&gt;
+pci@0000:00:00.0   bridge    Core Processor DRAM Controller
+pci@0000:00:01.0   bridge    Core Processor PCI Express x16 Root Po
+pci@0000:01:00.0   display   GT216M &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;GeForce GT 330M]
+pci@0000:00:02.0   display   Core Processor Integrated Graphics Con
+pci@0000:00:1c.0   bridge    5 Series/3400 Series Chipset PCI Expre
+pci@0000:00:1c.1   bridge    5 Series/3400 Series Chipset PCI Expre
+pci@0000:00:1c.2   bridge    5 Series/3400 Series Chipset PCI Expre
+pci@0000:00:1c.3   bridge    5 Series/3400 Series Chipset PCI Expre
+pci@0000:00:1e.0   bridge    82801 Mobile PCI Bridge
+pci@0000:00:1f.0   bridge    HM55 Chipset LPC Interface Controller
+pci@0000:ff:00.0   bridge    Core Processor QuickPath Architecture
+pci@0000:ff:00.1   bridge    Core Processor QuickPath Architecture
+pci@0000:ff:02.0   bridge    Core Processor QPI Link 0
+pci@0000:ff:02.1   bridge    1st Generation Core i3/5/7 Processor Q
+pci@0000:ff:02.2   bridge    1st Generation Core i3/5/7 Processor R
+pci@0000:ff:02.3   bridge    1st Generation Core i3/5/7 Processor R
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Creamos el fichero siguiente fichero para forzar el inicio del bus en el arranque EFI:&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;~&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;nano /etc/grub.d/01_enable_vga.conf
+
+&lt;span class=&quot;nb&quot;&gt;cat&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;EOF&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;
+setpci -s &quot;00:01.0&quot; 3e.b=8
+setpci -s &quot;01:00.0&quot; 04.b=7
+&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;EOF
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Cambiamos permisos y actualizamos grub:&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;~&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo chmod &lt;/span&gt;755 /etc/grub.d/01_enable_vga.conf
+~&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;update-grub
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Al reiniciar el equipo el driver de Nvidia debería funcionar correctamente.&lt;/p&gt;
+
+&lt;h2 id=&quot;iluminación-del-teclado&quot;&gt;Iluminación del teclado&lt;/h2&gt;
+
+&lt;p&gt;La solución es plug &amp;amp; play:&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;~&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;apt &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;pommed
+~&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;service pommed start
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;ventiladores-y-control-de-temperatura&quot;&gt;Ventiladores y control de temperatura&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/dgraziotin/mbpfan&quot;&gt;mbpfan&lt;/a&gt; lleva bastantes años funcionando. En el mismo repositorio están las instrucciones para su instalación. Esta es la configuración que por ahora me funciona bien:&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;~&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;vim /etc/mbpfan.conf
+
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;general]
+min_fan_speed &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; 3200
+&lt;span class=&quot;c&quot;&gt;#max_fan_speed = 6200&lt;/span&gt;
+low_temp &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; 50
+high_temp &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; 60
+max_temp &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; 86
+polling_interval &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; 5
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;soporte-7-zip&quot;&gt;Soporte 7-zip&lt;/h2&gt;
+
+&lt;p&gt;Y ya que estamos, podemos añadir soporte para ficheros 7-zip:&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;apt-get &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;p7zip-full
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Aitor Lozano</name></author><category term="Guide" /><summary type="html">Con la nueva versión de MacOS Mojave, mi MacbookPro de mediadios de 2010 dejará de tener soporte por parte de Apple. Hasta mucho ha tardado la gran manzana en jubilarlo. No tengo planes de dejar de utilizar el portátil, así que (mientras Nvidia me deje) Linux se encargará de mantenerlo funcionando. Distribución de Linux Hay distribuciones de Linux para aburrir. En DistroWatch mantienen un ranking de popularidad por distribuciones que puede ser una guía más que interesante. En los últimos años las distribuciones basadas en Arch con una instalación guiada (como Manjaro o AntergOS) han subido bastante. Su actualización continua o distribución Rolling Release es estupenda para utilizar siempre la última versión del software, pero puede ser un arma de doble filo en lo que a drivers se refiere. Para mi gusto, la configuración inicial requiere un esfuerzo que no me merece la pena. Aprovechando las nuevas versiones de elementary OS 5.0 Juno y Ubuntu 18.10, me animé a probar ambas distribuciones en el portátil. elementary OS ha crecido sin parar en los últimos años, pero tuve algunos problemas gráficos al intentar utilizar Unity3D. Finalmente, las mejoras de rendimiento de Ubuntu 18.10 hacen que sea mi opción preferida por el momento. Resolución de problemas No todo fue bonito tras la instalación, así que ahí van los problemas que me encontré durante la instalación. Nvidia drivers + EFI boot Instalar los drivers y reiniciar el equipo daban como resultado un pantallazo negro eterno y costó lo suyo dar con la solución. Instalamos los drivers propietarios y no reiniciamos. Buscamos los identificadores del bus PCI-E, que serán el primer ‘display’ y la entrada justo antes. En mi caso, segundo y tercer dispositivos: ~$ sudo lshw -businfo -class bridge -class display Bus info Device Class Description ===================================================== pci@0000:00:00.0 bridge Core Processor DRAM Controller pci@0000:00:01.0 bridge Core Processor PCI Express x16 Root Po pci@0000:01:00.0 display GT216M [GeForce GT 330M] pci@0000:00:02.0 display Core Processor Integrated Graphics Con pci@0000:00:1c.0 bridge 5 Series/3400 Series Chipset PCI Expre pci@0000:00:1c.1 bridge 5 Series/3400 Series Chipset PCI Expre pci@0000:00:1c.2 bridge 5 Series/3400 Series Chipset PCI Expre pci@0000:00:1c.3 bridge 5 Series/3400 Series Chipset PCI Expre pci@0000:00:1e.0 bridge 82801 Mobile PCI Bridge pci@0000:00:1f.0 bridge HM55 Chipset LPC Interface Controller pci@0000:ff:00.0 bridge Core Processor QuickPath Architecture pci@0000:ff:00.1 bridge Core Processor QuickPath Architecture pci@0000:ff:02.0 bridge Core Processor QPI Link 0 pci@0000:ff:02.1 bridge 1st Generation Core i3/5/7 Processor Q pci@0000:ff:02.2 bridge 1st Generation Core i3/5/7 Processor R pci@0000:ff:02.3 bridge 1st Generation Core i3/5/7 Processor R Creamos el fichero siguiente fichero para forzar el inicio del bus en el arranque EFI: ~$ sudo nano /etc/grub.d/01_enable_vga.conf cat &amp;lt;&amp;lt; EOF setpci -s &quot;00:01.0&quot; 3e.b=8 setpci -s &quot;01:00.0&quot; 04.b=7 EOF Cambiamos permisos y actualizamos grub: ~$ sudo chmod 755 /etc/grub.d/01_enable_vga.conf ~$ sudo update-grub Al reiniciar el equipo el driver de Nvidia debería funcionar correctamente. Iluminación del teclado La solución es plug &amp;amp; play: ~$ sudo apt install pommed ~$ sudo service pommed start Ventiladores y control de temperatura mbpfan lleva bastantes años funcionando. En el mismo repositorio están las instrucciones para su instalación. Esta es la configuración que por ahora me funciona bien: ~$ sudo vim /etc/mbpfan.conf [general] min_fan_speed = 3200 #max_fan_speed = 6200 low_temp = 50 high_temp = 60 max_temp = 86 polling_interval = 5 Soporte 7-zip Y ya que estamos, podemos añadir soporte para ficheros 7-zip: sudo apt-get install p7zip-full</summary></entry><entry><title type="html">Códigos de caracteres</title><link href="http://localhost:4000/resource/codigos-de-caracteres/" rel="alternate" type="text/html" title="Códigos de caracteres" /><published>2017-01-02T00:00:00+00:00</published><updated>2017-01-02T00:00:00+00:00</updated><id>http://localhost:4000/resource/codigos-de-caracteres</id><content type="html" xml:base="http://localhost:4000/resource/codigos-de-caracteres/">&lt;p&gt;Cuando hago presentaciones en Reveal.js y necesito algún símbolo (como por ejemplo flechas) intento utilizar sus códigos HTML para evitar incluir imágenes.&lt;/p&gt;
+
+&lt;p&gt;En &lt;a href=&quot;http://character-code.com/&quot;&gt;Character-Code&lt;/a&gt; hay un listado brutal de códigos con su representación.&lt;/p&gt;
+
+&lt;p&gt;¡Fácil y para toda la familia!&lt;/p&gt;</content><author><name>Aitor Lozano</name></author><category term="Resource" /><summary type="html">Cuando hago presentaciones en Reveal.js y necesito algún símbolo (como por ejemplo flechas) intento utilizar sus códigos HTML para evitar incluir imágenes.</summary></entry><entry><title type="html">DNSTwist</title><link href="http://localhost:4000/software/dnstwist/" rel="alternate" type="text/html" title="DNSTwist" /><published>2016-05-06T00:00:00+01:00</published><updated>2016-05-06T00:00:00+01:00</updated><id>http://localhost:4000/software/dnstwist</id><content type="html" xml:base="http://localhost:4000/software/dnstwist/">&lt;p&gt;DNSTwist es una herramienta que puede ayudarnos a analizar los errores más comunes al escribir un dominio web, y al mismo tiempo busca dominios similares.&lt;/p&gt;
+
+&lt;p&gt;Según su propia descripción, esto puede ayudarnos a analizar dominios adversarios y evitar ataques phising. Aquí podemos verlo en acción:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/posts/dnstwistdemo.gif&quot; alt=&quot;Instalacion de typora en linux&quot; class=&quot;center-image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;La plataforma principal de desarrollo es Ubuntu, y ya es compatible con la versión 15.04 o superior.&lt;/p&gt;
+
+&lt;p&gt;Toda la información está disponible en su &lt;a href=&quot;https://github.com/elceef/dnstwist&quot;&gt;Github&lt;/a&gt;.&lt;/p&gt;</content><author><name>Aitor Lozano</name></author><category term="Software" /><summary type="html">DNSTwist es una herramienta que puede ayudarnos a analizar los errores más comunes al escribir un dominio web, y al mismo tiempo busca dominios similares.</summary></entry></feed>

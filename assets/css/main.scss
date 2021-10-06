@@ -1,0 +1,48 @@
+---
+# Only the main Sass file needs front matter (the dashes are enough)
+---
+
+@charset "utf-8";
+
+@import "minimal-mistakes/skins/{{ site.minimal_mistakes_skin | default: 'default' }}"; // skin
+@import "minimal-mistakes"; // main partials
+
+.nomargin {
+    margin: 0;
+}
+
+.h3 {
+    font-size: 1.125em;
+}
+
+.h3-small {
+    font-size: 1.5em;
+}
+
+.job-position {
+    font-size: 0.9em !important;
+    margin-top: 0.3em !important;
+    margin-bottom: 0.3em !important;
+}
+
+.job-position-time {
+    margin-bottom: 0.25em;
+    padding: 0.25em .5em;
+    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
+    font-size: 0.75em;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    border-width: 0;
+    border-radius: 2px;
+}
+
+.green {
+    color: #fff;
+    background-color: #3fa63f;
+}
+
+.gray {
+    color: #333;
+    background-color: rgb(210, 210, 210);;
+}
