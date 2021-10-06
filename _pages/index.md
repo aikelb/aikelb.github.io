@@ -19,7 +19,7 @@ latest-services:
   - url: https://store.steampowered.com/app/1593750/Creatures_of_Aether/
     image_path: /assets/images/aether.png
     alt: "Creatures of Aether (Steam port)"
-  - url: https://play.google.com/store/apps/details?id=com.PlayMedusa.Huri
+  - url: https://www.campusfad.org/huri-games/
     image_path: /assets/images/huri.png
     alt: "HURI - HUman RIghts"
   - url: 
