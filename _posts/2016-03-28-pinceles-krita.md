@@ -1,6 +1,7 @@
 ---
 title: "Pinceles para Krita"
-featured-img: krita
+header:
+  image: assets/posts/krita.jpg
 categories: 
   - Software
 ---

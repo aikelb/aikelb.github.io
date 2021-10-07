@@ -1,6 +1,7 @@
 ---
 title: "Edición de video y VFX"
-featured-img: davinci
+header:
+  image: assets/posts/davinci.jpg
 categories: 
   - Software
 ---
@@ -11,7 +12,7 @@ La comodidad que ofrece la Creative Suite de Adobe es difícil de igualar, pero 
 
 Hay bastantes opciones open source. [Kdenlive](https://kdenlive.org/en/), Pitivi o [Blender](https://www.blender.org/) (y plugins como [Power Sequencer](https://github.com/GDquest/Blender-power-sequencer)) pueden ser opciones totalmente válidas. Mi opción preferida es DaVinci Resolve.
 
-![Davinci Resolve](/assets/img/posts/davinci-resolve15.jpg){: .center-image}
+![Davinci Resolve](/assets/posts/davinci-resolve15.jpg){: .center-image}
 
 La única pega que le he encontrado es que no es Open Source, de resto, es una herramienta estupenda. La interfaz de usuario, la estabilidad y características que ofrece en su versión gratuita es completísima.
 
@@ -19,7 +20,7 @@ La única pega que le he encontrado es que no es Open Source, de resto, es una h
 
 Aquí no he encontrado tantas alternativas, pero Natron lo tiene todo: open source, multiplatforma y un estándar de la industria:
 
-![Natron](/assets/img/posts/natron.jpg){: .center-image}
+![Natron](/assets/posts/natron.jpg){: .center-image}
 
 Aún no he podido probarlo, pero su editor basado en nodos pinta genial. ¡Espero poder utilizarlo y que no sea un infierno!
 

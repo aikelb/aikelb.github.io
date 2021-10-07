@@ -1,6 +1,7 @@
 ---
 title: "Códigos de caracteres"
-featured-img: arrows
+header:
+  image: assets/posts/arrows.jpg
 categories: 
   - Resource
 ---

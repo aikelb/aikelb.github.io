@@ -1,6 +1,7 @@
 ---
 title: "Migrando a easyengine v4"
-featured-img: easyengine
+header:
+  image: assets/posts/easyengine.jpg
 categories: 
   - Guide
 ---

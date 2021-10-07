@@ -1,5 +1,7 @@
 ---
 title: "Rasperry Pi & Archlinux"
+header:
+  image: assets/posts/archlinux.jpg
 categories: 
   - Software
 ---

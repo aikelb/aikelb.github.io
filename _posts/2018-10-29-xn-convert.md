@@ -1,6 +1,7 @@
 ---
 title: "XnConvert"
-featured-img: xn
+header:
+  image: assets/posts/xn.jpg
 categories: 
   - Software
 ---

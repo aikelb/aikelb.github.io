@@ -1,6 +1,5 @@
 ---
 title: "Servir build WebGL de Unity utilizando NGINX"
-featured-img: 
 categories: 
   - Guide
 ---

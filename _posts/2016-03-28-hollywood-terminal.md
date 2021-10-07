@@ -1,6 +1,7 @@
 ---
 title: "Hollywood Terminal"
-featured-img: cool-retro-term
+header:
+  image: assets/posts/cool-retro-term.jpg
 categories: 
   - Software
 ---

@@ -1,6 +1,7 @@
 ---
 title: "Ubuntu en un Macbook Pro 6,2"
-featured-img: ubuntu1810
+header:
+  image: assets/posts/ubuntu1810.jpg
 categories: 
   - Guide
 ---
@@ -27,7 +28,7 @@ Instalar los drivers y reiniciar el equipo daban como resultado un pantallazo ne
 
 Instalamos los drivers propietarios y no reiniciamos.
 
-![Software & Updates](/assets/img/posts/additional-drivers_sm.png)
+![Software & Updates](/assets/posts/additional-drivers.png)
 {: .center-image}
 
 Buscamos los identificadores del bus PCI-E, que serán el primer 'display' y la entrada justo antes. En mi caso, segundo y tercer dispositivos:
@@ -108,4 +109,4 @@ Y ya que estamos, podemos añadir soporte para ficheros 7-zip:
 sudo apt-get install p7zip-full
 ```
 
-[ubuntu]: /assets/img/posts/ubuntu1810_lg.png "Ubuntu 18.10 - MacbookPro 6,2"
+[ubuntu]: /assets/posts/ubuntu1810.jpg "Ubuntu 18.10 - MacbookPro 6,2"
