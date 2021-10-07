@@ -54,7 +54,7 @@ We offer third party development services while making our own games in our spar
 <i class="fas fa-address-card"/> External teacher · <i class="fas fa-business-time"/> <span href="#" class="job-position-time gray"> Oct 2014 - Jun 2020</span>
 {: .job-position}
 ---
-University expert in design and game programming at the ULPGC. Subjects taught: design patterns, multiplayer, gamefeel, and development workshops.
+University expert in design and game programming at the University of Las Palmas de Gran Canaria. Subjects taught: design patterns, multiplayer, gamefeel, and development workshops.
 
 ### <i class="fas fa-map-marker-alt"/> 30 Parallel Games
 {: .nomargin}
@@ -84,8 +84,8 @@ As a mentor I help the participants to develop their videogames, supporting them
 Mobile video game development with Unity3D + C#
 
 Published titles:
-: [American Gitl World](https://www.youtube.com/watch?v=wFfVz-VXC1U)
-: [Barbie™ You Can Be Anything](https://www.youtube.com/watch?v=vl7Hdozl3Cw)
+: [American Girl World](https://www.youtube.com/watch?v=wFfVz-VXC1U) (iOS)
+: [Barbie™ You Can Be Anything](https://www.youtube.com/watch?v=vl7Hdozl3Cw) (iOS)
 
 ## Education
 ### <i class="fas fa-map-marker-alt"/> Universidad de Las Palmas de Gran Canaria
