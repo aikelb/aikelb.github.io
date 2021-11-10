@@ -7,37 +7,282 @@ tags:
   - c-sharp
 ---
 
-El streaming de vídeos puede resolver muchos problemas si intentamos utilizar algún plugin que espera una URL como entrada.
+El streaming de vídeos puede resolver muchos problemas si intentamos utilizar algún plugin que espera una URL como entrada, especialmente si estamos intentando reproducir un video encriptado (AES + HLS) en iOS. 
 
-[Güney Aksakalli](https://gist.github.com/aksakalli) publicó hace unos años un [SimpleHTTPServer](https://gist.github.com/aksakalli/9191056) que permite servir el contenido de un directorio como `StreamingAssets` con una línea de código:
+Como pequeño extra, siguiendo [esta entrada de StackOverflow](https://stackoverflow.com/questions/25898922/handle-range-requests-with-httplistener) y [este código](https://www.codeproject.com/Articles/137979/Simple-HTTP-Server-in-C) como base, he conseguido montar un servidor local que soporte peticiones por rangos de bytes, lo que permite utilizar videos encriptados en un único fichero ```.ts```.
 
+Podemos utilizarlo de la siguiente forma:
 ```csharp
-var server = new SimpleHTTPServer($"{Application.streamingAssetsPath}/Videos/", 8080);
+//Start
+var server = new MyHttpServer($"{Application.streamingAssetsPath}/Videos/", 8080);
+
+//Stop
+server.Stop();
 ```
 
-¡Muy útil y cómodo!
-
-
-Dejo por aquí una copia del script:
+Dejo por aquí una copia del script incluyendo los arreglos para que funcione en iOS/Mac.
 
 ```csharp
-// MIT License - Copyright (c) 2016 Can Güney Aksakalli
-// https://aksakalli.github.io/2014/02/24/simple-http-server-with-csparp.html
-
 using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Net.Sockets;
-using System.Net;
 using System.IO;
+using System.Net;
+using System.Net.Sockets;
 using System.Threading;
-using Debug = UnityEngine.Debug;
+using UnityEngine;
 
+// offered to the public domain for any use with no restriction
+// and also with no warranty of any kind, please enjoy. - David Jeske. 
 
-public class SimpleHTTPServer
+// simple HTTP explanation
+// http://www.jmarshall.com/easy/http/
+
+namespace Bend.Util
 {
-    private static IDictionary<string, string> _mimeTypeMappings = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase) {
-        #region extension to MIME type list
-        {".asf", "video/x-ms-asf"},
+    public class HttpProcessor
+    {
+        public TcpClient socket;
+        public HttpServer srv;
+
+        private Stream inputStream;
+        public StreamWriter outputStream;
+
+        public String http_method;
+        public String http_url;
+        public String http_protocol_versionstring;
+        public Hashtable httpHeaders = new Hashtable();
+
+
+        private static int MAX_POST_SIZE = 10 * 1024 * 1024; // 10MB
+
+        public HttpProcessor(TcpClient s, HttpServer srv)
+        {
+            this.socket = s;
+            this.srv = srv;
+        }
+
+
+        private string streamReadLine(Stream inputStream)
+        {
+            int next_char;
+            string data = "";
+            while (true)
+            {
+                next_char = inputStream.ReadByte();
+                if (next_char == '\n')
+                {
+                    break;
+                }
+
+                if (next_char == '\r')
+                {
+                    continue;
+                }
+
+                if (next_char == -1)
+                {
+                    Thread.Sleep(1);
+                    continue;
+                }
+
+                ;
+                data += Convert.ToChar(next_char);
+            }
+
+            return data;
+        }
+
+        public void process()
+        {
+            // we can't use a StreamReader for input, because it buffers up extra data on us inside it's
+            // "processed" view of the world, and we want the data raw after the headers
+            inputStream = new BufferedStream(socket.GetStream());
+
+            // we probably shouldn't be using a streamwriter for all output from handlers either
+            outputStream = new StreamWriter(new BufferedStream(socket.GetStream()));
+            try
+            {
+                parseRequest();
+                readHeaders();
+                if (http_method.Equals("GET"))
+                {
+                    handleGETRequest();
+                }
+                else if (http_method.Equals("POST"))
+                {
+                    handlePOSTRequest();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Exception: " + e.ToString());
+                writeFailure();
+            }
+
+            outputStream.Flush();
+            // bs.Flush(); // flush any remaining output
+            inputStream = null;
+            outputStream = null; // bs = null;            
+            socket.Close();
+        }
+
+        public void parseRequest()
+        {
+            String request = streamReadLine(inputStream);
+            string[] tokens = request.Split(' ');
+            if (tokens.Length != 3)
+            {
+                throw new Exception("invalid http request line");
+            }
+
+            http_method = tokens[0].ToUpper();
+            http_url = tokens[1];
+            http_protocol_versionstring = tokens[2];
+
+            Console.WriteLine("starting: " + request);
+        }
+
+        public void readHeaders()
+        {
+            Console.WriteLine("readHeaders()");
+            String line;
+            while ((line = streamReadLine(inputStream)) != null)
+            {
+                if (line.Equals(""))
+                {
+                    Console.WriteLine("got headers");
+                    return;
+                }
+
+                int separator = line.IndexOf(':');
+                if (separator == -1)
+                {
+                    throw new Exception("invalid http header line: " + line);
+                }
+
+                String name = line.Substring(0, separator);
+                int pos = separator + 1;
+                while ((pos < line.Length) && (line[pos] == ' '))
+                {
+                    pos++; // strip any spaces
+                }
+
+                string value = line.Substring(pos, line.Length - pos);
+                Console.WriteLine("header: {0}:{1}", name, value);
+                httpHeaders[name] = value;
+            }
+        }
+
+        public void handleGETRequest()
+        {
+            srv.handleGETRequest(this);
+        }
+
+        private const int BUF_SIZE = 4096;
+
+        public void handlePOSTRequest()
+        {
+            // this post data processing just reads everything into a memory stream.
+            // this is fine for smallish things, but for large stuff we should really
+            // hand an input stream to the request processor. However, the input stream 
+            // we hand him needs to let him see the "end of the stream" at this content 
+            // length, because otherwise he won't know when he's seen it all! 
+
+            Console.WriteLine("get post data start");
+            int content_len = 0;
+            MemoryStream ms = new MemoryStream();
+            if (this.httpHeaders.ContainsKey("Content-Length"))
+            {
+                content_len = Convert.ToInt32(this.httpHeaders["Content-Length"]);
+                if (content_len > MAX_POST_SIZE)
+                {
+                    throw new Exception(
+                        String.Format("POST Content-Length({0}) too big for this simple server",
+                            content_len));
+                }
+
+                byte[] buf = new byte[BUF_SIZE];
+                int to_read = content_len;
+                while (to_read > 0)
+                {
+                    Console.WriteLine("starting Read, to_read={0}", to_read);
+
+                    int numread = this.inputStream.Read(buf, 0, Math.Min(BUF_SIZE, to_read));
+                    Console.WriteLine("read finished, numread={0}", numread);
+                    if (numread == 0)
+                    {
+                        if (to_read == 0)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            throw new Exception("client disconnected during post");
+                        }
+                    }
+
+                    to_read -= numread;
+                    ms.Write(buf, 0, numread);
+                }
+
+                ms.Seek(0, SeekOrigin.Begin);
+            }
+
+            Console.WriteLine("get post data end");
+            srv.handlePOSTRequest(this, new StreamReader(ms));
+        }
+
+        public void writeSuccess(string content_type = "text/html")
+        {
+            outputStream.WriteLine("HTTP/1.0 200 OK");
+            outputStream.WriteLine("Content-Type: " + content_type);
+            outputStream.WriteLine("Connection: close");
+            outputStream.WriteLine("");
+        }
+
+        public void writeFailure()
+        {
+            outputStream.WriteLine("HTTP/1.0 404 File not found");
+            outputStream.WriteLine("Connection: close");
+            outputStream.WriteLine("");
+        }
+    }
+
+    public abstract class HttpServer
+    {
+        protected int port;
+        TcpListener listener;
+        bool is_active = true;
+
+        public HttpServer(int port)
+        {
+            this.port = port;
+        }
+
+        public void listen()
+        {
+            listener = new TcpListener(port);
+            listener.Start();
+            while (is_active)
+            {
+                TcpClient s = listener.AcceptTcpClient();
+                HttpProcessor processor = new HttpProcessor(s, this);
+                Thread thread = new Thread(new ThreadStart(processor.process));
+                thread.Start();
+                Thread.Sleep(1);
+            }
+        }
+
+        public abstract void handleGETRequest(HttpProcessor p);
+        public abstract void handlePOSTRequest(HttpProcessor p, StreamReader inputData);
+    }
+
+    public class MyHttpServer : HttpServer
+    {
+        
+        private static IDictionary<string, string> _mimeTypeMappings = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase) {
+            {".asf", "video/x-ms-asf"},
         {".asx", "video/x-ms-asf"},
         {".avi", "video/x-msvideo"},
         {".bin", "application/octet-stream"},
@@ -104,142 +349,131 @@ public class SimpleHTTPServer
         {".xml", "text/xml"},
         {".xpi", "application/x-xpinstall"},
         {".zip", "application/zip"},
-        #endregion
-    };
-    private Thread _serverThread;
-    private string _rootDirectory;
-    private HttpListener _listener;
-
-    public int Port { get; private set; }
-
-    /// <summary>
-    /// Construct server with given port.
-    /// </summary>
-    /// <param name="path">Directory path to serve.</param>
-    /// <param name="port">Port of the server.</param>
-    public SimpleHTTPServer(string path, int port)
-    {
-        Initialize(path, port);
-    }
- 
-    /// <summary>
-    /// Construct server with suitable port.
-    /// </summary>
-    /// <param name="path">Directory path to serve.</param>
-    public SimpleHTTPServer(string path)
-    {
-        //get an empty port
-        TcpListener l = new TcpListener(IPAddress.Loopback, 0);
-        l.Start();
-        int port = ((IPEndPoint)l.LocalEndpoint).Port;
-        l.Stop();
-        Initialize(path, port);
-    }
- 
-    /// <summary>
-    /// Stop server and dispose all functions.
-    /// </summary>
-    public void Stop()
-    {
-        _serverThread.Abort();
-        _listener.Stop();
-    }
- 
-    private void Listen()
-    {
-        _listener = new HttpListener();
-        _listener.Prefixes.Add("http://*:" + Port + "/");
-        _listener.Start();
-        while (true)
+        };
+        
+        public MyHttpServer(int port)
+            : base(port)
         {
-            try
-            {
-                HttpListenerContext context = _listener.GetContext();
-                Process(context);
-            }
-            catch (Exception ex)
-            {
-                Debug.LogError(ex);
-            }
         }
-    }
- 
-    private void Process(HttpListenerContext context)
+
+        private string baseURL;
+        private Thread server;
+
+        public MyHttpServer(string baseURL, int port) : base(port)
         {
-            string filename = WebUtility.UrlDecode(context.Request.Url.AbsolutePath.Substring(1));
-            Console.WriteLine(filename);
+            this.baseURL = baseURL;
+            server = new Thread(listen);
+            server.Start();
+        }
 
-            if (string.IsNullOrEmpty(filename))
+        public void Stop()
+        {
+            server.Abort();
+        }
+
+        public override void handleGETRequest(HttpProcessor p)
+        {
+            string filename = WebUtility.UrlDecode(p.http_url);
+            var contentType = _mimeTypeMappings.TryGetValue(Path.GetExtension(filename), out string mime) ? mime : "application/octet-stream";
+            var filePath = $"{baseURL}/{filename}";
+            if (contentType.Contains("video") || contentType.Contains("audio"))
             {
+                using (FileStream fs = new FileStream(filePath, FileMode.Open))
                 {
-                    try
+                    int startByte = -1;
+                    int endByte = -1;
+                    if (p.httpHeaders.Contains("Range"))
                     {
-                        string responseString = string.Join("\n", Directory.GetFiles(_rootDirectory, @"*.*", SearchOption.AllDirectories));
-                        byte[] buffer = System.Text.Encoding.UTF8.GetBytes(responseString);
-                        context.Response.ContentLength64 = buffer.Length;
-                        Stream output = context.Response.OutputStream;
-                        output.Write(buffer, 0, buffer.Length);
-
-                        context.Response.StatusCode = (int)HttpStatusCode.OK;
-                        context.Response.OutputStream.Flush();
+                        string rangeHeader = p.httpHeaders["Range"].ToString().Replace("bytes=", "");
+                        string[] range = rangeHeader.Split('-');
+                        startByte = int.Parse(range[0]);
+                        if (range[1].Trim().Length > 0) int.TryParse(range[1], out endByte);
+                        if (endByte == -1)
+                            endByte = (int)fs.Length;
+                        else
+                            endByte++;
                     }
-                    catch
+                    else
                     {
-                        context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                        startByte = 0;
+                        endByte = (int)fs.Length;
                     }
-                }
-            }
 
-            filename = Path.Combine(_rootDirectory, filename);
-
-            if (File.Exists(filename))
-            {
-                try
-                {
-                    Stream input = new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.Read);
+                    byte[] buffer = new byte[endByte - startByte];
+                    fs.Position = startByte;
+                    fs.Read(buffer, 0, endByte - startByte);
+                    p.outputStream.AutoFlush = true;
+                    p.outputStream.WriteLine("HTTP/1.0 206 Partial Content");
+                    p.outputStream.WriteLine("Content-Type: " + mime);
+                    p.outputStream.WriteLine("Accept-Ranges: bytes");
+                    if (p.httpHeaders.Contains("Range"))
+                    {
+                        int totalCount = startByte + buffer.Length;
+                        p.outputStream.WriteLine($"Content-Range: bytes {startByte}-{totalCount - 1}/{fs.Length}");
+                        p.outputStream.WriteLine("Content-Length: " + buffer.Length);
+                        p.outputStream.WriteLine("Connection: keep-alive");
+                    }
+                    else
+                    {
+                        p.outputStream.WriteLine("Content-Length: " + buffer.Length);
+                        p.outputStream.WriteLine("Connection: close");
+                    }
+                    p.outputStream.WriteLine("");
+                    p.outputStream.AutoFlush = false;
+                    fs.Flush();
+                    fs.Close();
+                    p.outputStream.BaseStream.Write(buffer, 0, buffer.Length);
+                    p.outputStream.BaseStream.Flush();
                     
-
-                    context.Response.ContentType = _mimeTypeMappings.TryGetValue(Path.GetExtension(filename), out string mime) ? mime : "application/octet-stream";
-                    context.Response.ContentLength64 = input.Length;
-                    context.Response.StatusCode = (int)HttpStatusCode.OK;
-
-                    if (context.Request.HttpMethod != "HEAD")
-                    {
-                        byte[] buffer = new byte[1024 * 16];
-                        int nbytes;
-                        context.Response.SendChunked = input.Length > 1024 * 16;
-                        while ((nbytes = input.Read(buffer, 0, buffer.Length)) > 0)
-                        {
-                            context.Response.OutputStream.Write(buffer, 0, nbytes);
-                        }
-                    }
-                    context.Response.OutputStream.Flush();
-                    context.Response.Close();
-                }
-                catch (Exception e)
-                {
-                    Debug.LogError(e);
-                    context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
                 }
             }
             else
             {
-                context.Response.StatusCode = (int)HttpStatusCode.NotFound;
+                byte[] buffer = File.ReadAllBytes(filePath);
+                p.outputStream.AutoFlush = true;
+                p.outputStream.WriteLine("HTTP/1.0 200 OK");
+                p.outputStream.WriteLine("Content-Type: " + mime);
+                p.outputStream.WriteLine("Connection: close");
+                p.outputStream.WriteLine("Content-Length: " + buffer.Length);
+                p.outputStream.WriteLine("");
+
+                p.outputStream.AutoFlush = false;
+                p.outputStream.BaseStream.Write(buffer, 0, buffer.Length);
+                p.outputStream.BaseStream.Flush();
+            }
+        }
+
+        public override void handlePOSTRequest(HttpProcessor p, StreamReader inputData)
+        {
+            Console.WriteLine("POST request: {0}", p.http_url);
+            string data = inputData.ReadToEnd();
+
+            p.writeSuccess();
+            p.outputStream.WriteLine("<html><body><h1>test server</h1>");
+            p.outputStream.WriteLine("<a href=/test>return</a><p>");
+            p.outputStream.WriteLine("postbody: <pre>{0}</pre>", data);
+        }
+    }
+
+    public class TestMain
+    {
+        public static int Main(String[] args)
+        {
+            HttpServer httpServer;
+            if (args.GetLength(0) > 0)
+            {
+                httpServer = new MyHttpServer(Convert.ToInt16(args[0]));
+            }
+            else
+            {
+                httpServer = new MyHttpServer(8080);
             }
 
-            context.Response.OutputStream.Close();
+            Thread thread = new Thread(new ThreadStart(httpServer.listen));
+            thread.Start();
+            return 0;
         }
- 
-    private void Initialize(string path, int port)
-    {
-        _rootDirectory = path;
-        Port = port;
-        _serverThread = new Thread(Listen);
-        _serverThread.Start();
-        //Debug.Log($"Listening {path} at {port}");
     }
- 
- 
 }
 ```
 
