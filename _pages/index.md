@@ -16,15 +16,15 @@ our-games:
     image_path: /assets/images/oddy-smog.png
     alt: "Oddy Smog’s Misadventure"
 latest-services:
+  - url: https://animalisland.us/
+    image_path: /assets/images/aila.jpg
+    alt: "Animal Island Learning Adventure"
   - url: https://store.steampowered.com/app/1593750/Creatures_of_Aether/
     image_path: /assets/images/aether.png
     alt: "Creatures of Aether (Steam port)"
   - url: https://www.campusfad.org/huri-games/
     image_path: /assets/images/huri.png
     alt: "HURI - HUman RIghts"
-  - url: 
-    image_path: /assets/images/empty2.png
-    alt: ""
 ---
 
 I'm a freelance game developer at [PlayMedusa](https://www.playmedusa.com). I'm from the Canary Islands (Spain), and I have a piece of paper saying that I'm a "Computer Science Engineer".
