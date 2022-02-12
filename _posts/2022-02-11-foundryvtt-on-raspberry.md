@@ -8,6 +8,8 @@ tags:
   - Raspberry
 ---
 
+Notas para la instalación de FoundryVTT en la Raspberry, por si pasa lo peor.
+
 ## Sistema Operatio:
 
 Instalar Pi OS en una tarjeta SD o disco duro externo. El [Raspberry Pi Imager](https://www.raspberrypi.org/software/) facilita bastante las cosas y permite descargar la última versión de Raspbery Pi OS en 64 bits.
