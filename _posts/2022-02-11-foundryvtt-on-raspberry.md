@@ -90,7 +90,6 @@ sudo apt install -y nodejs
 2. Descargar y configurar FoundryVTT siguiendo los pasos [instalación](https://foundryvtt.com/article/installation/) de la web oficial.
 
 3. Creación del servicio en `/etc/systemd/system/foundryvtt.service`:
-
 ```
 [Unit]
 Description=Foundry VTT
@@ -154,7 +153,6 @@ server {
 ```
 
 3. Activamos el sitio y revisamos la configuración :
-
 ```
 # Enable new site
 cd /et c/nginx/sites-enabled
@@ -205,15 +203,14 @@ sudo iw wlan0 set power_save off
 ```
 
 Para hacer el cambio permanente hay que añadir lo siguiente al fichero `/etc/rc.local` (antes del exit 0!):
-
 ```
 /sbin/iw dev wlan0 set power_save off
 ```
 
 ## Referencias
 
-[https://github.com/orangetruth/foundryvtt-raspberry-pi](https://github.com/orangetruth/foundryvtt-raspberry-pi)
-[https://www.raspberrypi.org/documentation/configuration/security.md](https://www.raspberrypi.org/documentation/configuration/security.md)
-[https://www.weigu.lu/sb-computer/raspi_tips_tricks/index.html#link_9](https://www.weigu.lu/sb-computer/raspi_tips_tricks/index.html#link_9)
-[https://martinpilon.ca/foundry-on-pi/](https://martinpilon.ca/foundry-on-pi/)
-[https://dracoli.ch/posts/foundry-rpi/](https://dracoli.ch/posts/foundry-rpi/)
+- [https://github.com/orangetruth/foundryvtt-raspberry-pi](https://github.com/orangetruth/foundryvtt-raspberry-pi)
+- [https://www.raspberrypi.org/documentation/configuration/security.md](https://www.raspberrypi.org/documentation/configuration/security.md)
+- [https://www.weigu.lu/sb-computer/raspi_tips_tricks/index.html#link_9](https://www.weigu.lu/sb-computer/raspi_tips_tricks/index.html#link_9)
+- [https://martinpilon.ca/foundry-on-pi/](https://martinpilon.ca/foundry-on-pi/)
+- [https://dracoli.ch/posts/foundry-rpi/](https://dracoli.ch/posts/foundry-rpi/)
