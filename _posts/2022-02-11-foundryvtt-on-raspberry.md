@@ -72,7 +72,7 @@ services:
 6. Terminamos lanzando el contenedor con: `docker-compose up -d`
 
 7. Para actualizar el contenedor en el futuro podemos utilizar:
-``
+```
 docker-compose pull
 //o
 docker pull felddy/foundryvtt:release
