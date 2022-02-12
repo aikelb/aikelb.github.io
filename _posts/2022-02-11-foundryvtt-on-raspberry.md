@@ -211,5 +211,8 @@ Para hacer el cambio permanente hay que añadir lo siguiente al fichero `/etc/rc
 ```
 
 ## Referencias
-https://github.com/orangetruth/foundryvtt-raspberry-pi
-https://www.weigu.lu/sb-computer/raspi_tips_tricks/index.html#link_9
+[https://github.com/orangetruth/foundryvtt-raspberry-pi](https://github.com/orangetruth/foundryvtt-raspberry-pi)
+[https://www.raspberrypi.org/documentation/configuration/security.md](https://www.raspberrypi.org/documentation/configuration/security.md)
+[https://www.weigu.lu/sb-computer/raspi_tips_tricks/index.html#link_9](https://www.weigu.lu/sb-computer/raspi_tips_tricks/index.html#link_9)
+[https://martinpilon.ca/foundry-on-pi/](https://martinpilon.ca/foundry-on-pi/)
+[https://dracoli.ch/posts/foundry-rpi/](https://dracoli.ch/posts/foundry-rpi/)
