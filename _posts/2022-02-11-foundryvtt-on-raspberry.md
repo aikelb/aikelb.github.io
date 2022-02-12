@@ -153,6 +153,7 @@ server {
 ```
 
 3. Activamos el sitio y revisamos la configuración :
+
 ```
 # Enable new site
 cd /et c/nginx/sites-enabled
