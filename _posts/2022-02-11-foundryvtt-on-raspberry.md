@@ -89,7 +89,8 @@ sudo apt install -y nodejs
 ```
 2. Descargar y configurar FoundryVTT siguiendo los pasos [instalación](https://foundryvtt.com/article/installation/) de la web oficial.
 
-3. Creación del servicio en `/etc/systemd/system/foundryvtt.service`:
+3. Creación del servicio en `/etc/systemd/system/foundryvtt.service` :
+
 ```
 [Unit]
 Description=Foundry VTT
@@ -106,6 +107,7 @@ User=pi
 [Install]
 WantedBy=multi-user.target
 ```
+
 Y podremos lanzar y parar FoundryVTT con:
 ```
 sudo service foundryvtt start
@@ -120,7 +122,7 @@ sudo apt-get update
 sudo apt-get install nginx
 ```
 
-2. Creamos el fichero de configuración para nuestro dominio en `/etc/nginx/sites-available/your.hostname.com` :
+2. Creamos el fichero de configuración para nuestro dominio en `/etc/nginx/sites-available/your.hostname.com`:
 ```
 server {
 
@@ -152,7 +154,7 @@ server {
 }
 ```
 
-3. Activamos el sitio y revisamos la configuración :
+3. Activamos el sitio y revisamos la configuración:
 
 ```
 # Enable new site
@@ -169,7 +171,7 @@ sudo nginx -t
 sudo service nginx restart
 ```
 
-Y si todo va bien, ha llegado la hora de instalar un certificado SSL usando [Certbot](https://certbot.eff.org/instructions?ws=nginx&os=debianbuster)
+Y si todo va bien, ha llegado la hora de instalar un certificado SSL usando [Certbot](https://certbot.eff.org/instructions?ws=nginx&os=debianbuster).
 
 ## DNS dinámicas
 Gracias a un pequeño [script](https://github.com/rmarchant/gandi-ddns) podemos actualizar las dns de un dominio de gandi automáticamente.
