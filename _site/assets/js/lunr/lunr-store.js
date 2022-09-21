@@ -90,7 +90,7 @@ var store = [{
         "teaser": null
       },{
         "title": "Streaming local de vídeos en Unity3D",
-        "excerpt":"El streaming de vídeos puede resolver muchos problemas si intentamos utilizar algún plugin que espera una URL como entrada. Güney Aksakalli publicó hace unos años un SimpleHTTPServer que permite servir el contenido de un directorio como StreamingAssets con una línea de código: var server = new SimpleHTTPServer($\"{Application.streamingAssetsPath}/Videos/\", 8080); ¡Muy útil...","categories": ["Guide"],
+        "excerpt":"El streaming de vídeos puede resolver muchos problemas si intentamos utilizar algún plugin que espera una URL como entrada, especialmente si estamos intentando reproducir un video encriptado (AES + HLS) en iOS. Como pequeño extra, siguiendo esta entrada de StackOverflow y este código como base, he conseguido montar un servidor...","categories": ["Guide"],
         "tags": ["Unity3D","c-sharp"],
         "url": "/guide/local-streaming/",
         "teaser": null

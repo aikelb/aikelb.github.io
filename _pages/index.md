@@ -30,8 +30,9 @@ latest-services:
 I'm a freelance game developer at [PlayMedusa](https://www.playmedusa.com). I'm from the Canary Islands (Spain), and I have a piece of paper saying that I'm a "Computer Science Engineer".
 
 I'm mostly interested in programming, specially anything related with videogames.
-For the lasts 10 years most of my work has been related with Unity3D development, and eventually, some websites including blockchain and smartcontract development.
+For the lasts 10 years most of my work has been related with Unity3D development, teaching, and eventually, some websites including blockchain and smartcontract development.
 
+[<i class="fas fa-file-download"/> PDF Version](assets/posts/cv.pdf)
 
 ## Experience
 
@@ -49,13 +50,6 @@ We offer third party development services while making our own games in our spar
 
 {% include gallery id="latest-services" caption="Our latest services." %}
 
-### <i class="fas fa-map-marker-alt"/> Teaching at ULPGC
-{: .nomargin}
-<i class="fas fa-address-card"/> External teacher · <i class="fas fa-business-time"/> <span href="#" class="job-position-time gray"> Oct 2014 - Jun 2020</span>
-{: .job-position}
----
-University expert in design and game programming at the University of Las Palmas de Gran Canaria. Subjects taught: design patterns, multiplayer, gamefeel, and development workshops.
-
 ### <i class="fas fa-map-marker-alt"/> 30 Parallel Games
 {: .nomargin}
 <i class="fas fa-address-card"/> Lead Developer · <i class="fas fa-business-time"/> <span href="#" class="job-position-time gray"> Jan 2018 - Jan 2020</span>
@@ -65,16 +59,6 @@ Video game development with Unity3D + C# and web technologies.
  
 Published titles:
 : [Bitponies](https://www.bitponies.com): Blockchain game centered around breedable, collectible and eventually raceable horses.
-
-
-### <i class="fas fa-map-marker-alt"/> ACADEVI
-{: .nomargin}
-<i class="fas fa-address-card"/> Mentor in Island Jam · <i class="fas fa-business-time"/> <span href="#" class="job-position-time gray"> Jan 2014 - Dec 2019</span>
-{: .job-position}
----
-The Island Jam is a videogame development competition organized in Gran Canaria based on the Ludum Dare event. 
-
-As a mentor I help the participants to develop their videogames, supporting them in the code side. In the first editions I also taught videogame development courses in Unity3D at a basic and advanced level.
 
 ### <i class="fas fa-map-marker-alt"/> Relativity Studios
 {: .nomargin}
@@ -86,6 +70,31 @@ Mobile video game development with Unity3D + C#
 Published titles:
 : [American Girl World](https://www.youtube.com/watch?v=wFfVz-VXC1U) (iOS)
 : [Barbie™ You Can Be Anything](https://www.youtube.com/watch?v=vl7Hdozl3Cw) (iOS)
+
+## Teaching
+
+### <i class="fas fa-map-marker-alt"/> Teaching at EOI
+{: .nomargin}
+<i class="fas fa-address-card"/> Teacher · <i class="fas fa-business-time"/> <span href="#" class="job-position-time gray"> Apr 2022 - Jul 2022</span>
+{: .job-position}
+---
+A 110 hours video game development course at the Escuela de Organización Industrial, where we developed several minigames to learn about Unity, C#, design patterns and gamefeel.
+
+### <i class="fas fa-map-marker-alt"/> Teaching at ULPGC
+{: .nomargin}
+<i class="fas fa-address-card"/> External teacher · <i class="fas fa-business-time"/> <span href="#" class="job-position-time gray"> Oct 2014 - Jun 2020</span>
+{: .job-position}
+---
+University expert in design and game programming at the University of Las Palmas de Gran Canaria. Subjects taught: design patterns, multiplayer, gamefeel, and development workshops.
+
+### <i class="fas fa-map-marker-alt"/> ACADEVI
+{: .nomargin}
+<i class="fas fa-address-card"/> Mentor in Island Jam · <i class="fas fa-business-time"/> <span href="#" class="job-position-time gray"> Jan 2014 - Dec 2019</span>
+{: .job-position}
+---
+The Island Jam is a videogame development competition organized in Gran Canaria based on the Ludum Dare event. 
+
+As a mentor I help the participants to develop their videogames, supporting them in the code side. In the first editions I also taught videogame development courses in Unity3D at a basic and advanced level.
 
 ## Education
 ### <i class="fas fa-map-marker-alt"/> Universidad de Las Palmas de Gran Canaria
