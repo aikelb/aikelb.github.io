@@ -57,3 +57,4 @@ build-iPhoneSimulator/
 */.DS_Store
 .DS_Store
 Gemfile.lock
+_site
