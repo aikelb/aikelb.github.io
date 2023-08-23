@@ -17,7 +17,7 @@ title: Aitor Lozano
 email: info@aitorlozano.com
 description: >- # this means to ignore newlines until "baseurl:"
   Unity3D developer @ PlayMedusa.
-twitter_username: aike_lb
+twitter_username: aikelb
 github_username: aikelb
 minimal_mistakes_skin: default
 search: true
@@ -63,9 +63,9 @@ author:
     - label: "Website"
       icon: "fas fa-fw fa-link"
       url: "https://aitorlozano.com"
-    - label: "Twitter"
-      icon: "fab fa-fw fa-twitter-square"
-      url: "https://twitter.com/aikesitos"
+    - label: "Bluesky"
+      icon: "fa-solid fa-square"
+      url: "https://bsky.app/profile/aikelb.bsky.social"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/aikelb"
@@ -75,9 +75,9 @@ author:
 
 footer:
   links:
-    - label: "Twitter"
-      icon: "fab fa-fw fa-twitter-square"
-      url: "https://twitter.com/aikesitos"
+    - label: "Bluesky"
+      icon: "fa-solid fa-square"
+      url: "https://bsky.app/profile/aikelb.bsky.social"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/aikelb"
