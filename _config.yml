@@ -64,7 +64,7 @@ author:
       icon: "fas fa-fw fa-link"
       url: "https://aitorlozano.com"
     - label: "Bluesky"
-      icon: "fa-solid fa-square"
+      icon: "fas fa-solid fa-square"
       url: "https://bsky.app/profile/aikelb.bsky.social"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
@@ -76,7 +76,7 @@ author:
 footer:
   links:
     - label: "Bluesky"
-      icon: "fa-solid fa-square"
+      icon: "fas fa-solid fa-square"
       url: "https://bsky.app/profile/aikelb.bsky.social"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
