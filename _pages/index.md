@@ -58,6 +58,7 @@ We offer third party development services while making our own games in our spar
 Video game development with Unity3D + C# and web technologies.
  
 Published titles:
+: [Terra Alia VR](https://www.meta.com/en-gb/experiences/terra-alia-a-multilingual-adventure/7146257325418969/): Language learning RPG with Photon based multiplayer.
 : [Bitponies](https://www.bitponies.com): Blockchain game centered around breedable, collectible and eventually raceable horses.
 
 ### <i class="fas fa-map-marker-alt"/> Relativity Studios
