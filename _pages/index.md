@@ -30,7 +30,7 @@ latest-services:
 I'm a freelance game developer at [PlayMedusa](https://www.playmedusa.com). I'm from the Canary Islands (Spain), and I have a piece of paper saying that I'm a "Computer Science Engineer".
 
 I'm mostly interested in programming, specially anything related with videogames.
-For the lasts 10 years most of my work has been related with Unity3D development, teaching, and eventually, some websites including blockchain and smartcontract development.
+For the lasts 10 years most of my work has been related with Unity3D development, teaching and a few websites. Recently I've working with Unreal and Defold.
 
 [<i class="fas fa-file-download"/> PDF Version](assets/posts/cv.pdf)
 
@@ -106,12 +106,12 @@ As a mentor I help the participants to develop their videogames, supporting them
 
 ### Programming Languages
 * C #
+* Lua
 * JavaScript (React and Node.js)
-* Solidity (Hardhat)
 * Server backend
 
 ### Software
 * Windows, OSX, Linux
-* Unity3D
+* Unity3D, Defold
+* Nvim, Rider
 * Git
-* Rider
