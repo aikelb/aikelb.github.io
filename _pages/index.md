@@ -54,10 +54,8 @@ We offer third party development services while making our own games in our spar
 <i class="fas fa-address-card"/> Lead Developer · <i class="fas fa-business-time"/> <span href="#" class="job-position-time gray"> Jan 2018 - Jan 2020</span>
 {: .job-position}
 ---
-Developed video games using Unity3D + C# and web technologies.
-Photon based multiplayer, HTC Vive and Meta Quest. 
-> Developed video games using Unity3D + C# and web technologies.
-> Photon based multiplayer, HTC Vive and Meta Quest. 
+- Developed video games using Unity3D + C# and web technologies.
+- Photon based multiplayer, HTC Vive and Meta Quest.
  
 Published titles:
 : [Terra Alia VR](https://30parallelgames.com) a multiplayer language learning RPG adventure for [Steam](https://store.steampowered.com/app/1183580/Terra_Alia_The_Language_Discovery_RPG/) and [Meta Quest](https://www.meta.com/en-gb/experiences/terra-alia-a-multilingual-adventure/7146257325418969/).
