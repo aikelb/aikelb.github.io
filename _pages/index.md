@@ -27,7 +27,8 @@ latest-services:
     alt: "Creatures of Aether (Steam port)"
 ---
 
-Freelance game developer at [PlayMedusa](https://www.playmedusa.com) with a decade of experience in Unity3D and a degree in Computer Science Engineering. Passionate about programming, with a focus on videogame development. Also exploring Unreal Engine and Defold, with experience in teaching and web development. Based in the Canary Islands (Spain), I've been working remotely since 2011, with a proven ability to deliver high-quality projects and collaborate effectively with teams across the globe.
+Freelance game developer at [PlayMedusa](https://www.playmedusa.com) with a decade of experience in Unity3D and a degree in Computer Science Engineering. Passionate about programming, with a focus on videogame development. Also exploring Unreal Engine and Defold, with experience in teaching and web development. 
+Based in the Canary Islands (Spain), I've been working remotely since 2011, with a proven ability to deliver high-quality projects and collaborate effectively with teams across the globe.
 
 [<i class="fas fa-file-download"/> PDF Version](assets/posts/cv.pdf)
 
