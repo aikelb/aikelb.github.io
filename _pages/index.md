@@ -88,7 +88,7 @@ Published titles:
 ---
 - Taught university expert in design and game programming
 - Subjects taught: design patterns, multiplayer, gamefeel, and development workshops
-- 
+
 ### <i class="fas fa-map-marker-alt"/> ACADEVI
 {: .nomargin}
 <i class="fas fa-address-card"/> Mentor in Island Jam · <i class="fas fa-business-time"/> <span href="#" class="job-position-time gray"> Jan 2014 - Dec 2019</span>
