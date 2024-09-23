@@ -16,25 +16,22 @@ our-games:
     image_path: /assets/images/oddy-smog.png
     alt: "Oddy Smog’s Misadventure"
 latest-services:
+  - url: https://30parallelgames.com
+    image_path: /assets/images/terra-allia.jpg
+    alt: "Terra Alia"
   - url: https://animalisland.us/
     image_path: /assets/images/aila.jpg
     alt: "Animal Island Learning Adventure"
   - url: https://store.steampowered.com/app/1593750/Creatures_of_Aether/
     image_path: /assets/images/aether.png
     alt: "Creatures of Aether (Steam port)"
-  - url: https://www.campusfad.org/huri-games/
-    image_path: /assets/images/huri.png
-    alt: "HURI - HUman RIghts"
 ---
 
-I'm a freelance game developer at [PlayMedusa](https://www.playmedusa.com). I'm from the Canary Islands (Spain), and I have a piece of paper saying that I'm a "Computer Science Engineer".
-
-I'm mostly interested in programming, specially anything related with videogames.
-For the lasts 10 years most of my work has been related with Unity3D development, teaching and a few websites. Recently I've working with Unreal and Defold.
+Freelance game developer at [PlayMedusa](https://www.playmedusa.com) with a decade of experience in Unity3D and a degree in Computer Science Engineering. Passionate about programming, with a focus on videogame development. Also exploring Unreal Engine and Defold, with experience in teaching and web development. Based in the Canary Islands (Spain), I've been working remotely since 2011, with a proven ability to deliver high-quality projects and collaborate effectively with teams across the globe.
 
 [<i class="fas fa-file-download"/> PDF Version](assets/posts/cv.pdf)
 
-## Experience
+## Software development
 
 ### <i class="fas fa-map-marker-alt"/> PlayMedusa
 {: .nomargin}
@@ -55,10 +52,11 @@ We offer third party development services while making our own games in our spar
 <i class="fas fa-address-card"/> Lead Developer · <i class="fas fa-business-time"/> <span href="#" class="job-position-time gray"> Jan 2018 - Jan 2020</span>
 {: .job-position}
 ---
-Video game development with Unity3D + C# and web technologies.
+- Developed video games using Unity3D + C# and web technologies.
+- Photon based multiplayer, HTC Vive and Meta Quest. 
  
 Published titles:
-: [Terra Alia VR](https://www.meta.com/en-gb/experiences/terra-alia-a-multilingual-adventure/7146257325418969/): Language learning RPG with Photon based multiplayer.
+: [Terra Alia VR](https://30parallelgames.com) a multiplayer language learning RPG adventure for [Steam](https://store.steampowered.com/app/1183580/Terra_Alia_The_Language_Discovery_RPG/) and [Meta Quest](https://www.meta.com/en-gb/experiences/terra-alia-a-multilingual-adventure/7146257325418969/).
 : [Bitponies](https://www.bitponies.com): Blockchain game centered around breedable, collectible and eventually raceable horses.
 
 ### <i class="fas fa-map-marker-alt"/> Relativity Studios
@@ -66,7 +64,8 @@ Published titles:
 <i class="fas fa-address-card"/> Lead Developer · <i class="fas fa-business-time"/> <span href="#" class="job-position-time gray"> Jan 2017 - Dec 2017</span>
 {: .job-position}
 ---
-Mobile video game development with Unity3D + C#
+- Led a remote team of 5 in Spain, developing mobile games with Unity3D + C#.
+- Coordinated with the main studio in Los Angeles, streamlining workflows and ensuring seamless communication
 
 Published titles:
 : [American Girl World](https://www.youtube.com/watch?v=wFfVz-VXC1U) (iOS)
@@ -79,15 +78,17 @@ Published titles:
 <i class="fas fa-address-card"/> Teacher · <i class="fas fa-business-time"/> <span href="#" class="job-position-time gray"> Apr 2022 - Jul 2022</span>
 {: .job-position}
 ---
-A 110 hours video game development course at the Escuela de Organización Industrial, where we developed several minigames to learn about Unity, C#, design patterns and gamefeel.
-
+- Taught a 110-hour video game development course
+- Developed several minigames to learn about Unity, C#, game programming  patterns, and gamefeel
+  
 ### <i class="fas fa-map-marker-alt"/> Teaching at ULPGC
 {: .nomargin}
 <i class="fas fa-address-card"/> External teacher · <i class="fas fa-business-time"/> <span href="#" class="job-position-time gray"> Oct 2014 - Jun 2020</span>
 {: .job-position}
 ---
-University expert in design and game programming at the University of Las Palmas de Gran Canaria. Subjects taught: design patterns, multiplayer, gamefeel, and development workshops.
-
+- Taught university expert in design and game programming
+- Subjects taught: design patterns, multiplayer, gamefeel, and development workshops
+- 
 ### <i class="fas fa-map-marker-alt"/> ACADEVI
 {: .nomargin}
 <i class="fas fa-address-card"/> Mentor in Island Jam · <i class="fas fa-business-time"/> <span href="#" class="job-position-time gray"> Jan 2014 - Dec 2019</span>
@@ -104,15 +105,9 @@ As a mentor I help the participants to develop their videogames, supporting them
 {: .job-position}
 
 ## Skills
-
-### Programming Languages
-* C #
-* Lua
-* JavaScript (React and Node.js)
-* Server backend
-
+### Programming Languages and frameworks
+C#, Lua, JavaScript (Astro, React and Node.js), Solidity (Hardhat)
 ### Software
-* Windows, OSX, Linux
-* Unity3D, Defold
-* Nvim, Rider
-* Git
+Unity3D, Defold, Unreal Engine, Git, Rider, Windows, OSX, Linux
+### Proficent in
+Game development, server backend development, team management
