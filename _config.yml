@@ -58,32 +58,35 @@ plugins:
 author:
   name   : "Aitor Lozano"
   avatar : "/assets/images/bio-photo.jpg"
-  bio    : "Unity3D Developer @ PlayMedusa"
+  bio    : "Game Developer @ PlayMedusa"
   links:
     - label: "Website"
       icon: "fas fa-fw fa-link"
       url: "https://aitorlozano.com"
-    - label: "Bluesky"
-      icon: "fas fa-solid fa-square"
-      url: "https://bsky.app/profile/aikelb.bsky.social"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/aikelb"
+    - label: "Mastodon"
+      icon: "fa-brands fa-mastodon"
+      url: "https://mastodon.gamedev.place/@aike"
+    - label: "Bluesky"
+      icon: "fas fa-solid fa-square"
+      url: "https://bsky.app/profile/aikelb.bsky.social"
 #    - label: "Instagram"
 #      icon: "fab fa-fw fa-instagram"
 #      url: "https://instagram.com/"
 
 footer:
   links:
-    - label: "Bluesky"
-      icon: "fas fa-solid fa-square"
-      url: "https://bsky.app/profile/aikelb.bsky.social"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/aikelb"
-#    - label: "Instagram"
-#      icon: "fab fa-fw fa-instagram"
-#      url: "https://instagram.com/"
+    - label: "Mastodon"
+      icon: "fa-brands fa-mastodon"
+      url: "https://mastodon.gamedev.place/@aike"
+    - label: "Bluesky"
+      icon: "fas fa-solid fa-square"
+      url: "https://bsky.app/profile/aikelb.bsky.social"
 
 defaults:
   # _posts
