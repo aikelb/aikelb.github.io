@@ -18,7 +18,7 @@
         {% for item in navigation[page.lang] %}
         {%- set url = item.url | locale_url %}
         <li>
-            <a 
+            <a class="transition"
                 href="{{ url }}"
                 {% if page.url === url %}aria-current="page"{% endif %}
             >
