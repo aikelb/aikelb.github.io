@@ -55,6 +55,7 @@
     "lodash.get": "^4.4.2",
     "markdown-it": "^14.1.0",
     "markdown-it-anchor": "^9.2.0",
+    "markdown-it-attrs": "^4.3.1",
     "markdown-it-image-figures": "^2.1.1",
     "markdown-it-ins": "^4.0.0",
     "markdown-it-mark": "^4.0.0",
