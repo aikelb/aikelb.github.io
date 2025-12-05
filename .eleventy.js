@@ -27,7 +27,7 @@ import pluginDrafts from './elva/plugins/drafts.js';
 import pluginDescriptions from './elva/plugins/seodescriptions.js';
 import pluginCSS from './elva/plugins/css.js';
 import pluginJS from './elva/plugins/js.js';
-
+import pluginSVG from './elva/plugins/svg.js';
 
 // Plugin Configs
 import pluginEmbedEverythingConfig from './elva/config/embeds.js';
@@ -46,6 +46,7 @@ import { formatDate } from './elva/filters/dates.js';
 import filterPrivateTags from './elva/filters/filterprivatetags.js';
 import languageFilter from './elva/filters/language.js';
 import fixLocaleLinks from './elva/filters/fixlocalelinks.js';
+import defaultLocaleURL from './elva/filters/defaultlocaleurl.js';
 import mimetype from './elva/filters/mimetype.js';
 import random from './elva/filters/random.js';
 import readingTime from './elva/filters/readingtime.js';
@@ -119,12 +120,13 @@ export default async function(eleventyConfig) {
 
     eleventyConfig.addPlugin(pluginCSS);
     eleventyConfig.addPlugin(pluginJS);
+    eleventyConfig.addPlugin(pluginSVG);
     await eleventyConfig.addPlugin(pluginRSS);
     eleventyConfig.addPlugin(pluginDrafts);
     eleventyConfig.addPlugin(pluginDescriptions);
     eleventyConfig.addPlugin(EleventyHtmlBasePlugin);
     eleventyConfig.addPlugin(EleventyRenderPlugin);
-    eleventyConfig.addPlugin(EleventyI18nPlugin, { defaultLanguage: 'en' });
+    eleventyConfig.addPlugin(EleventyI18nPlugin, { defaultLanguage: 'en', errorMode: 'never'});
     eleventyConfig.addPlugin(IdAttributePlugin);
     eleventyConfig.addPlugin(pluginSyntaxHighlight);
     eleventyConfig.addPlugin(pluginEmbedEverything, pluginEmbedEverythingConfig);
@@ -149,6 +151,7 @@ export default async function(eleventyConfig) {
     eleventyConfig.addFilter('formatDate', formatDate);
     eleventyConfig.addFilter('languageFilter', languageFilter);
     eleventyConfig.addFilter('fix_locale_links', fixLocaleLinks);
+    eleventyConfig.addFilter('default_locale_url', defaultLocaleURL);
     eleventyConfig.addFilter('mimetype', mimetype);
     eleventyConfig.addFilter('random', random);
     eleventyConfig.addFilter('readingTime', readingTime);

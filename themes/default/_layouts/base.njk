@@ -38,12 +38,10 @@
         <link rel="apple-touch-icon" href="{{ "/assets/img/icon-180.png" | htmlBaseUrl(settings.url) | cdnify }}">
 
         <!-- styles -->
-		<style type="text/css">{{googlefonts|safe}}</style>
         {% css %}{% include '../css/reset.css' %}{% endcss -%}
         {% css %}{% include '../css/variables.css' %}{% endcss -%}
         {% css %}{% include '../css/styles.css' %}{% endcss -%}
-        {% css %}{% include '../css/unocss.css' %}{% endcss -%}
-        {% css %}{% include '../css/extend.css' %}{% endcss -%}
+        {% css 'defer' %}{% include '../css/defer.css' %}{% endcss -%}
         {% css 'defer' %}{% include '../css/components/syntax.css' %}{% endcss -%}
 	    <style>{% getBundle 'css' %}</style>
 	    <link rel="stylesheet" href="{% getBundleFileUrl 'css', 'defer' %}?v={% version %}" fetchpriority="low">
