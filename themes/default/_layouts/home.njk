@@ -1,8 +1,12 @@
 ---
 layout: base
 ---
-<div class="posts-list">
-    {% set postslist = collections._posts | languageFilter | reverse %}
-    {% include "posts.njk" %}
+
+<div class="site-intro">
+
+    {% svg "logo.svg", { class: "logo", title: 'meta.title' | translate, ariaLabel: 'meta.title' | translate, width: 541, height: 242 } %}
+
     {{ content | safe }}
+
 </div>
+

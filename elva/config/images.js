@@ -1,16 +1,17 @@
 import fs from "node:fs";
+import path from "node:path";
 import settings from '../../content/_data/settings.json' with { type: 'json' }
 
 export default (eleventyConfig) => {
     const cdnify = (eleventyConfig.globalData.settings.isProduction || eleventyConfig.globalData.settings.isStaging) && settings.cdn;
-    let outputdir = { outputDir: './dist/assets/img/' }
+    let outputdir = { outputDir: path.join(eleventyConfig.directories.output, '/assets/img/') }
 
     // cache images for faster builds
     if (process.env.ELEVENTY_RUN_MODE === 'build' && !cdnify) {
         outputdir.outputDir = '.cache/@11ty/img/';
 
         eleventyConfig.on('eleventy.after', () => {
-            fs.cpSync('.cache/@11ty/img/', './dist/assets/img/', { recursive: true });
+            fs.cpSync('.cache/@11ty/img/', path.join(eleventyConfig.directories.output, '/assets/img/'), { recursive: true });
         });
     }
 
@@ -24,7 +25,8 @@ export default (eleventyConfig) => {
 
         // generate CDN urls when turned on
         urlFormat: (cdnify) ? function({src, width}) {
-            return `https://i0.wp.com/${eleventyConfig.globalData.settings.url.replace(/^https?:\/\//, '')}/${src.replace('content/', '')}?w=${width}&quality=85&strip=info`;
+            const quality = (src.endsWith('.gif')) ? '100' : '85';
+            return `https://i0.wp.com/${eleventyConfig.globalData.settings.url.replace(/^https?:\/\//, '')}/${src.replace('content/', '')}?w=${width}&quality=${quality}&strip=info`;
         } : undefined,
 
         // sharp options: https://www.11ty.dev/docs/plugins/image/#advanced-control-of-sharp-image-processor
