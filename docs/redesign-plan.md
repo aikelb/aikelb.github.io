@@ -1,13 +1,43 @@
 # Aitor Lozano — Website Redesign Plan (LLM-Optimized Spec v4.0)
 
-> This document is a complete, unambiguous technical specification designed for code-generating LLMs (e.g., DeepSeek) to implement the redesign of a personal portfolio website. 
-> 
+> **Status: Phase 1 complete ✅** — Homepage fully implemented. Content pages pending.
+
 > **The Pivot:** The aesthetic shifts from a developer-only terminal theme to an **all-public friendly, highly readable modern CV and Project Hub**. It combines a clean professional layout (ideal for giving talks and presenting your CV) with warm, human touches (cats, coffee, and becoming a dad by the end of the year) while maintaining the visual excellence of a premium portfolio.
 
 ---
 
-## 0. Technical Goal & Directory Mapping
-Reconstruct the homepage layout, design tokens, and style behaviors across the following files:
+## 0. Implementation Status
+
+### ✅ Phase 1: Foundation — COMPLETE
+
+| File | Status |
+|---|---|
+| `themes/default/css/variables.css` | ✅ Tokyo Night palette, bright text (#f7f8fc), blue accent (#7aa2f7) |
+| `themes/default/css/redesign.css` | ✅ Full layout: .page-container, .content-columns, .content-single, hero, all components |
+| `themes/default/_layouts/home.njk` | ✅ All 7 sections: Hero, About, Now, Work, Teaching, Skills, Highlights, Stats Bento |
+| `themes/default/_layouts/base.njk` | ✅ Inter + JetBrains Mono via Google Fonts |
+| `content/assets/img/cv.png` | ✅ Profile photo loaded |
+| `content/assets/img/cats.jpg` | ✅ Cat photo in bento tile |
+| **Canvas** | ✅ Ambient Aurora — morphing Tokyo Night metaballs, full viewport |
+| **Scroll reveals** | ✅ IntersectionObserver, fade-up, 300ms |
+| **Work hover** | ✅ Padding-shift, no size change |
+| **Navigation** | ✅ Sticky, backdrop blur, monospace logo |
+| **Footer** | ✅ Social links, copyright |
+| **Mobile** | ✅ Responsive at 375/768/900/1280px, no horizontal scroll |
+| **Accessibility** | ✅ prefers-reduced-motion, skip link, focus rings |
+
+### ❌ Remaining Phases
+
+| Phase | What | Status |
+|---|---|---|
+| **Phase 2: Content Pages** | `/writing/` index, individual post layout, `/teaching/` page | ❌ Not started |
+| **Phase 3: Content Migration** | Replace elva demo posts with 14 real posts from aitorlozano.com | ❌ Not started |
+| **Phase 4: Polish** | OG images, RSS feed verification, footer `$ exit 0`, final spacing | ⚠️ Partial |
+
+---
+
+## Technical Goal & Directory Mapping
+The following files form the core of the redesign:
 1. **Design Tokens:** [variables.css](file:///Users/aike/git/elva/themes/default/css/variables.css)
 2. **Component Styles:** [redesign.css](file:///Users/aike/git/elva/themes/default/css/redesign.css)
 3. **Nunjucks Template:** [home.njk](file:///Users/aike/git/elva/themes/default/_layouts/home.njk)
@@ -1033,17 +1063,41 @@ body {
 
 ---
 
-## 5. Checklist of Implementation Action Steps
+## 5. Implementation Checklist
 
-Follow these validation guidelines precisely to complete the redesign execution:
+### Phase 1: Foundation ✅ COMPLETE
 
-- [ ] **Import Fonts:** Confirm Google Fonts (Inter + JetBrains Mono) are loaded in `base.njk`.
-- [ ] **Reset Variables:** Replace code lines in `themes/default/css/variables.css` using the token spec.
-- [ ] **Restructure Template:** Replace Nunjucks markup inside `themes/default/_layouts/home.njk` to structure layout grids and load the Ambient Aurora canvas animation script.
-- [ ] **Apply Styles:** Replace all CSS rules in `themes/default/css/redesign.css` to govern layout behaviors.
-- [ ] **Set Profile Avatar Image:** Place the file `cv.png` inside the directory `content/assets/img/` so that it passes through compilation correctly and loads in the hero.
-- [ ] **Verification:** Run `npm run build` or inspect on `localhost:8080` to verify:
-  1. No horizontal scrollbars exist on viewport scales between `375px` and `1920px`.
-  2. Spacing alignment between `.content-columns` sections matches the centered single-column width constraints.
-  3. Tokyo Night Ambient Aurora canvas renders soft, slowly morphing colored glow paths reacting gently to mouse movement.
-  4. Padding shift hover on `Work` rows does not cause structural layout offsets.
+- [x] **Import Fonts:** Inter + JetBrains Mono loaded in `base.njk`.
+- [x] **Reset Variables:** Tokyo Night palette applied in `variables.css`.
+- [x] **Restructure Template:** Homepage in `home.njk` with `.page-container`, `.content-columns`, `.content-single`.
+- [x] **Apply Styles:** All CSS rules in `redesign.css` governing layout, hero, bento, components.
+- [x] **Profile Avatar:** `cv.png` placed in `content/assets/img/`.
+- [x] **Ambient Aurora:** Canvas renders morphing Tokyo Night metaballs, full viewport width.
+- [x] **Verification:**
+  1. ✅ No horizontal scroll at 375–1920px.
+  2. ✅ Two-column sections match single-column width.
+  3. ✅ Aurora blobs morph and react to mouse.
+  4. ✅ Padding-shift hover on Work rows — no layout offset.
+
+### Phase 2: Content Pages ❌ PENDING
+
+- [ ] **Writing index** (`/writing/`): Grid/list of all posts with new design styling.
+- [ ] **Post layout** (`themes/default/_layouts/post.njk`): Tokyo Night styled individual post template.
+- [ ] **Teaching page** (`/teaching/`): ULPGC slides listing, EOI, ACADEVI, credentials.
+- [ ] **Post data:** Replace demo frontmatter (title, description, tags) with real content.
+
+### Phase 3: Content Migration ❌ PENDING
+
+- [ ] Replace elva demo posts with 14 real posts from aitorlozano.com.
+- [ ] Migrate post content: FoundryVTT, Unity streaming, NGINX, EasyEngine, Intellisense, VPN, etc.
+- [ ] Update post frontmatter: tags, descriptions, dates.
+
+### Phase 4: Polish ⚠️ PARTIAL
+
+- [x] Mobile responsive (375px, 480px, 768px, 900px+).
+- [x] Reduced motion support.
+- [x] Scroll reveals + padding-shift hover.
+- [ ] OG image generation (already in elva, needs verification).
+- [ ] RSS feed verification (already in elva).
+- [ ] Footer `$ exit 0` line (removed during simplification — re-add as terminal signature).
+- [ ] Final spacing and typography review across all breakpoints.
