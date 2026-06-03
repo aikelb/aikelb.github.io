@@ -1,23 +1,12 @@
-/* layer: cssvar-property */
-@property --un-bg-opacity{syntax:"<percentage>";inherits:false;initial-value:100%;}
-@property --un-scale-x{syntax:"*";inherits:false;initial-value:1;}
-@property --un-scale-y{syntax:"*";inherits:false;initial-value:1;}
-@property --un-scale-z{syntax:"*";inherits:false;initial-value:1;}
 /* layer: theme */
 :root, :host {
 --spacing: 0.25rem;
---defaults-transition-timingFunction: cubic-bezier(0.4, 0, 0.2, 1);
---defaults-transition-duration: 150ms;
 --font-sans: ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
 --font-mono: ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
---defaults-font-family: var(--font-sans);
---defaults-font-featureSettings: var(--font-sans--font-feature-settings);
---defaults-font-variationSettings: var(--font-sans--font-variation-settings);
---defaults-monoFont-family: var(--font-mono);
---defaults-monoFont-featureSettings: var(--font-mono--font-feature-settings);
---defaults-monoFont-variationSettings: var(--font-mono--font-variation-settings);
+--default-font-family: var(--font-sans);
+--default-monoFont-family: var(--font-mono);
 }
-/* layer: preflights */
+/* layer: base */
 /*
   1. Prevent padding and border from affecting element width. (https://github.com/mozdevs/cssremedy/issues/4)
   2. Remove default margins and padding
@@ -51,7 +40,7 @@ html,
   -webkit-text-size-adjust: 100%; /* 2 */
   tab-size: 4; /* 3 */
   font-family: var(
-    --defaults-font-family,
+    --default-font-family,
     ui-sans-serif,
     system-ui,
     sans-serif,
@@ -60,17 +49,9 @@ html,
     'Segoe UI Symbol',
     'Noto Color Emoji'
   ); /* 4 */
-  font-feature-settings: var(--defaults-font-featureSettings, normal); /* 5 */
-  font-variation-settings: var(--defaults-font-variationSettings, normal); /* 6 */
+  font-feature-settings: var(--default-font-featureSettings, normal); /* 5 */
+  font-variation-settings: var(--default-font-variationSettings, normal); /* 6 */
   -webkit-tap-highlight-color: transparent; /* 7 */
-}
-
-/*
-  Inherit line-height from `html` so users can set them as a class directly on the `html` element.
-*/
-
-body {
-  line-height: inherit;
 }
 
 /*
@@ -139,7 +120,7 @@ kbd,
 samp,
 pre {
   font-family: var(
-    --defaults-monoFont-family,
+    --default-monoFont-family,
     ui-monospace,
     SFMono-Regular,
     Menlo,
@@ -149,8 +130,8 @@ pre {
     'Courier New',
     monospace
   ); /* 1 */
-  font-feature-settings: var(--defaults-monoFont-featureSettings, normal); /* 2 */
-  font-variation-settings: var(--defaults-monoFont-variationSettings, normal); /* 3 */
+  font-feature-settings: var(--default-monoFont-featureSettings, normal); /* 2 */
+  font-variation-settings: var(--default-monoFont-variationSettings, normal); /* 3 */
   font-size: 1em; /* 4 */
 }
 
@@ -304,13 +285,23 @@ textarea,
 }
 
 /*
-  1. Reset the default placeholder opacity in Firefox. (https://github.com/tailwindlabs/tailwindcss/issues/3300)
-  2. Set the default placeholder color to a semi-transparent version of the current text color.
+  Reset the default placeholder opacity in Firefox. (https://github.com/tailwindlabs/tailwindcss/issues/3300)
 */
 
 ::placeholder {
-  opacity: 1; /* 1 */
-  color: color-mix(in oklab, currentColor 50%, transparent); /* 2 */
+  opacity: 1;
+}
+
+/*
+  Set the default placeholder color to a semi-transparent version of the current text color in browsers that do not
+  crash when using `color-mix(…)` with `currentcolor`. (https://github.com/tailwindlabs/tailwindcss/issues/17194)
+*/
+
+@supports (not (-webkit-appearance: -apple-pay-button)) /* Not Safari */ or
+  (contain-intrinsic-size: 1px) /* Safari 17+ */ {
+  ::placeholder {
+    color: color-mix(in oklab, currentcolor 50%, transparent);
+  }
 }
 
 /*
@@ -368,6 +359,14 @@ textarea {
 }
 
 /*
+  Center dropdown marker shown on inputs with paired `<datalist>`s in Chrome. (https://github.com/tailwindlabs/tailwindcss/issues/18499)
+*/
+
+::-webkit-calendar-picker-indicator {
+  line-height: 1;
+}
+
+/*
   Remove the additional `:invalid` styles in Firefox. (https://github.com/mozilla/gecko-dev/blob/2f9eacd9d3d995c937b4251a5557d95d494c9be1/layout/style/res/forms.css#L728-L737)
 */
 
@@ -398,7 +397,7 @@ input:where([type='button'], [type='reset'], [type='submit']),
   Make elements with the HTML hidden attribute stay hidden by default.
 */
 
-[hidden]:where(:not([hidden='until-found'])) {
+[hidden]:where(:not([hidden~='until-found'])) {
   display: none !important;
 }
 /* layer: default */
@@ -407,25 +406,8 @@ input:where([type='button'], [type='reset'], [type='submit']),
 .m243\.853{margin:calc(var(--spacing) * 243.853);}
 .m265\.817{margin:calc(var(--spacing) * 265.817);}
 .m466\.712{margin:calc(var(--spacing) * 466.712);}
-.mt-8{margin-top:calc(var(--spacing) * 8);}
+.me{margin-inline-end:calc(var(--spacing) * 4);}
 .b{border-width:1px;}
-.rounded-\[12px\]{border-radius:12px;}
-.bg-\[\#465e5f\]{background-color:color-mix(in oklch, #465e5f var(--un-bg-opacity), transparent) /* #465e5f */;}
-.grid{display:grid;}
-.h-full{height:100%;}
-.max-w-full{max-width:100%;}
-.w-\[35\%\]{width:35%;}
-.w-full{width:100%;}
-.aspect-\[122\/119\]{aspect-ratio:122/119;}
-.aspect-\[346\/300\]{aspect-ratio:346/300;}
 .inline{display:inline;}
-.hover\:scale-\[1\.05\]:hover{--un-scale-x:1.05;--un-scale-y:1.05;scale:var(--un-scale-x) var(--un-scale-y);}
-.transition{transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,--un-gradient-from,--un-gradient-via,--un-gradient-to,opacity,box-shadow,transform,translate,scale,rotate,filter,-webkit-backdrop-filter,backdrop-filter;transition-timing-function:var(--un-ease, var(--defaults-transition-timingFunction));transition-duration:var(--un-duration, var(--defaults-transition-duration));}
-.right-0{right:calc(var(--spacing) * 0);}
-.top-0{top:calc(var(--spacing) * 0);}
-.justify-self-end{justify-self:end;}
-.absolute{position:absolute;}
 .relative{position:relative;}
-.object-cover{object-fit:cover;}
 .filter{filter:var(--un-blur,) var(--un-brightness,) var(--un-contrast,) var(--un-grayscale,) var(--un-hue-rotate,) var(--un-invert,) var(--un-saturate,) var(--un-sepia,) var(--un-drop-shadow,);}
-.clip-path-\[url\(\#preview-two-clip-path\)\]{clip-path:url(#preview-two-clip-path);}
