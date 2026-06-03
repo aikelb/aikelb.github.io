@@ -76,17 +76,26 @@ a:hover {
 
 .navigation-menu a {
     color: var(--text-secondary);
-    font-size: var(--step--1);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
+    font-size: var(--step--2);
+    font-family: var(--font-mono);
+    letter-spacing: 0.04em;
     text-decoration: none;
-    transition: color var(--transition-fast);
-    padding: var(--space-2xs) 0;
+    padding: var(--space-2xs) var(--space-s);
+    border-radius: 100px;
+    background: rgba(255, 255, 255, 0.04);
+    transition: background-color 0.2s ease, color 0.2s ease;
+    display: inline-flex;
+    align-items: center;
 }
 
-.navigation-menu a:hover,
-.navigation-menu a[aria-current="page"] {
+.navigation-menu a:hover {
+    background: rgba(255, 255, 255, 0.1);
     color: var(--text-primary);
+}
+
+.navigation-menu a[aria-current="page"] {
+    background: rgba(88, 166, 255, 0.15);
+    color: var(--accent);
 }
 
 .site-logo {
@@ -129,9 +138,13 @@ a:hover {
     font-family: var(--font-mono);
     font-size: var(--step--2);
     color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin-bottom: var(--space-s);
+    letter-spacing: 0.06em;
+    margin-bottom: var(--space-xs);
+    background: var(--bg-elevated);
+    display: inline-block;
+    padding: var(--space-3xs) var(--space-s);
+    border-radius: 100px;
+    border: 1px solid var(--border);
 }
 
 .section-title {
@@ -164,7 +177,7 @@ a:hover {
     width: 100%;
     height: 100%;
     z-index: 0;
-    opacity: 0.4;
+    opacity: 0.55;
 }
 
 .hero-content {
@@ -260,16 +273,16 @@ a:hover {
 .now-card {
     background: var(--bg-surface);
     border: 1px solid var(--border);
-    border-radius: var(--border-radius);
+    border-radius: 16px;
     padding: var(--space-m);
     display: flex;
     align-items: flex-start;
     gap: var(--space-s);
-    transition: border-color var(--transition-fast);
+    transition: border-color 0.2s ease;
 }
 
 .now-card:hover {
-    border-color: var(--border-hover);
+    border-color: rgba(88, 166, 255, 0.2);
 }
 
 .now-icon {
@@ -311,25 +324,22 @@ a:hover {
 .work-card {
     background: var(--bg-surface);
     border: 1px solid var(--border);
-    border-radius: var(--border-radius);
+    border-radius: 16px;
     padding: var(--space-m);
-    transition: all var(--transition-base);
+    transition: border-color 0.2s ease;
     position: relative;
 }
 
 .work-card:hover {
-    border-color: var(--border-hover);
-    transform: translateY(-2px);
-    box-shadow: 0 0 0 1px var(--accent-glow);
+    border-color: rgba(88, 166, 255, 0.25);
 }
 
 .work-card--current {
-    border-color: var(--accent-muted);
+    border-color: rgba(88, 166, 255, 0.25);
 }
 
 .work-card--current:hover {
-    border-color: var(--accent);
-    box-shadow: 0 0 0 1px var(--accent-glow);
+    border-color: rgba(88, 166, 255, 0.5);
 }
 
 .work-company {
@@ -517,12 +527,13 @@ a:hover {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: var(--space-m);
+    grid-auto-flow: dense;
 }
 
 .bento-cell {
     background: var(--bg-surface);
     border: 1px solid var(--border);
-    border-radius: var(--border-radius);
+    border-radius: 16px;
     padding: var(--space-m);
     display: flex;
     flex-direction: column;
@@ -530,15 +541,21 @@ a:hover {
     align-items: center;
     text-align: center;
     gap: var(--space-3xs);
-    transition: border-color var(--transition-fast);
+    transition: border-color 0.2s ease;
+    position: relative;
+    overflow: hidden;
 }
 
 .bento-cell:hover {
-    border-color: var(--border-hover);
+    border-color: rgba(88, 166, 255, 0.3);
+}
+
+.bento-cell--tall {
+    grid-row: span 2;
 }
 
 .bento-cell--wide {
-    grid-column: span 3;
+    grid-column: span 2;
     flex-direction: row;
     gap: var(--space-m);
     justify-content: center;
@@ -546,6 +563,7 @@ a:hover {
 }
 
 .bento-number {
+    font-family: var(--font-mono);
     font-size: var(--step-3);
     font-weight: 700;
     color: var(--accent);
@@ -553,10 +571,11 @@ a:hover {
 }
 
 .bento-label {
-    font-size: var(--step--2);
+    font-family: var(--font-mono);
+    font-size: 10px;
     color: var(--text-muted);
     text-transform: uppercase;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.08em;
 }
 
 .bento-text {
