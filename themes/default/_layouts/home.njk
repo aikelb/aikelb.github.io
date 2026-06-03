@@ -6,7 +6,7 @@ layout: base
 <section class="hero">
     <canvas class="hero-canvas" id="hero-canvas" aria-hidden="true"></canvas>
     <div class="hero-content">
-        <img class="hero-avatar" src="/assets/img/avatar.jpg" alt="Aitor Lozano" width="88" height="88" loading="eager" eleventy:ignore>
+        <img class="hero-avatar" src="/assets/img/cats.jpg" alt="Marvel &amp; Haru" width="100" height="100" loading="eager" eleventy:ignore>
         <h1 class="hero-name">Aitor Lozano</h1>
         <p class="hero-tagline">Game Developer &amp; Software Engineer</p>
         <p class="hero-sub">14+ years building games, tools, and AI</p>
@@ -24,11 +24,13 @@ layout: base
                 Bluesky
             </a>
         </div>
-        <p class="hero-prompt"><span>aitor@lozano</span>:~$<span class="hero-cursor">█</span></p>
+        <p class="hero-prompt"><span>aitor@lozano</span>:~$</p>
     </div>
 </section>
 
-<!-- About -->
+<!-- About + Now (two-column on desktop) -->
+<div class="content-columns">
+
 <section class="section anim-reveal" id="about">
     <p class="section-prompt">$ about</p>
     <hr class="section-divider" aria-hidden="true">
@@ -39,7 +41,6 @@ layout: base
     </div>
 </section>
 
-<!-- Now -->
 <section class="section anim-reveal" id="now">
     <p class="section-prompt">$ now</p>
     <hr class="section-divider" aria-hidden="true">
@@ -59,15 +60,24 @@ layout: base
             </div>
         </li>
         <li class="now-item">
-            <span class="now-icon">🎮</span>
+            <span class="now-icon">☕</span>
             <div>
-                <p class="now-label">Playing</p>
-                <p class="now-value">Things I enjoy when I'm not coding</p>
+                <p class="now-label">Fueled by</p>
+                <p class="now-value now-coffee">Coffee, always</p>
+            </div>
+        </li>
+        <li class="now-item">
+            <span class="now-icon">🐾</span>
+            <div>
+                <p class="now-label">Compañía</p>
+                <p class="now-value">Marvel &amp; Haru</p>
             </div>
         </li>
     </ul>
     <p class="now-date">Last updated: June 2026</p>
 </section>
+
+</div>
 
 <!-- Work -->
 <section class="section anim-reveal" id="work">
@@ -113,7 +123,9 @@ layout: base
     </div>
 </section>
 
-<!-- Teaching -->
+<!-- Teaching + Skills (two-column on desktop) -->
+<div class="content-columns">
+
 <section class="section anim-reveal" id="teaching">
     <p class="section-prompt">$ teaching</p>
     <hr class="section-divider" aria-hidden="true">
@@ -147,7 +159,6 @@ layout: base
     <p class="teaching-cred">🎓 Master's in Teacher Training for Secondary Education (2024 – 2025)</p>
 </section>
 
-<!-- Skills -->
 <section class="section anim-reveal" id="skills">
     <p class="section-prompt">$ skills</p>
     <hr class="section-divider" aria-hidden="true">
@@ -171,6 +182,8 @@ layout: base
     </div>
 </section>
 
+</div>
+
 <!-- Writing -->
 <section class="section anim-reveal" id="writing">
     <p class="section-prompt">$ writing</p>
@@ -187,29 +200,38 @@ layout: base
     <a href="/writing/" class="posts-more">→ all posts ({{ collections._posts.length }})</a>
 </section>
 
-<!-- Stats -->
+<!-- Stats Bento -->
 <section class="section anim-reveal" id="stats">
     <p class="section-prompt">$ stats</p>
     <hr class="section-divider" aria-hidden="true">
-    <div class="stats-row">
-        <div class="stat-item">
-            <span class="stat-number">14+</span>
-            <span class="stat-label">years coding</span>
+    <div class="bento-grid">
+        <div class="bento-cell">
+            <span class="bento-number">14+</span>
+            <span class="bento-label">years coding</span>
         </div>
-        <div class="stat-item">
-            <span class="stat-number">80+</span>
-            <span class="stat-label">games published</span>
+        <div class="bento-cell">
+            <span class="bento-number">80+</span>
+            <span class="bento-label">games published</span>
         </div>
-        <div class="stat-item">
-            <span class="stat-number">9</span>
-            <span class="stat-label">slide decks</span>
+        <div class="bento-cell bento-cell--cat bento-cell--tall">
+            <img src="/assets/img/cats.jpg" alt="Marvel &amp; Haru" loading="lazy" eleventy:ignore>
         </div>
-        <div class="stat-item">
-            <span class="stat-number">14</span>
-            <span class="stat-label">posts written</span>
+        <div class="bento-cell">
+            <span class="bento-number">9</span>
+            <span class="bento-label">slide decks</span>
+        </div>
+        <div class="bento-cell">
+            <span class="bento-number">14</span>
+            <span class="bento-label">posts written</span>
+        </div>
+        <div class="bento-cell">
+            <span class="bento-number">2011</span>
+            <span class="bento-label">remote since</span>
+        </div>
+        <div class="bento-cell bento-cell--tall">
+            <span class="bento-text">Based in the Canary Islands 🇮🇨<br><br>10M+ downloads shipped<br>6 roles across games, AI &amp; teaching</span>
         </div>
     </div>
-    <p class="stats-sub">Remote since 2011 · Canary Islands 🇮🇨 · 10M+ downloads shipped</p>
 </section>
 
 <!-- Floating constellation -->
@@ -228,95 +250,92 @@ layout: base
     }
 
     function createStars() {
-        var count = Math.min(90, Math.floor(canvas.width / 12));
+        var count = Math.min(70, Math.floor(canvas.width / 15));
         stars = [];
         for (var i = 0; i < count; i++) {
             var baseX = Math.random();
             var baseY = Math.random();
             stars.push({
-                bx: baseX,       // base position (normalized 0-1)
+                bx: baseX,
                 by: baseY,
-                ox: (Math.random() - 0.5) * 0.015,  // orbit speed x
-                oy: (Math.random() - 0.5) * 0.015,  // orbit speed y
-                phase: Math.random() * Math.PI * 2,  // orbit phase offset
-                radius: Math.random() * 0.008 + 0.002, // orbit radius (normalized)
-                size: Math.random() < 0.12 ? (Math.random() * 1.5 + 1.5) : (Math.random() * 1 + 0.4), // few bright, most dim
-                brightness: Math.random() * 0.3 + 0.2,
-                pulseSpeed: Math.random() * 0.015 + 0.005,
-                hue: Math.random() < 0.2 ? 'cyan' : 'blue', // occasional cyan accent
+                ox: (Math.random() - 0.5) * 0.012,
+                oy: (Math.random() - 0.5) * 0.012,
+                phase: Math.random() * Math.PI * 2,
+                radius: Math.random() * 0.006 + 0.0015,
+                size: Math.random() < 0.15 ? (Math.random() * 1.5 + 1.5) : (Math.random() * 0.8 + 0.3),
+                brightness: Math.random() * 0.25 + 0.15,
+                pulseSpeed: Math.random() * 0.012 + 0.003,
+                hue: Math.random() < 0.25 ? 'warm' : (Math.random() < 0.3 ? 'cyan' : 'blue'),
             });
         }
     }
 
     function draw() {
-        time += 0.008;
+        time += 0.006;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         var w = canvas.width;
         var h = canvas.height;
 
-        // Update and draw stars
         for (var i = 0; i < stars.length; i++) {
             var s = stars[i];
-            // Orbital motion around base position
-            var angle = time * 0.5 + s.phase;
-            var ox = Math.cos(angle * s.ox * 30) * s.radius;
-            var oy = Math.sin(angle * s.oy * 30) * s.radius;
+            var angle = time * 0.4 + s.phase;
+            var ox = Math.cos(angle * s.ox * 25) * s.radius;
+            var oy = Math.sin(angle * s.oy * 25) * s.radius;
             var x = (s.bx + ox) * w;
             var y = (s.by + oy) * h;
 
-            // Slow drift of base position
-            s.bx += s.ox * 0.0003;
-            s.by += s.oy * 0.0003;
+            s.bx += s.ox * 0.0002;
+            s.by += s.oy * 0.0002;
             if (s.bx > 1.05) s.bx = -0.05;
             if (s.bx < -0.05) s.bx = 1.05;
             if (s.by > 1.05) s.by = -0.05;
             if (s.by < -0.05) s.by = 1.05;
 
-            // Pulsing brightness
-            var pulse = Math.sin(time * s.pulseSpeed * 20) * 0.2 + 0.8;
+            var pulse = Math.sin(time * s.pulseSpeed * 18) * 0.2 + 0.8;
             var alpha = s.brightness * pulse;
 
-            // Glow
+            var color;
+            if (s.hue === 'warm') color = '196, 149, 106';
+            else if (s.hue === 'cyan') color = '125, 207, 255';
+            else color = '196, 149, 106';
+
             var gradient = ctx.createRadialGradient(x, y, 0, x, y, s.size * 3);
-            var color = s.hue === 'cyan' ? '125, 207, 255' : '122, 162, 247';
-            gradient.addColorStop(0, 'rgba(' + color + ', ' + (alpha * 1.2) + ')');
-            gradient.addColorStop(0.5, 'rgba(' + color + ', ' + (alpha * 0.3) + ')');
+            gradient.addColorStop(0, 'rgba(' + color + ', ' + (alpha * 1.1) + ')');
+            gradient.addColorStop(0.5, 'rgba(' + color + ', ' + (alpha * 0.25) + ')');
             gradient.addColorStop(1, 'rgba(' + color + ', 0)');
             ctx.beginPath();
             ctx.arc(x, y, s.size * 3, 0, Math.PI * 2);
             ctx.fillStyle = gradient;
             ctx.fill();
 
-            // Core dot
             ctx.beginPath();
-            ctx.arc(x, y, s.size * 0.4, 0, Math.PI * 2);
-            ctx.fillStyle = 'rgba(' + color + ', ' + Math.min(alpha * 1.5, 0.8) + ')';
+            ctx.arc(x, y, s.size * 0.35, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(' + color + ', ' + Math.min(alpha * 1.4, 0.7) + ')';
             ctx.fill();
         }
 
-        // Draw connections between nearby stars
         for (var i = 0; i < stars.length; i++) {
             var s1 = stars[i];
-            var x1 = (s1.bx + Math.cos(time * 0.5 + s1.phase) * s1.radius) * w;
-            var y1 = (s1.by + Math.sin(time * 0.5 + s1.phase) * s1.radius) * h;
+            var x1 = (s1.bx + Math.cos(time * 0.4 + s1.phase) * s1.radius) * w;
+            var y1 = (s1.by + Math.sin(time * 0.4 + s1.phase) * s1.radius) * h;
 
             for (var j = i + 1; j < stars.length; j++) {
                 var s2 = stars[j];
-                var x2 = (s2.bx + Math.cos(time * 0.5 + s2.phase) * s2.radius) * w;
-                var y2 = (s2.by + Math.sin(time * 0.5 + s2.phase) * s2.radius) * h;
+                var x2 = (s2.bx + Math.cos(time * 0.4 + s2.phase) * s2.radius) * w;
+                var y2 = (s2.by + Math.sin(time * 0.4 + s2.phase) * s2.radius) * h;
 
                 var dx = x1 - x2;
                 var dy = y1 - y2;
                 var dist = Math.sqrt(dx * dx + dy * dy);
-                var maxDist = 150;
+                var maxDist = 140;
 
                 if (dist < maxDist) {
-                    var alpha = 0.12 * (1 - dist / maxDist);
+                    var alpha = 0.1 * (1 - dist / maxDist);
                     ctx.beginPath();
                     ctx.moveTo(x1, y1);
                     ctx.lineTo(x2, y2);
-                    ctx.strokeStyle = 'rgba(122, 162, 247, ' + alpha + ')';
-                    ctx.lineWidth = 0.4;
+                    ctx.strokeStyle = 'rgba(196, 149, 106, ' + alpha + ')';
+                    ctx.lineWidth = 0.35;
                     ctx.stroke();
                 }
             }

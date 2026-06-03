@@ -6,11 +6,12 @@
     --text-primary:  #a9b1d6;    /* Main text (soft blue-white) */
     --text-secondary:#787c99;    /* Muted text */
     --text-muted:    #565f89;    /* Very dim */
-    --accent:        #7aa2f7;    /* Links, highlights */
-    --accent-muted:  #5d7cc4;    /* Deeper blue */
-    --accent-glow:   rgba(122, 162, 247, 0.12); /* Subtle glow */
+    --accent:        #c4956a;    /* Warm coffee — links, highlights */
+    --accent-muted:  #a87d58;    /* Deeper warm */
+    --accent-glow:   rgba(196, 149, 106, 0.12); /* Subtle warm glow */
     --green:         #9ece6a;    /* Prompts, status */
     --cyan:          #7dcfff;    /* Tags, secondary accent */
+    --warm:          #c4956a;    /* Coffee / personal touches */
     --purple:        #bb9af7;    /* Special highlights */
     --yellow:        #e0af68;    /* Dates, warnings */
     --border:        #3b4261;    /* Subtle borders */

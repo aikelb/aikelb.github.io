@@ -6,9 +6,20 @@
 
 ## 0. Design Philosophy
 
-Leanrada's design is defined by **what it doesn't do**: no shadows, no glows, no card borders (except bento), no transforms on hover. The visual interest comes entirely from layout asymmetry, pixel-art icons, monospace typography, and a canvas particle hero. It's a developer's site made by a developer — confident, restrained, content-first.
+### Aesthetic Style: "Playful Minimalist" / "Neo-brutalist Lite"
 
-**Core principle:** Every element has exactly one purpose. Nothing competes for attention.
+Leanrada sits at the intersection of two movements:
+
+- **Playful Minimalist:** High-contrast layout with soft, readable typography. Strips away modern web clutter — no heavy gradients, no massive hero background images, no generic stock photos. Content breathes.
+- **Neo-brutalist Lite:** Raw but refined. Custom elements (`<feature-card>`, `<card-box>`, `<lab-item>`) instead of generic `<div>` soup. Borders are honest (1px solid, subdued color). No decorative fluff.
+
+**The Canvas:** Whitespace is a deliberate design element. Content isn't crammed; it breathes, giving the site a calm, intentional feeling. Every element on the page has exactly one purpose. Nothing competes for attention.
+
+**Color Palette:** Monochromatic base (deep dark `#111616`) with white text. No accent colors. Pixel icons provide the only visual color — a radically simple choice that makes every interactive element feel deliberate.
+
+### Design DNA — What It Doesn't Do
+
+Leanrada's design is defined by **what it doesn't do**: no shadows, no glows, no card borders (except bento), no transforms on hover. No gradients. No stock photos. The visual interest comes entirely from layout asymmetry, pixel-art icons, monospace typography, and a canvas particle hero. It's a developer's site made by a developer — confident, restrained, content-first.
 
 ---
 
@@ -296,6 +307,17 @@ This is genius because:
 
 The hero canvas uses a `<nebula-animation>` custom element that renders a flow-field. Particles follow a vector field (Perlin noise or similar), creating organic flowing patterns. This is the only "heavy" animation on the site, and it's confined to the hero.
 
+### 5.4 Animation Philosophy — Tied to User Intent
+
+The secret to why this site feels cohesive is that **animations are tied to user intent**, not just running in a loop. They feel snappy and physical.
+
+| Principle | Implementation |
+|---|---|
+| **Fluid transitions** | Page changes and section reveals use custom easing curves (`cubic-bezier(0.25, 1, 0.5, 1)`) that start fast and decelerate smoothly — mimicking real-world physics |
+| **Micro-interactions** | Hovering triggers instant, subtle feedback — positional offsets (padding shift), background color fills, or shifting borders. The interface feels "alive" and tactile |
+| **Scroll-driven reveal** | Elements fade and slide upward slightly as they enter the viewport. Subtle enough to not delay reading, prominent enough to guide the eye downward |
+| **Animation budget** | ONE heavy animation (canvas hero). Everything else is CSS transitions under 300ms. No JS animation libraries |
+
 ---
 
 ## 6. What Makes It Work — Design Principles
@@ -324,6 +346,12 @@ Stats aren't in a list or table — they're in an asymmetric grid of tiles. Numb
 ### Principle 7: Canvas Hero, Nowhere Else
 The flow-field animation is ONLY in the hero. After that, the page is completely static except for hover transitions. This creates a clear visual hierarchy: hero = wow, content = read.
 
+### Principle 8: The Blueprint Effect (Cohesion)
+A consistent visual anchor links every section together. If a card has `border-radius: 18px`, the same rule applies to buttons, input fields, and image frames. If sections have pixel icons, ALL sections have pixel icons. This creates a "blueprint" — a set of rules that every component follows, making the site feel designed as a single piece, not assembled from parts.
+
+### Principle 9: Seamless Navigation
+No jarring full-page reloads. The header remains a static anchor while content fluidly replaces itself underneath (SPA routing or smooth internal scrolling). Navigation is predictable and never disorients.
+
 ---
 
 ## 7. Adaptation Guide for Aitor's Site
@@ -346,14 +374,29 @@ The flow-field animation is ONLY in the hero. After that, the page is completely
 | Canvas hero only | Particles ONLY in hero. Nowhere else. |
 
 ### 7.3 What to keep uniquely ours
-- `$ command` prompts (our equivalent of pixel icons)
+- `$ command` prompts (our equivalent of pixel icons — our "blueprint anchor")
 - Blinking cursor (one, in hero prompt)
 - Profile avatar in hero (leanrada has no photo — we do)
 - Social links in hero (leanrada has none)
 - Tokyo Night blue accent (leanrada is monochrome)
 - Inter for body text (better readability for non-devs)
 
-### 7.4 Layout changes needed
+### 7.4 Cohesion checklist — The Blueprint Effect for our site
+
+Every component must follow the same rules. If one thing uses a specific border-radius, spacing, or font — everything uses it.
+
+| Rule | Value |
+|---|---|
+| Border-radius on cards/tiles | 14px (unified across bento, now cards, teaching entries) |
+| Border width | 1px solid `var(--border)` — same on every bordered element |
+| Hover transition | 200ms `cubic-bezier(0.8, 0, 1, 1)` — same easing everywhere |
+| Section prompt font | JetBrains Mono, 12px, `var(--green)` — identical on all sections |
+| Spacing between items | `var(--space-xs)` for list items, `var(--space-m)` for sections |
+| Max content width | 960px (wider than current 680px to accommodate two columns)
+
+### 7.5 Layout changes needed
+
+### 7.6 Layout changes needed
 
 **Current**: Single column, max-width 680px
 **New**: Single column on mobile, two columns at ≥900px
@@ -379,7 +422,7 @@ Desktop (≥900px):
 └──────────────────────────────────────┘
 ```
 
-### 7.5 Hover behavior changes
+### 7.7 Hover behavior changes
 
 **Work rows** — adopt leanrada's padding-shift hover:
 ```css
@@ -393,7 +436,7 @@ Desktop (≥900px):
 ```
 No border-left, no width change. Just content shifting within the same footprint.
 
-### 7.6 Stats → Bento
+### 7.8 Stats → Bento
 
 Replace the stats row with a bento grid:
 - 2 columns, 12px gap
