@@ -402,7 +402,6 @@ input:where([type='button'], [type='reset'], [type='submit']),
 }
 /* layer: default */
 .me{margin-inline-end:calc(var(--spacing) * 4);}
-.p2{padding:calc(var(--spacing) * 2);}
 .inline{display:inline;}
 .resize{resize:both;}
 .relative{position:relative;}

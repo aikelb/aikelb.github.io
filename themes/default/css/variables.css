@@ -1,68 +1,58 @@
 :root {
-    /* background palette */
-    --bg-void:       #07090a;
-    --bg-surface:    #0d1117;
-    --bg-elevated:   #161b22;
-    --bg-overlay:    #21262d;
+    /* Tokyo Night palette */
+    --bg-void:       #1a1b26;    /* Deep void */
+    --bg-surface:    #24283b;    /* Cards, elevated surfaces */
+    --bg-elevated:   #292e42;    /* Hover states */
+    --text-primary:  #a9b1d6;    /* Main text (soft blue-white) */
+    --text-secondary:#787c99;    /* Muted text */
+    --text-muted:    #565f89;    /* Very dim */
+    --accent:        #7aa2f7;    /* Links, highlights */
+    --accent-muted:  #5d7cc4;    /* Deeper blue */
+    --accent-glow:   rgba(122, 162, 247, 0.12); /* Subtle glow */
+    --green:         #9ece6a;    /* Prompts, status */
+    --cyan:          #7dcfff;    /* Tags, secondary accent */
+    --purple:        #bb9af7;    /* Special highlights */
+    --yellow:        #e0af68;    /* Dates, warnings */
+    --border:        #3b4261;    /* Subtle borders */
+    --border-hover:  #565f89;    /* Hover borders */
 
-    /* text */
-    --text-primary:  #e6edf3;
-    --text-secondary:#8b949e;
-    --text-muted:    #484f58;
-
-    /* accent — blue */
-    --accent:        #58a6ff;
-    --accent-muted:  #1f6feb;
-    --accent-glow:   rgba(88, 166, 255, 0.15);
-
-    /* green accent (status, links) */
-    --green:         #3fb950;
-
-    /* semantic */
-    --border:        #21262d;
-    --border-hover:  #30363d;
-
-    /* typography */
+    /* Typography */
     --font-sans:     'Inter', system-ui, -apple-system, sans-serif;
     --font-mono:     'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
 
-    /* fluid type scale */
-    --step--2: clamp(0.69rem, calc(0.67rem + 0.09vw), 0.75rem);
-    --step--1: clamp(0.83rem, calc(0.80rem + 0.17vw), 0.94rem);
-    --step-0:  clamp(1.00rem, calc(0.95rem + 0.27vw), 1.19rem);
-    --step-1:  clamp(1.20rem, calc(1.12rem + 0.41vw), 1.50rem);
-    --step-2:  clamp(1.44rem, calc(1.32rem + 0.59vw), 1.88rem);
-    --step-3:  clamp(1.73rem, calc(1.56rem + 0.85vw), 2.38rem);
-    --step-4:  clamp(2.07rem, calc(1.83rem + 1.20vw), 3.00rem);
-    --step-5:  clamp(2.49rem, calc(2.15rem + 1.68vw), 3.81rem);
-    --step-6:  clamp(2.99rem, calc(2.52rem + 2.33vw), 4.81rem);
+    /* Fluid type scale — web-appropriate */
+    --text-xs:   clamp(0.69rem, 0.67rem + 0.09vw, 0.75rem);   /* ~12px */
+    --text-sm:   clamp(0.83rem, 0.80rem + 0.17vw, 0.94rem);   /* ~14px */
+    --text-base: clamp(1.00rem, 0.95rem + 0.27vw, 1.13rem);   /* ~16px */
+    --text-lg:   clamp(1.20rem, 1.12rem + 0.41vw, 1.44rem);   /* ~20px */
+    --text-xl:   clamp(1.44rem, 1.32rem + 0.59vw, 1.75rem);   /* ~24px */
+    --text-2xl:  clamp(1.73rem, 1.56rem + 0.85vw, 2.25rem);   /* ~32px */
+    --text-3xl:  clamp(2.07rem, 1.83rem + 1.20vw, 2.75rem);   /* ~40px */
+    --text-hero: clamp(2.49rem, 2.15rem + 1.68vw, 4.00rem);   /* Hero name */
 
-    /* spacing */
-    --space-3xs: clamp(0.25rem, calc(0.24rem + 0.06vw), 0.31rem);
-    --space-2xs: clamp(0.50rem, calc(0.47rem + 0.14vw), 0.63rem);
-    --space-xs:  clamp(0.75rem, calc(0.71rem + 0.20vw), 0.94rem);
-    --space-s:   clamp(1.00rem, calc(0.95rem + 0.27vw), 1.25rem);
-    --space-m:   clamp(1.50rem, calc(1.42rem + 0.41vw), 1.88rem);
-    --space-l:   clamp(2.00rem, calc(1.89rem + 0.54vw), 2.50rem);
-    --space-xl:  clamp(3.00rem, calc(2.84rem + 0.81vw), 3.75rem);
-    --space-2xl: clamp(4.00rem, calc(3.79rem + 1.08vw), 5.00rem);
-    --space-3xl: clamp(6.00rem, calc(5.68rem + 1.62vw), 7.50rem);
+    /* Spacing */
+    --space-3xs: clamp(0.25rem, 0.24rem + 0.06vw, 0.31rem);
+    --space-2xs: clamp(0.50rem, 0.47rem + 0.14vw, 0.63rem);
+    --space-xs:  clamp(0.75rem, 0.71rem + 0.20vw, 0.94rem);
+    --space-s:   clamp(1.00rem, 0.95rem + 0.27vw, 1.25rem);
+    --space-m:   clamp(1.50rem, 1.42rem + 0.41vw, 1.88rem);
+    --space-l:   clamp(2.00rem, 1.89rem + 0.54vw, 2.50rem);
+    --space-xl:  clamp(3.00rem, 2.84rem + 0.81vw, 3.75rem);
+    --space-2xl: clamp(4.00rem, 3.79rem + 1.08vw, 5.00rem);
+    --space-3xl: clamp(6.00rem, 5.68rem + 1.62vw, 7.50rem);
 
-    /* layout */
-    --content-width: 60rem;
-    --section-pad: var(--space-2xl);
+    /* Layout */
+    --content-width: 42.5rem;  /* 680px — terminal reading width */
 
-    /* animation */
+    /* Animation */
     --transition-fast: 150ms ease;
-    --transition-base: 250ms ease;
-    --transition-slow: 400ms cubic-bezier(0.22, 1, 0.36, 1);
-    --transition-bounce: 500ms cubic-bezier(0.5, 0.05, 0.2, 1.5);
+    --transition-base: 200ms ease;
 
-    /* misc */
+    /* Misc */
     --border-radius: 0.5rem;
     --focus-ring: 0 0 0 2px var(--bg-void), 0 0 0 4px var(--accent);
 
-    /* backwards compat with elva vars */
+    /* Backwards compat with elva vars */
     --background: var(--bg-void);
     --background-soft: var(--bg-surface);
     --foreground: var(--text-primary);
@@ -73,14 +63,24 @@
     --code-background: var(--bg-elevated);
     --code-default: var(--text-primary);
     --code-regex: #d2a8ff;
-    --code-tag: #7ee787;
+    --code-tag: var(--green);
     --code-comment: var(--text-muted);
-    --code-selector: #79c0ff;
-    --code-number: #a5d6ff;
-    --code-function: #d2a8ff;
+    --code-selector: var(--cyan);
+    --code-number: var(--purple);
+    --code-function: var(--accent);
     --focus-outline: 0.3ch solid var(--accent);
     --font-base: var(--font-sans);
     --font-headings: var(--font-sans);
     --tracking: -0.01em;
     --tracking-s: -0.02em;
+    --step--2: var(--text-xs);
+    --step--1: var(--text-sm);
+    --step-0:  var(--text-base);
+    --step-1:  var(--text-lg);
+    --step-2:  var(--text-xl);
+    --step-3:  var(--text-xl);
+    --step-4:  var(--text-2xl);
+    --step-5:  var(--text-3xl);
+    --step-6:  var(--text-hero);
+    --section-pad: var(--space-2xl);
 }
