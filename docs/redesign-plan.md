@@ -180,12 +180,29 @@ The current website is **significantly out of date**. Key additions from the PDF
 
 ---
 
-### 2.4 Animation Examples
+### 2.4 Animation Gold Standard — Emil Kowalski
+
+**animations.dev** — Emil Kowalski's interactive animation course. Teaches theory + practice for CSS animations, Framer Motion, and "Good vs Great" animation design. Includes interactive visualizers for spring parameters and side-by-side CSS vs Framer Motion vs WAAPI comparisons.
+
+**emilkowal.ski/ui/great-animations** — The definitive reference for web animation principles:
+
+| Principle | Rule | Apply to this project |
+|---|---|---|
+| **Feel natural** | Use spring animations. Nothing in the real world appears/disappears instantly | Hero canvas particles = continuous spring-like motion. Reveals = spring translateY |
+| **Are fast** | Use `ease-out`, keep under 300ms. Snappy = responsive | Card hovers: 200ms ease-out. Section reveals: 400ms max |
+| **Have a purpose** | Don't animate everywhere. Animate to explain, indicate state, or enrich info | Canvas hero = enriches. Scroll reveals = indicate state change. That's it. |
+| **Are performant** | Only animate `transform` + `opacity` (composite-only, GPU). Never `margin`/`padding` | We already do this — `.anim-reveal` uses transform + opacity only |
+| **Are interruptible** | CSS transitions over keyframe animations. User can change state mid-animation | ✅ Our scroll reveals use CSS transitions, not keyframes |
+| **Are accessible** | Respect `prefers-reduced-motion`. Provide alternative or no animation | Add `@media (prefers-reduced-motion: reduce) { .anim-reveal { transition: opacity 0.1s; } }` |
+| **Feel right** | Easing + duration must match the vibe. Review with fresh eyes | Our `cubic-bezier(0.22, 1, 0.36, 1)` for reveals needs verification against content weight |
+
+**Key takeaway:** Less is more. One purposeful animation (canvas particles) + subtle scroll reveals. No bouncing, no pulsing, no distracting micro-interactions. Every animation must justify its existence.
+
+### 2.5 Other Animation Examples
 
 | Source | Animation | Use For |
 |---|---|---|
 | Codepen filipz | SVG circular dash-offset animations | Loading spinner, decorative background |
-| Codepen sparklingman | (Restricted — organic flow/morph animations) | — |
 | Uiverse wise-wombat-45 | Button with glow pulse + smooth scale | Primary CTA buttons |
 | Uiverse modern-mouse-31 | Custom cursor follower dot | Optional game-dev flair |
 | freefrontend.com | Curated gallery of CSS components | Ongoing reference |

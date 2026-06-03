@@ -616,6 +616,26 @@ a:hover {
     color: var(--text-muted);
 }
 
+/* --- Reduced motion (accessibility) --- */
+
+@media (prefers-reduced-motion: reduce) {
+    .anim-reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+
+    .anim-stagger > * {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+
+    .hero-canvas {
+        display: none;
+    }
+}
+
 /* --- Scroll animations --- */
 
 .anim-reveal {
