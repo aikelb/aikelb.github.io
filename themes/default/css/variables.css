@@ -28,6 +28,7 @@
     --text-lg:   clamp(1.20rem, 1.12rem + 0.41vw, 1.44rem);
     --text-xl:   clamp(1.44rem, 1.32rem + 0.59vw, 1.75rem);
     --text-2xl:  clamp(1.73rem, 1.56rem + 0.85vw, 2.25rem);
+    --text-3xl:  clamp(2.07rem, 1.83rem + 1.20vw, 2.75rem);
     --text-hero: clamp(2.49rem, 2.15rem + 1.68vw, 4.00rem);
 
     /* Spacing */
@@ -42,7 +43,6 @@
 
     /* Layout */
     --page-width:    960px;
-    --content-width: 680px;
 
     /* Transitions */
     --transition-fast: 150ms ease;

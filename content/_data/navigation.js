@@ -1,12 +1,8 @@
 export default {
     en: [
 		{
-			text: 'About',
+			text: 'Home',
 			url: '/'
-		},
-		{
-			text: 'Writing',
-			url: '/writing/'
 		},
 		{
 			text: 'Teaching',

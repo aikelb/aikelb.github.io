@@ -1,43 +1,13 @@
-# Aitor Lozano — Website Redesign Plan (LLM-Optimized Spec v4.0)
+# Aitor Lozano — Website Redesign Plan (LLM-Optimized Spec v5.0)
 
-> **Status: Phase 1 complete ✅** — Homepage fully implemented. Content pages pending.
-
-> **The Pivot:** The aesthetic shifts from a developer-only terminal theme to an **all-public friendly, highly readable modern CV and Project Hub**. It combines a clean professional layout (ideal for giving talks and presenting your CV) with warm, human touches (cats, coffee, and becoming a dad by the end of the year) while maintaining the visual excellence of a premium portfolio.
-
----
-
-## 0. Implementation Status
-
-### ✅ Phase 1: Foundation — COMPLETE
-
-| File | Status |
-|---|---|
-| `themes/default/css/variables.css` | ✅ Tokyo Night palette, bright text (#f7f8fc), blue accent (#7aa2f7) |
-| `themes/default/css/redesign.css` | ✅ Full layout: .page-container, .content-columns, .content-single, hero, all components |
-| `themes/default/_layouts/home.njk` | ✅ All 7 sections: Hero, About, Now, Work, Teaching, Skills, Highlights, Stats Bento |
-| `themes/default/_layouts/base.njk` | ✅ Inter + JetBrains Mono via Google Fonts |
-| `content/assets/img/cv.png` | ✅ Profile photo loaded |
-| `content/assets/img/cats.jpg` | ✅ Cat photo in bento tile |
-| **Canvas** | ✅ Ambient Aurora — morphing Tokyo Night metaballs, full viewport |
-| **Scroll reveals** | ✅ IntersectionObserver, fade-up, 300ms |
-| **Work hover** | ✅ Padding-shift, no size change |
-| **Navigation** | ✅ Sticky, backdrop blur, monospace logo |
-| **Footer** | ✅ Social links, copyright |
-| **Mobile** | ✅ Responsive at 375/768/900/1280px, no horizontal scroll |
-| **Accessibility** | ✅ prefers-reduced-motion, skip link, focus rings |
-
-### ❌ Remaining Phases
-
-| Phase | What | Status |
-|---|---|---|
-| **Phase 2: Content Pages** | `/writing/` index, individual post layout, `/teaching/` page | ❌ Not started |
-| **Phase 3: Content Migration** | Replace elva demo posts with 14 real posts from aitorlozano.com | ❌ Not started |
-| **Phase 4: Polish** | OG images, RSS feed verification, footer `$ exit 0`, final spacing | ⚠️ Partial |
+> This document is a complete, technical specification designed for code-generating LLMs (e.g., DeepSeek) to implement the redesign of a personal portfolio website. 
+> 
+> **Goal:** Create an all-public friendly, highly readable modern CV and Project Hub. It unifies professional density (experience timeline, skills inventory, lecture decks) with warm personal highlights (cats, coffee, dad-to-be) under a balanced, modern **Tokyo Night Dark** layout.
 
 ---
 
-## Technical Goal & Directory Mapping
-The following files form the core of the redesign:
+## 0. Technical Goal & Directory Mapping
+Modify the layout and styling elements across the following three files in the repository:
 1. **Design Tokens:** [variables.css](file:///Users/aike/git/elva/themes/default/css/variables.css)
 2. **Component Styles:** [redesign.css](file:///Users/aike/git/elva/themes/default/css/redesign.css)
 3. **Nunjucks Template:** [home.njk](file:///Users/aike/git/elva/themes/default/_layouts/home.njk)
@@ -46,7 +16,7 @@ The following files form the core of the redesign:
 
 ## 1. Design Tokens (themes/default/css/variables.css)
 
-Overwrite the existing `:root` variables to establish a soft, highly readable **Tokyo Night Dark Palette**. Remove all warm brown/coffee colors (`#c4956a`). Ensure the text colors are bright and contrast-compliant.
+Overwrite the existing `:root` variables to establish a soft, highly readable **Tokyo Night Dark Palette**. Ensure body text uses clean white `#f7f8fc` for high contrast and readability.
 
 ```css
 :root {
@@ -54,7 +24,6 @@ Overwrite the existing `:root` variables to establish a soft, highly readable **
     --bg-void:       #1a1b26;    /* Deep void background */
     --bg-surface:    #24283b;    /* Cards, elevated elements */
     --bg-elevated:   #292e42;    /* Active card states / hover background */
-    --text-primary:  #e0af68;    /* Main text (high contrast soft warm white) -> adjusted to #f7f8fc for readability */
     --text-primary:  #f7f8fc;    /* Clear, crisp white for body reading */
     --text-secondary:#a9b1d6;    /* Muted blue-grey for secondary paragraphs */
     --text-muted:    #787c99;    /* Very dim details, dividers, inactive states */
@@ -80,6 +49,7 @@ Overwrite the existing `:root` variables to establish a soft, highly readable **
     --text-lg:   clamp(1.20rem, 1.12rem + 0.41vw, 1.44rem);   /* ~20px */
     --text-xl:   clamp(1.44rem, 1.32rem + 0.59vw, 1.75rem);   /* ~24px */
     --text-2xl:  clamp(1.73rem, 1.56rem + 0.85vw, 2.25rem);   /* ~32px */
+    --text-3xl:  clamp(2.07rem, 1.83rem + 1.20vw, 2.75rem);   /* ~40px */
     --text-hero: clamp(2.49rem, 2.15rem + 1.68vw, 4.00rem);   /* Hero name */
 
     /* --- Spacing Scale --- */
@@ -94,7 +64,6 @@ Overwrite the existing `:root` variables to establish a soft, highly readable **
 
     /* --- Layout & Alignment Grid --- */
     --page-width:    960px;     /* Center container desktop layout boundaries */
-    --content-width: 680px;     /* Single-column max-width for comfortable reading */
 
     /* --- Transition Curves --- */
     --transition-fast: 150ms ease;
@@ -108,24 +77,21 @@ Overwrite the existing `:root` variables to establish a soft, highly readable **
 
 ---
 
-## 2. Visual Architecture & Key Design Shift
+## 2. Visual Architecture & De-duplication Strategy
 
-Remove all harsh hacker/terminal aesthetics (e.g., CLI prompts like `$ command` or `aitor@lozano:~$`). In their place, establish a **Modern, Warm Technical Vibe** focusing on readability and approachability:
+Ensure a professional, modern visual flow that is completely free of text duplication. Follow these layout structures precisely:
 
-1. **Section Headers:** Use a clean, numbered index system in monospace tags above standard titles:
-   ```
-   [01 // about]
-   About
-   ```
-2. **Cozy Hero Background: Tokyo Night Ambient Aurora:** Instead of abstract developer particles or terminal matrices, render a soft, slowly morphing liquid light gradient (Metaballs/Aurora) in Tokyo Night colors that floats behind the hero text and reacts gently to mouse movement.
-3. **Approachable CV Bio:** The text centers on your dual career (Game Dev + AI Engineer), your university lectures (ready for talks), and human indicators: cats, coffee, and expected fatherhood.
-4. **Project Highlights:** The "Writing" section is renamed **"Highlights & Postcards"**. It acts as a warehouse for projects, slide decks, and special announcements (e.g., talks given or key learnings).
+1. **Aesthetic Tone:** Shift from dev-only commands to clean, modern portfolio indices (e.g., `[01 // about]`, `[02 // experience]`). Remove all terminal characters (`$`, `aitor@lozano:~$`).
+2. **Hero Banner:** Remove the `hero-avatar` image (`cv.png`) from the hero entirely to prevent a cramped top. Instead, typeset the name in bold display typography, floating over the **Ambient Aurora Canvas** backdrop.
+3. **Professional Bio:** Keep the "About Me" section strictly professional (CV intro). Do not include personal hobbies or updates here to prevent duplication.
+4. **Eliminate "Now" Section:** Remove the standalone `Now` section. Consolidate all human/personal details (cats, coffee, dad-to-be, remote work status) inside dedicated cells in the **Bento Stats Grid** at the bottom.
+5. **Unified Grid Width:** Stretch all layout rows (About, Experience, Teaching, Highlights, and Bento Grid) to the full `.page-container` width of `960px`. Eliminate the `.content-single` column restriction (`680px`) so elements align symmetrically and the Bento Grid has ample breathing room.
 
 ---
 
 ## 3. Nunjucks Layout Template (themes/default/_layouts/home.njk)
 
-Replace the contents of `home.njk` with the following document structure. It integrates the clean layouts inside `.page-container` and loads the **Ambient Aurora** canvas script.
+Replace the contents of `home.njk` with the following restructured document layout. It structures the page container grids and sets up the Ambient Aurora script.
 
 ```html
 ---
@@ -135,15 +101,13 @@ layout: base
 <!-- Page wrapper to enforce grid limits -->
 <div class="page-container">
 
-    <!-- Hero Section -->
+    <!-- Hero Section (No picture, bold typeset) -->
     <section class="hero">
         <canvas class="hero-canvas" id="hero-canvas" aria-hidden="true"></canvas>
         <div class="hero-content">
-            <!-- Profile avatar: Friendly front-facing photo -->
-            <img src="/assets/img/cv.png" alt="Aitor Lozano" class="hero-avatar" loading="eager" width="110" height="110">
             <h1 class="hero-name">Aitor Lozano</h1>
             <p class="hero-tagline">Game Developer &amp; Software Engineer</p>
-            <p class="hero-sub">14+ years building games, tools, and AI · Educator · Father-to-be</p>
+            <p class="hero-sub">Building games, software tools, and lecturing since 2011</p>
             
             <div class="hero-links">
                 <a href="https://github.com/aikelb" class="hero-link" rel="me">
@@ -162,7 +126,7 @@ layout: base
         </div>
     </section>
 
-    <!-- Two-column Section: About & Now -->
+    <!-- Row 1: About (Left) & Skills (Right) -->
     <div class="content-columns">
         <section class="section anim-reveal" id="about">
             <header class="section-header">
@@ -173,52 +137,38 @@ layout: base
             <div class="about-text">
                 <p>I build tools at <strong>INNO-VERSE</strong>, focusing on AI-powered development software. Previously, I spent over a decade making games at <strong>PlayMedusa</strong> — shipping Unity3D titles for Steam, Meta Quest, and iOS.</p>
                 <p>I also teach. From 2014 to 2020 I was an external lecturer at <strong>ULPGC</strong>, and recently completed a <strong>Master's in Teacher Training</strong>. I've mentored startups at <strong>Exel Gaming Accelerator</strong> in Riyadh and community game jams in Gran Canaria.</p>
-                <p>Beyond engineering, I'm a cat dad to Marvel &amp; Haru, a coffee enthusiast, and preparing for my next major update: becoming a human dad by the end of this year.</p>
             </div>
         </section>
 
-        <section class="section anim-reveal" id="now">
+        <section class="section anim-reveal" id="skills">
             <header class="section-header">
-                <span class="section-index">[02 // now]</span>
-                <h2 class="section-title">What I'm Up To</h2>
+                <span class="section-index">[02 // expertise]</span>
+                <h2 class="section-title">Skills &amp; Engines</h2>
             </header>
             <hr class="section-divider" aria-hidden="true">
-            <ul class="now-list">
-                <li class="now-item">
-                    <span class="now-icon">🍼</span>
-                    <div>
-                        <p class="now-label">Preparing for</p>
-                        <p class="now-value">Becoming a dad (expected end of 2026!)</p>
-                    </div>
-                </li>
-                <li class="now-item">
-                    <span class="now-icon">🤖</span>
-                    <div>
-                        <p class="now-label">Working on</p>
-                        <p class="now-value">AI-powered developer tools at INNO-VERSE</p>
-                    </div>
-                </li>
-                <li class="now-item">
-                    <span class="now-icon">🐾</span>
-                    <div>
-                        <p class="now-label">Hanging out with</p>
-                        <p class="now-value">Marvel &amp; Haru (our cats)</p>
-                    </div>
-                </li>
-                <li class="now-item">
-                    <span class="now-icon">☕</span>
-                    <div>
-                        <p class="now-label">Drinking</p>
-                        <p class="now-value">Single-origin filter coffee</p>
-                    </div>
-                </li>
-            </ul>
-            <p class="now-date">Last updated: June 2026</p>
+            <div class="skills-block">
+                <div class="skills-row">
+                    <span class="skills-label">Languages</span>
+                    <span class="skills-values"><span class="skill-accent">Python</span>  C#  JavaScript  Lua  Solidity</span>
+                </div>
+                <div class="skills-row">
+                    <span class="skills-label">AI / Backend</span>
+                    <span class="skills-values"><span class="skill-accent">LangChain</span>  <span class="skill-accent">FastAPI</span>  Node.js  Hardhat</span>
+                </div>
+                <div class="skills-row">
+                    <span class="skills-label">Engines</span>
+                    <span class="skills-values">Unity3D  Defold  Unreal Engine</span>
+                </div>
+                <div class="skills-row">
+                    <span class="skills-label">Tools</span>
+                    <span class="skills-values">Git  Rider  macOS  Linux  Windows</span>
+                </div>
+            </div>
         </section>
     </div>
 
-    <!-- Centered Content Section: CV / Experience (The CV Engine) -->
-    <div class="content-single">
+    <!-- Row 2: Experience / CV (Full-width, 960px) -->
+    <div class="content-full">
         <section class="section anim-reveal" id="work">
             <header class="section-header">
                 <span class="section-index">[03 // experience]</span>
@@ -266,7 +216,7 @@ layout: base
         </section>
     </div>
 
-    <!-- Two-column Section: Teaching & Skills -->
+    <!-- Row 3: Teaching & Slides (Left) & Projects Spotlight (Right) -->
     <div class="content-columns">
         <section class="section anim-reveal" id="teaching">
             <header class="section-header">
@@ -278,7 +228,7 @@ layout: base
                 <div class="teaching-entry">
                     <h3>ULPGC — Universidad de Las Palmas</h3>
                     <p class="teaching-meta">Lecturer · 2014 – 2020</p>
-                    <p class="teaching-desc">Lectures in game programming. Below are the slide decks I use when giving talks:</p>
+                    <p class="teaching-desc">Game programming slide decks for talks and lectures:</p>
                     <div class="teaching-pills">
                         <a class="teaching-pill" href="https://slides.aitorlozano.com/juiciness">juiciness</a>
                         <a class="teaching-pill" href="https://slides.aitorlozano.com/juiciness-ii">juiciness-ii</a>
@@ -293,52 +243,19 @@ layout: base
                 <div class="teaching-entry">
                     <h3>EOI — University Courses</h3>
                     <p class="teaching-meta">Unity3D Specialist · 2022</p>
-                    <p class="teaching-desc">110-hour curriculum covering programming patterns, gamefeel, C#, and rendering.</p>
+                    <p class="teaching-desc">110-hour curriculum covering programming patterns, gamefeel, and rendering.</p>
                 </div>
             </div>
             <p class="teaching-cred">🎓 Master's in Teacher Training for Secondary Education (2025)</p>
         </section>
 
-        <section class="section anim-reveal" id="skills">
-            <header class="section-header">
-                <span class="section-index">[05 // expertise]</span>
-                <h2 class="section-title">Skills &amp; Engines</h2>
-            </header>
-            <hr class="section-divider" aria-hidden="true">
-            <div class="skills-block">
-                <div class="skills-row">
-                    <span class="skills-label">Languages</span>
-                    <span class="skills-values"><span class="skill-accent">Python</span>  C#  JavaScript  Lua  Solidity</span>
-                </div>
-                <div class="skills-row">
-                    <span class="skills-label">AI / Backend</span>
-                    <span class="skills-values"><span class="skill-accent">LangChain</span>  <span class="skill-accent">FastAPI</span>  Node.js  Hardhat</span>
-                </div>
-                <div class="skills-row">
-                    <span class="skills-label">Engines</span>
-                    <span class="skills-values">Unity3D  Defold  Unreal Engine</span>
-                </div>
-                <div class="skills-row">
-                    <span class="skills-label">Tools</span>
-                    <span class="skills-values">Git  Rider  macOS  Linux  Windows</span>
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <!-- Centered Content Section: Highlighted Projects (Wares & Spotlights) -->
-    <div class="content-single">
         <section class="section anim-reveal" id="writing">
             <header class="section-header">
-                <span class="section-index">[06 // highlights &amp; showcases]</span>
-                <h2 class="section-title">Highlighted Projects</h2>
+                <span class="section-index">[05 // spotlights]</span>
+                <h2 class="section-title">Project Spotlights</h2>
             </header>
             <hr class="section-divider" aria-hidden="true">
-            
-            <p class="writing-intro" style="color: var(--text-secondary); margin-bottom: var(--space-s); font-size: var(--text-sm);">
-                Selected articles, design notes, and specific project spotlights I talk about when giving lectures:
-            </p>
-
+            <p class="writing-intro" style="margin-bottom: var(--space-s); font-size: var(--text-sm);">Selected articles, design notes, and specific project showcases:</p>
             <div class="posts-list">
                 {%- set latestPosts = collections._posts | sortBy('date', true) | slice(0, 4) %}
                 {%- for post in latestPosts %}
@@ -348,16 +265,16 @@ layout: base
                 </a>
                 {%- endfor %}
             </div>
-            <a href="/writing/" class="posts-more">→ browse all highlights ({{ collections._posts.length }})</a>
+            <a href="/writing/" class="posts-more">→ browse all showcases ({{ collections._posts.length }})</a>
         </section>
     </div>
 
-    <!-- Centered Content Section: Bento Stats Grid (Approachability Focus) -->
-    <div class="content-single">
+    <!-- Row 4: Metrics, Milestone & Personal Bento Grid (Full-width, 960px) -->
+    <div class="content-full">
         <section class="section anim-reveal" id="stats">
             <header class="section-header">
-                <span class="section-index">[07 // by the numbers]</span>
-                <h2 class="section-title">Metrics &amp; Milestones</h2>
+                <span class="section-index">[06 // context &amp; milestones]</span>
+                <h2 class="section-title">Context &amp; Numbers</h2>
             </header>
             <hr class="section-divider" aria-hidden="true">
             <div class="bento-grid">
@@ -373,56 +290,51 @@ layout: base
                     <img src="/assets/img/cats.jpg" alt="Marvel &amp; Haru" loading="lazy" eleventy:ignore>
                 </div>
                 <div class="bento-cell">
-                    <span class="bento-number">🍼</span>
-                    <span class="bento-label">Dad-to-be (Dec 2026)</span>
-                </div>
-                <div class="bento-cell">
                     <span class="bento-number">9</span>
-                    <span class="bento-label">slide decks for talks</span>
-                </div>
-                <div class="bento-cell">
-                    <span class="bento-number">☕</span>
-                    <span class="bento-label">Coffee fueled</span>
+                    <span class="bento-label">lecture slide decks</span>
                 </div>
                 <div class="bento-cell bento-cell--tall">
                     <span class="bento-text">
-                        <strong>Based in the Canary Islands 🇮🇨</strong><br><br>
-                        • Remote work veteran (since 2011)<br>
-                        • 10M+ downloads shipped<br>
-                        • Game developer turned AI engineer
+                        <strong>Cozy Details</strong><br><br>
+                        • 🍼 Soon-to-be dad (expected Dec 2026)<br>
+                        • ☕ Fueled by single-origin filter coffee<br>
+                        • 📍 Based in Canary Islands (Remote since 2011)<br>
+                        • 🚀 10M+ downloads shipped across PC, VR &amp; mobile
                     </span>
+                </div>
+                <div class="bento-cell">
+                    <span class="bento-number">14</span>
+                    <span class="bento-label">spotlight writeups</span>
                 </div>
             </div>
         </section>
     </div>
 
 </div>
+<!-- end page-container -->
 
-<!-- Concept 1: Tokyo Night Ambient Aurora Canvas Script -->
+<!-- Ambient Aurora Canvas -->
 <script>
 (function() {
-    const canvas = document.getElementById('hero-canvas');
+    var canvas = document.getElementById('hero-canvas');
     if (!canvas) return;
-    const ctx = canvas.getContext('2d');
+    var ctx = canvas.getContext('2d');
 
-    let width = 0;
-    let height = 0;
-    
-    // Ambient Blob parameters for Aurora effect
-    const blobs = [
-        { x: 0, y: 0, ox: 0.2, oy: 0.3, radius: 250, vx: 0.05, vy: 0.07, color: 'rgba(122, 162, 247, 0.28)' }, // Purple-Blue
-        { x: 0, y: 0, ox: 0.8, oy: 0.6, radius: 280, vx: -0.06, vy: 0.04, color: 'rgba(187, 154, 247, 0.24)' }, // Magenta-Purple
-        { x: 0, y: 0, ox: 0.5, oy: 0.2, radius: 220, vx: 0.08, vy: -0.05, color: 'rgba(125, 207, 255, 0.22)' }  // Light Cyan
+    var width = 0;
+    var height = 0;
+
+    var blobs = [
+        { x: 0, y: 0, ox: 0.2, oy: 0.35, radius: 400, vx: 0.03, vy: 0.05, color: 'rgba(122, 162, 247, 0.35)' },
+        { x: 0, y: 0, ox: 0.75, oy: 0.55, radius: 420, vx: -0.04, vy: 0.03, color: 'rgba(187, 154, 247, 0.30)' },
+        { x: 0, y: 0, ox: 0.45, oy: 0.25, radius: 350, vx: 0.05, vy: -0.04, color: 'rgba(125, 207, 255, 0.28)' }
     ];
 
-    const mouse = { x: 0, y: 0, tx: 0, ty: 0, ease: 0.06 };
+    var mouse = { x: 0, y: 0, tx: 0, ty: 0, ease: 0.06 };
 
     function resize() {
         width = canvas.width = canvas.offsetWidth;
         height = canvas.height = canvas.offsetHeight;
-        
-        // Map blob coordinate targets to pixel values
-        blobs.forEach(b => {
+        blobs.forEach(function(b) {
             b.x = b.ox * width;
             b.y = b.oy * height;
         });
@@ -430,32 +342,26 @@ layout: base
         mouse.y = mouse.ty = height / 2;
     }
 
-    let time = 0;
+    var time = 0;
     function draw() {
         time += 0.001;
-        ctx.fillStyle = '#1a1b26'; // Match deep Tokyo Night background
+        ctx.fillStyle = '#1a1b26';
         ctx.fillRect(0, 0, width, height);
 
-        // Smoothly interpolate mouse movement coords
         mouse.x += (mouse.tx - mouse.x) * mouse.ease;
         mouse.y += (mouse.ty - mouse.y) * mouse.ease;
 
-        // Render soft gradients
         ctx.globalCompositeOperation = 'screen';
-        
-        blobs.forEach((b, index) => {
-            // Drift positions slowly over time with sine/cosine waves
-            const driftX = Math.sin(time * 15 + index) * (width * 0.07);
-            const driftY = Math.cos(time * 12 + index) * (height * 0.07);
-            
-            // Attract slightly to mouse coordinate
-            const targetX = b.ox * width + driftX + (mouse.x - width / 2) * 0.12;
-            const targetY = b.oy * height + driftY + (mouse.y - height / 2) * 0.12;
 
-            // Smooth draw
-            const grad = ctx.createRadialGradient(targetX, targetY, 0, targetX, targetY, b.radius);
+        blobs.forEach(function(b, index) {
+            var driftX = Math.sin(time * 15 + index) * (width * 0.07);
+            var driftY = Math.cos(time * 12 + index) * (height * 0.07);
+            var targetX = b.ox * width + driftX + (mouse.x - width / 2) * 0.12;
+            var targetY = b.oy * height + driftY + (mouse.y - height / 2) * 0.12;
+
+            var grad = ctx.createRadialGradient(targetX, targetY, 0, targetX, targetY, b.radius);
             grad.addColorStop(0, b.color);
-            grad.addColorStop(0.5, b.color.replace(')', ', 0.5)').replace('0.2', '0.1'));
+            grad.addColorStop(0.4, b.color.replace(/[\d.]+(?=\))/, '0.12'));
             grad.addColorStop(1, 'rgba(0,0,0,0)');
 
             ctx.beginPath();
@@ -472,29 +378,29 @@ layout: base
     draw();
 
     window.addEventListener('resize', resize);
-    
-    window.addEventListener('mousemove', (e) => {
-        const rect = canvas.getBoundingClientRect();
+
+    window.addEventListener('mousemove', function(e) {
+        var rect = canvas.getBoundingClientRect();
         mouse.tx = e.clientX - rect.left;
         mouse.ty = e.clientY - rect.top;
     });
 })();
 </script>
 
-<!-- Intersection Observer for Scroll Reveals -->
+<!-- Scroll Reveals -->
 <script>
 (function() {
-    requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
+    requestAnimationFrame(function() {
+        requestAnimationFrame(function() {
+            var observer = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('is-visible');
                     }
                 });
             }, { threshold: 0.05 });
 
-            document.querySelectorAll('.anim-reveal').forEach(el => {
+            document.querySelectorAll('.anim-reveal').forEach(function(el) {
                 observer.observe(el);
             });
         });
@@ -507,7 +413,7 @@ layout: base
 
 ## 4. Style Specifications (themes/default/css/redesign.css)
 
-Specify how elements arrange and animate. Ensure text reads comfortably.
+Ensure the styling de-clutters page widths and aligns grid hierarchies.
 
 ```css
 /* ============================================
@@ -543,9 +449,8 @@ body {
     margin-bottom: var(--space-m);
 }
 
-.content-single {
-    max-width: var(--content-width); /* 680px centered CV body column */
-    margin: 0 auto;
+.content-full {
+    width: 100%;
 }
 
 @media (min-width: 900px) {
@@ -615,15 +520,6 @@ body {
     max-width: 38rem;
 }
 
-.hero-avatar {
-    width: 110px;
-    height: 110px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-bottom: var(--space-s);
-    border: 3px solid rgba(255, 255, 255, 0.08);
-}
-
 .hero-name {
     font-size: var(--text-hero);
     font-weight: 800;
@@ -681,45 +577,6 @@ body {
 
 .about-text strong {
     color: var(--text-primary);
-}
-
-/* --- Now List Icons --- */
-.now-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-s);
-}
-
-.now-item {
-    display: flex;
-    align-items: flex-start;
-    gap: var(--space-s);
-}
-
-.now-icon {
-    font-size: var(--text-lg);
-    line-height: 1.25;
-}
-
-.now-label {
-    font-family: var(--font-mono);
-    font-size: var(--text-xs);
-    color: var(--text-muted);
-    text-transform: uppercase;
-}
-
-.now-value {
-    color: var(--text-secondary);
-}
-
-.now-date {
-    margin-top: var(--space-m);
-    font-family: var(--font-mono);
-    font-size: var(--text-xs);
-    color: var(--text-muted);
 }
 
 /* --- Work Timeline (Padding-Shift Hover) --- */
@@ -917,6 +774,7 @@ body {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 12px;
+    width: 100%;
 }
 
 @media (min-width: 900px) {
@@ -982,7 +840,7 @@ body {
 .bento-text {
     font-size: var(--text-sm);
     color: var(--text-secondary);
-    text-align: center;
+    text-align: left; /* Restructured details read better left-aligned */
     line-height: 1.6;
 }
 
@@ -1023,7 +881,6 @@ body {
     }
     .hero-name { font-size: var(--text-2xl); }
     .hero-tagline { font-size: var(--text-lg); }
-    .hero-avatar { width: 90px; height: 90px; }
 
     .section {
         padding: var(--space-l) 0;
@@ -1063,41 +920,16 @@ body {
 
 ---
 
-## 5. Implementation Checklist
+## 5. Checklist of Implementation Action Steps
 
-### Phase 1: Foundation ✅ COMPLETE
+Follow these validation guidelines precisely during your next coding session:
 
-- [x] **Import Fonts:** Inter + JetBrains Mono loaded in `base.njk`.
-- [x] **Reset Variables:** Tokyo Night palette applied in `variables.css`.
-- [x] **Restructure Template:** Homepage in `home.njk` with `.page-container`, `.content-columns`, `.content-single`.
-- [x] **Apply Styles:** All CSS rules in `redesign.css` governing layout, hero, bento, components.
-- [x] **Profile Avatar:** `cv.png` placed in `content/assets/img/`.
-- [x] **Ambient Aurora:** Canvas renders morphing Tokyo Night metaballs, full viewport width.
-- [x] **Verification:**
-  1. ✅ No horizontal scroll at 375–1920px.
-  2. ✅ Two-column sections match single-column width.
-  3. ✅ Aurora blobs morph and react to mouse.
-  4. ✅ Padding-shift hover on Work rows — no layout offset.
-
-### Phase 2: Content Pages ❌ PENDING
-
-- [ ] **Writing index** (`/writing/`): Grid/list of all posts with new design styling.
-- [ ] **Post layout** (`themes/default/_layouts/post.njk`): Tokyo Night styled individual post template.
-- [ ] **Teaching page** (`/teaching/`): ULPGC slides listing, EOI, ACADEVI, credentials.
-- [ ] **Post data:** Replace demo frontmatter (title, description, tags) with real content.
-
-### Phase 3: Content Migration ❌ PENDING
-
-- [ ] Replace elva demo posts with 14 real posts from aitorlozano.com.
-- [ ] Migrate post content: FoundryVTT, Unity streaming, NGINX, EasyEngine, Intellisense, VPN, etc.
-- [ ] Update post frontmatter: tags, descriptions, dates.
-
-### Phase 4: Polish ⚠️ PARTIAL
-
-- [x] Mobile responsive (375px, 480px, 768px, 900px+).
-- [x] Reduced motion support.
-- [x] Scroll reveals + padding-shift hover.
-- [ ] OG image generation (already in elva, needs verification).
-- [ ] RSS feed verification (already in elva).
-- [ ] Footer `$ exit 0` line (removed during simplification — re-add as terminal signature).
-- [ ] Final spacing and typography review across all breakpoints.
+- [ ] **Google Fonts Loading:** Confirm Inter and JetBrains Mono fonts link tags are defined inside [base.njk](file:///Users/aike/git/elva/themes/default/_layouts/base.njk).
+- [ ] **Apply Variable Tokens:** Completely replace configurations in [variables.css](file:///Users/aike/git/elva/themes/default/css/variables.css) with the token block.
+- [ ] **Implement CSS Grid Rules:** Replace the styling rules in [redesign.css](file:///Users/aike/git/elva/themes/default/css/redesign.css) to stretch experience and bento segments to full-width and remove narrow column blocks.
+- [ ] **Template Reconstruction:** Completely overwrite [home.njk](file:///Users/aike/git/elva/themes/default/_layouts/home.njk) with the Nunjucks blueprint.
+- [ ] **Verification:** Run `npm run build` or serve on `localhost:8080` to confirm:
+  1. No horizontal scrollbars exist on any screen size.
+  2. Experience rows, slides, projects, and the bento cells align to the exact left and right bounds of the centered `960px` container wrapper.
+  3. No photo renders in the hero, while the cats image renders at the bottom inside the bento block.
+  4. Personal details (dad-to-be, cats, coffee, Canary Islands location) do not duplicate in body sections.

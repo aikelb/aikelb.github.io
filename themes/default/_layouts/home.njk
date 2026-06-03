@@ -2,36 +2,16 @@
 layout: base
 ---
 
-<!-- Hero (full width) -->
-<section class="hero">
-        <canvas class="hero-canvas" id="hero-canvas" aria-hidden="true"></canvas>
-        <div class="hero-content">
-            <img src="/assets/img/cv.png" alt="Aitor Lozano" class="hero-avatar" loading="eager" width="110" height="110" eleventy:ignore>
-            <h1 class="hero-name">Aitor Lozano</h1>
-            <p class="hero-tagline">Game Developer &amp; Software Engineer</p>
-            <p class="hero-sub">14+ years building games, tools, and AI · Educator · Father-to-be</p>
-            <div class="hero-links">
-                <a href="https://github.com/aikelb" class="hero-link" rel="me">
-                    <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.335-1.755-1.335-1.755-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.605-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg>
-                    GitHub
-                </a>
-                <a href="https://mastodon.gamedev.place/@aike" class="hero-link" rel="me">
-                    <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14" aria-hidden="true"><path d="M23.193 7.88c0-5.207-3.411-6.733-3.411-6.733C18.062.357 14.728.417 12 .417c-2.723 0-6.05-.057-7.777.73 0 0-3.411 1.526-3.411 6.733 0 1.427-.025 3.131.016 4.935.124 5.508.922 10.932 5.565 12.279 2.138.618 3.977.758 5.451.667 2.763-.172 4.316-1.013 4.316-1.013l-.091-2.062s-1.982.644-4.196.567c-2.195-.076-4.506-.244-4.86-3.016-.02-.153-.031-.31-.034-.465 1.049.256 2.39.43 4.004.45 2.494.031 4.828-.145 6.089-.526 1.916-.578 3.586-1.417 3.804-2.573.345-1.835.304-4.45.304-4.45zm-3.586-3.45v4.82h-2.004V8.959c0-1.022-.43-1.54-1.29-1.54-.95 0-1.427.614-1.427 1.83v2.648h-1.967V9.248c0-1.216-.477-1.83-1.428-1.83-.86 0-1.289.518-1.289 1.54v4.29H8.388V8.95c0-1.022-.24-1.803-.734-2.252-.508-.462-1.172-.698-1.998-.698-1.064 0-1.864.373-2.45 1.114l-.526.88-.527-.88c-.586-.741-1.386-1.114-2.45-1.114-.826 0-1.49.236-1.998.698-.494.449-.734 1.23-.734 2.252v4.29H0V7.88c0-5.207 3.411-6.733 3.411-6.733C5.131.357 8.465.417 11.193.417h.007c2.728 0 6.062-.057 7.777.73 0 0 3.411 1.526 3.411 6.733z"/></svg>
-                    Mastodon
-                </a>
-                <a href="https://bsky.app/profile/aikelb.bsky.social" class="hero-link" rel="me">
-                    <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14" aria-hidden="true"><path d="M12 10.8c-1.087-2.114-4.046-6.053-6.798-7.995C2.566.944 1.561 1.266.902 1.565.139 1.908 0 3.08 0 3.768c0 .69.378 5.65.624 6.479.815 2.736 3.713 3.66 6.383 3.364.136-.02.273-.039.41-.058-.136.02-.273.04-.41.058-3.33.45-6.243 1.714-2.385 6.035 4.236 4.73 6.09-1.183 6.57-2.71.272-.858.4-1.31.808-1.31.407 0 .536.452.808 1.31.48 1.527 2.334 7.44 6.57 2.71 3.858-4.321.945-5.585-2.385-6.035-.138-.02-.274-.039-.41-.059l.41.059c2.67.295 5.568-.628 6.383-3.364.246-.828.624-5.79.624-6.478 0-.69-.139-1.861-.902-2.206-.659-.298-1.664-.62-4.3 1.24C16.046 4.748 13.087 8.687 12 10.8Z"/></svg>
-                    Bluesky
-                </a>
-            </div>
-        </div>
-    </section>
+<!-- Aurora banner beneath navbar -->
+<div class="aurora-banner">
+    <canvas id="hero-canvas" aria-hidden="true"></canvas>
+</div>
 
-<!-- Page content wrapper -->
+<!-- Page wrapper to enforce grid limits -->
 <div class="page-container">
 
-    <!-- About + Now -->
-    <div class="content-columns">
+    <!-- Row 1: About (Full-width) -->
+    <div class="content-full">
         <section class="section anim-reveal" id="about">
             <header class="section-header">
                 <span class="section-index">[01 // about]</span>
@@ -39,57 +19,17 @@ layout: base
             </header>
             <hr class="section-divider" aria-hidden="true">
             <div class="about-text">
-                <p>I build tools at <strong>INNO-VERSE</strong>, focusing on AI-powered development software. Previously, I spent over a decade making games at <strong>PlayMedusa</strong> — shipping Unity3D titles for Steam, Meta Quest, and iOS.</p>
-                <p>I also teach. From 2014 to 2020 I was an external lecturer at <strong>ULPGC</strong>, and recently completed a <strong>Master's in Teacher Training</strong>. I've mentored startups at <strong>Exel Gaming Accelerator</strong> in Riyadh and community game jams in Gran Canaria.</p>
-                <p>Beyond engineering, I'm a cat dad to Marvel &amp; Haru, a coffee enthusiast, and preparing for my next major update: becoming a human dad by the end of this year.</p>
+                <p>Hi, I'm Aitor. I'm a programmer based in the Canary Islands. Right now I work at <strong>INNO-VERSE</strong>, building AI agents. Before that, I spent over a decade at <strong>PlayMedusa</strong> making games — the kind you'd find on Steam, Meta Quest, or the App Store.</p>
+                <p>I used to lecture at the <strong>University of Las Palmas</strong>, teaching game programming to undergrads. I've helped out at a few community game jams and mentored startups through the <strong>Exel Gaming Accelerator</strong> in Riyadh. I recently finished a Master's in Teacher Training, which turned out to be harder than I expected.</p>
             </div>
-        </section>
-
-        <section class="section anim-reveal" id="now">
-            <header class="section-header">
-                <span class="section-index">[02 // now]</span>
-                <h2 class="section-title">What I'm Up To</h2>
-            </header>
-            <hr class="section-divider" aria-hidden="true">
-            <ul class="now-list">
-                <li class="now-item">
-                    <span class="now-icon">🍼</span>
-                    <div>
-                        <p class="now-label">Preparing for</p>
-                        <p class="now-value">Becoming a dad (expected end of 2026!)</p>
-                    </div>
-                </li>
-                <li class="now-item">
-                    <span class="now-icon">🤖</span>
-                    <div>
-                        <p class="now-label">Working on</p>
-                        <p class="now-value">AI-powered developer tools at INNO-VERSE</p>
-                    </div>
-                </li>
-                <li class="now-item">
-                    <span class="now-icon">🐾</span>
-                    <div>
-                        <p class="now-label">Hanging out with</p>
-                        <p class="now-value">Marvel &amp; Haru (our cats)</p>
-                    </div>
-                </li>
-                <li class="now-item">
-                    <span class="now-icon">☕</span>
-                    <div>
-                        <p class="now-label">Drinking</p>
-                        <p class="now-value">Single-origin filter coffee</p>
-                    </div>
-                </li>
-            </ul>
-            <p class="now-date">Last updated: June 2026</p>
         </section>
     </div>
 
-    <!-- Work -->
-    <div class="content-single">
+    <!-- Row 2: Experience / CV (Full-width, 960px) -->
+    <div class="content-full">
         <section class="section anim-reveal" id="work">
             <header class="section-header">
-                <span class="section-index">[03 // experience]</span>
+                <span class="section-index">[02 // experience]</span>
                 <h2 class="section-title">Professional Experience</h2>
             </header>
             <hr class="section-divider" aria-hidden="true">
@@ -98,7 +38,7 @@ layout: base
                     <span class="work-company">INNO-VERSE</span>
                     <span class="work-role">Software Engineer</span>
                     <span class="work-dates">2025 – Present</span>
-                    <span class="work-detail">Building AI-powered development tools using Python, FastAPI, and LangChain.</span>
+                    <span class="work-detail">Building AI agents. Python, FastAPI, LangChain.</span>
                 </div>
                 <div class="work-row">
                     <span class="work-company">Exel by Merak</span>
@@ -108,7 +48,7 @@ layout: base
                 </div>
                 <div class="work-row">
                     <span class="work-company">Aurita Games</span>
-                    <span class="work-role">CEO &amp; Lead</span>
+                    <span class="work-role">CEO &amp; Game Developer</span>
                     <span class="work-dates">2020 – 2025</span>
                     <span class="work-detail">Directed production of over 80+ web, PC, and cozy mobile game assets.</span>
                 </div>
@@ -134,11 +74,11 @@ layout: base
         </section>
     </div>
 
-    <!-- Teaching + Skills -->
+    <!-- Row 3: Teaching & Slides (Left) & Projects Spotlight (Right) -->
     <div class="content-columns">
         <section class="section anim-reveal" id="teaching">
             <header class="section-header">
-                <span class="section-index">[04 // talks &amp; teaching]</span>
+                <span class="section-index">[03 // talks &amp; teaching]</span>
                 <h2 class="section-title">Teaching &amp; Slides</h2>
             </header>
             <hr class="section-divider" aria-hidden="true">
@@ -146,7 +86,7 @@ layout: base
                 <div class="teaching-entry">
                     <h3>ULPGC — Universidad de Las Palmas</h3>
                     <p class="teaching-meta">Lecturer · 2014 – 2020</p>
-                    <p class="teaching-desc">Lectures in game programming. Below are the slide decks I use when giving talks:</p>
+                    <p class="teaching-desc">Game programming slide decks for talks and lectures:</p>
                     <div class="teaching-pills">
                         <a class="teaching-pill" href="https://slides.aitorlozano.com/juiciness">juiciness</a>
                         <a class="teaching-pill" href="https://slides.aitorlozano.com/juiciness-ii">juiciness-ii</a>
@@ -161,100 +101,84 @@ layout: base
                 <div class="teaching-entry">
                     <h3>EOI — University Courses</h3>
                     <p class="teaching-meta">Unity3D Specialist · 2022</p>
-                    <p class="teaching-desc">110-hour curriculum covering programming patterns, gamefeel, C#, and rendering.</p>
+                    <p class="teaching-desc">110-hour curriculum covering programming patterns, gamefeel, and rendering.</p>
                 </div>
             </div>
-            <p class="teaching-cred">🎓 Master's in Teacher Training for Secondary Education (2025)</p>
+            <p class="teaching-cred">Master's in Teacher Training for Secondary Education (2025)</p>
         </section>
 
-        <section class="section anim-reveal" id="skills">
-            <header class="section-header">
-                <span class="section-index">[05 // expertise]</span>
-                <h2 class="section-title">Skills &amp; Engines</h2>
-            </header>
-            <hr class="section-divider" aria-hidden="true">
-            <div class="skills-block">
-                <div class="skills-row">
-                    <span class="skills-label">Languages</span>
-                    <span class="skills-values"><span class="skill-accent">Python</span>  C#  JavaScript  Lua  Solidity</span>
-                </div>
-                <div class="skills-row">
-                    <span class="skills-label">AI / Backend</span>
-                    <span class="skills-values"><span class="skill-accent">LangChain</span>  <span class="skill-accent">FastAPI</span>  Node.js  Hardhat</span>
-                </div>
-                <div class="skills-row">
-                    <span class="skills-label">Engines</span>
-                    <span class="skills-values">Unity3D  Defold  Unreal Engine</span>
-                </div>
-                <div class="skills-row">
-                    <span class="skills-label">Tools</span>
-                    <span class="skills-values">Git  Rider  macOS  Linux  Windows</span>
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <!-- Highlights -->
-    <div class="content-single">
         <section class="section anim-reveal" id="writing">
             <header class="section-header">
-                <span class="section-index">[06 // highlights &amp; showcases]</span>
-                <h2 class="section-title">Highlighted Projects</h2>
+                <span class="section-index">[04 // spotlights]</span>
+                <h2 class="section-title">Project Spotlights</h2>
             </header>
             <hr class="section-divider" aria-hidden="true">
-            <p class="writing-intro">Selected articles, design notes, and specific project spotlights I talk about when giving lectures:</p>
+            <p class="writing-intro" style="margin-bottom: var(--space-s); font-size: var(--text-sm);">Selected articles, design notes, and specific project showcases:</p>
             <div class="posts-list">
-                {%- set latestPosts = collections._posts | sortBy('date', true) | slice(0, 4) %}
+                {%- set latestPosts = collections._posts | sortBy('date', true) %}
                 {%- for post in latestPosts %}
+                {%- if loop.index0 < 4 %}
                 <a href="{{ post.url }}" class="post-row">
                     <span class="post-row-title">{{ post.data.title }}</span>
-                    <span class="post-row-tag">{{ post.data.tags[0] or 'project' }}</span>
+                    <span class="post-row-tag">{{ post.data.tags | filterPrivateTags | first or 'project' }}</span>
                 </a>
+                {%- endif %}
                 {%- endfor %}
             </div>
-            <a href="/writing/" class="posts-more">→ browse all highlights ({{ collections._posts.length }})</a>
+            <a href="/writing/" class="posts-more">→ browse all showcases ({{ collections._posts | languageFilter | length }})</a>
         </section>
     </div>
 
-    <!-- Stats Bento -->
-    <div class="content-single">
+    <!-- Row 4: Bento Grid -->
+    <div class="content-full">
         <section class="section anim-reveal" id="stats">
-            <header class="section-header">
-                <span class="section-index">[07 // by the numbers]</span>
-                <h2 class="section-title">Metrics &amp; Milestones</h2>
-            </header>
-            <hr class="section-divider" aria-hidden="true">
             <div class="bento-grid">
                 <div class="bento-cell">
                     <span class="bento-number">14+</span>
                     <span class="bento-label">years coding</span>
-                </div>
-                <div class="bento-cell">
-                    <span class="bento-number">80+</span>
+                    <span class="bento-number" style="margin-top:var(--space-2xs)">80+</span>
                     <span class="bento-label">games published</span>
                 </div>
                 <div class="bento-cell bento-cell--cat bento-cell--tall">
                     <img src="/assets/img/cats.jpg" alt="Marvel &amp; Haru" loading="lazy" eleventy:ignore>
                 </div>
                 <div class="bento-cell">
-                    <span class="bento-number">🍼</span>
-                    <span class="bento-label">Dad-to-be (Dec 2026)</span>
+                    <strong class="bento-cell-heading">I work with</strong>
+                    <div class="bento-tags">
+                        <span class="bento-tag">Python</span>
+                        <span class="bento-tag">C#</span>
+                        <span class="bento-tag">JavaScript</span>
+                        <span class="bento-tag">Lua</span>
+                        <span class="bento-tag">Solidity</span>
+                        <span class="bento-tag">Unity3D</span>
+                        <span class="bento-tag">Defold</span>
+                        <span class="bento-tag">LangChain</span>
+                        <span class="bento-tag">FastAPI</span>
+                        <span class="bento-tag">Node.js</span>
+                        <span class="bento-tag">Hardhat</span>
+                        <span class="bento-tag">Unreal Engine</span>
+                        <span class="bento-tag">Git</span>
+                        <span class="bento-tag">Rider</span>
+                    </div>
                 </div>
                 <div class="bento-cell">
-                    <span class="bento-number">9</span>
-                    <span class="bento-label">slide decks for talks</span>
+                    <strong class="bento-cell-heading">Looking into</strong>
+                    <div class="bento-tags">
+                        <span class="bento-tag">Arch</span>
+                        <span class="bento-tag">Neovim</span>
+                        <span class="bento-tag">Defold</span>
+                        <span class="bento-tag">Zen Browser</span>
+                    </div>
                 </div>
                 <div class="bento-cell">
-                    <span class="bento-number">☕</span>
-                    <span class="bento-label">Coffee fueled</span>
-                </div>
-                <div class="bento-cell bento-cell--tall">
-                    <span class="bento-text">
-                        <strong>Based in the Canary Islands 🇮🇨</strong><br><br>
-                        • Remote work veteran (since 2011)<br>
-                        • 10M+ downloads shipped<br>
-                        • Game developer turned AI engineer
-                    </span>
+                    <strong class="bento-cell-heading">Software I like</strong>
+                    <div class="bento-tags">
+                        <span class="bento-tag">Hedgedoc</span>
+                        <span class="bento-tag">Blinko</span>
+                        <span class="bento-tag">Obsidian</span>
+                        <span class="bento-tag">Planka</span>
+                        <span class="bento-tag">Ghostty</span>
+                    </div>
                 </div>
             </div>
         </section>
@@ -274,12 +198,12 @@ layout: base
     var height = 0;
 
     var blobs = [
-        { x: 0, y: 0, ox: 0.2, oy: 0.35, radius: 400, vx: 0.03, vy: 0.05, color: 'rgba(122, 162, 247, 0.35)' },
-        { x: 0, y: 0, ox: 0.75, oy: 0.55, radius: 420, vx: -0.04, vy: 0.03, color: 'rgba(187, 154, 247, 0.30)' },
-        { x: 0, y: 0, ox: 0.45, oy: 0.25, radius: 350, vx: 0.05, vy: -0.04, color: 'rgba(125, 207, 255, 0.28)' }
+        { x: 0, y: 0, ox: 0.25, oy: 0.35, radius: 260, vx: 0.02, vy: 0.03, color: 'rgba(122, 162, 247, 0.16)' },
+        { x: 0, y: 0, ox: 0.72, oy: 0.55, radius: 280, vx: -0.03, vy: 0.02, color: 'rgba(187, 154, 247, 0.13)' },
+        { x: 0, y: 0, ox: 0.48, oy: 0.25, radius: 230, vx: 0.03, vy: -0.03, color: 'rgba(125, 207, 255, 0.12)' }
     ];
 
-    var mouse = { x: 0, y: 0, tx: 0, ty: 0, ease: 0.06 };
+    var mouse = { x: 0, y: 0, tx: 0, ty: 0, ease: 0.04 };
 
     function resize() {
         width = canvas.width = canvas.offsetWidth;
@@ -294,7 +218,7 @@ layout: base
 
     var time = 0;
     function draw() {
-        time += 0.001;
+        time += 0.0006;
         ctx.fillStyle = '#1a1b26';
         ctx.fillRect(0, 0, width, height);
 
@@ -304,10 +228,10 @@ layout: base
         ctx.globalCompositeOperation = 'screen';
 
         blobs.forEach(function(b, index) {
-            var driftX = Math.sin(time * 15 + index) * (width * 0.07);
-            var driftY = Math.cos(time * 12 + index) * (height * 0.07);
-            var targetX = b.ox * width + driftX + (mouse.x - width / 2) * 0.12;
-            var targetY = b.oy * height + driftY + (mouse.y - height / 2) * 0.12;
+            var driftX = Math.sin(time * 10 + index) * (width * 0.04);
+            var driftY = Math.cos(time * 8 + index) * (height * 0.04);
+            var targetX = b.ox * width + driftX + (mouse.x - width / 2) * 0.05;
+            var targetY = b.oy * height + driftY + (mouse.y - height / 2) * 0.05;
 
             var grad = ctx.createRadialGradient(targetX, targetY, 0, targetX, targetY, b.radius);
             grad.addColorStop(0, b.color);
