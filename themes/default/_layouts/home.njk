@@ -235,8 +235,8 @@ layout: base
     </div>
 </section>
 
-<!-- Hero canvas script -->
-{% js 'defer' %}
+<!-- Hero canvas (inline for cross-browser reliability) -->
+<script>
 (function() {
     const canvas = document.getElementById('hero-canvas');
     if (!canvas) return;
@@ -250,7 +250,7 @@ layout: base
     }
 
     function createParticles() {
-        const count = Math.min(80, Math.floor(canvas.width / 15));
+        const count = Math.min(120, Math.floor(canvas.width / 10));
         particles = [];
         for (let i = 0; i < count; i++) {
             particles.push({
@@ -258,7 +258,7 @@ layout: base
                 y: Math.random() * canvas.height,
                 vx: (Math.random() - 0.5) * 0.4,
                 vy: (Math.random() - 0.5) * 0.4,
-                r: Math.random() * 1.5 + 0.5,
+                r: Math.random() * 2 + 1,
             });
         }
     }
@@ -276,7 +276,7 @@ layout: base
 
             ctx.beginPath();
             ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-            ctx.fillStyle = 'rgba(88, 166, 255, 0.25)';
+            ctx.fillStyle = 'rgba(88, 166, 255, 0.5)';
             ctx.fill();
 
             // Draw connections to nearby particles
@@ -285,11 +285,11 @@ layout: base
                 const dx = p.x - p2.x;
                 const dy = p.y - p2.y;
                 const dist = Math.sqrt(dx * dx + dy * dy);
-                if (dist < 100) {
+                if (dist < 130) {
                     ctx.beginPath();
                     ctx.moveTo(p.x, p.y);
                     ctx.lineTo(p2.x, p2.y);
-                    ctx.strokeStyle = 'rgba(88, 166, 255, ' + (0.08 * (1 - dist / 100)) + ')';
+                    ctx.strokeStyle = 'rgba(88, 166, 255, ' + (0.2 * (1 - dist / 130)) + ')';
                     ctx.lineWidth = 0.5;
                     ctx.stroke();
                 }
@@ -306,10 +306,10 @@ layout: base
         createParticles();
     });
 })();
-{% endjs %}
+</script>
 
 <!-- Scroll reveal observer -->
-{% js 'defer' %}
+<script>
 (function() {
     requestAnimationFrame(function() {
         requestAnimationFrame(function() {
@@ -327,4 +327,4 @@ layout: base
         });
     });
 })();
-{% endjs %}
+</script>
