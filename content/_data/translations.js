@@ -1,12 +1,12 @@
 export default {
     en: {
         meta: {
-            title: 'elva',
+            title: 'Aitor Lozano',
             rssTitle: 'RSS Feed',
             jsonTitle: 'JSON Feed',
             blogrollTitle: 'Blogroll',
-            description: 'A multilingual, clean, green, 11ty starter theme',
-            opengraphDefaultAlt: 'An English description of the default opengraph image'
+            description: 'Software Engineer & Game Developer. 14+ years building for AI, games, and the web.',
+            opengraphDefaultAlt: 'Aitor Lozano — Software Engineer & Game Developer'
         },
         header: {
             skipLink: 'Skip to content',
@@ -32,12 +32,12 @@ export default {
     },
     sv: {
         meta: {
-            title: 'elva',
+            title: 'Aitor Lozano',
             rssTitle: 'RSS Feed',
             jsonTitle: 'JSON Feed',
             blogrollTitle: 'Blogroll',
-            description: 'A multilingual, clean, green, 11ty starter theme',
-            opengraphDefaultAlt: 'A Swedish description of the default opengraph image'
+            description: 'Software Engineer & Game Developer. 14+ years building for AI, games, and the web.',
+            opengraphDefaultAlt: 'Aitor Lozano — Software Engineer & Game Developer'
         },
         header: {
             skipLink: 'Hoppa till innehållet',

@@ -2,30 +2,15 @@ export default {
     en: [
 		{
 			text: 'About',
-			url: '/about/'
+			url: '/'
 		},
 		{
-			text: 'Documentation',
-			url: '/documentation/'
+			text: 'Writing',
+			url: '/writing/'
 		},
 		{
-			text: 'GitHub',
-			url: 'https://github.com/scottsweb/elva'
-		}
-    ],
-    sv: [
-		{
-			text: 'Om',
-			url: '/om/'
-		},
-		{
-			text: 'Dokumentation',
-			url: '/dokumentation/'
-		},
-		{
-			text: 'GitHub',
-			url: 'https://github.com/scottsweb/elva'
+			text: 'Teaching',
+			url: '/teaching/'
 		}
     ]
 };
-  

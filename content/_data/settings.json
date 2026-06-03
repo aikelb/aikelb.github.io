@@ -1,18 +1,19 @@
 {
-	"themeColorLight": "#eceff4",
-	"themeColorDark": "#2e3440",
+	"themeColorLight": "#0d1117",
+	"themeColorDark": "#07090a",
 	"cdn": false,
 	"author": {
-		"name": "Scott Evans",
-		"email": "noreply@example.com",
-		"url": "https://scott.ee",
-		"location": "Stockholm, Sweden",
-		"fediverseProfile": "https://toot.scott.ee/@scott",
-		"fediverseUsername": "@scott@toot.scott.ee",
-		"githubProfile": "https://github.com/scottsweb"
+		"name": "Aitor Lozano",
+		"email": "info@aitorlozano.com",
+		"url": "https://aitorlozano.com",
+		"location": "Canary Islands, Spain",
+		"fediverseProfile": "https://mastodon.gamedev.place/@aike",
+		"fediverseUsername": "@aike@mastodon.gamedev.place",
+		"githubProfile": "https://github.com/aikelb",
+		"blueskyProfile": "https://bsky.app/profile/aikelb.bsky.social"
 	},
 	"meta": {
-		"separator": "•",
+		"separator": "·",
 		"opengraphDefaultImage": "/assets/img/opengraph-default.png"
 	},
 	"seo": {
@@ -20,10 +21,10 @@
 		"defaultPriority": "0.7"
 	},
 	"manifest": {
-		"themeColor": "#eceff4",
-		"backgroundColor": "#eceff4",
+		"themeColor": "#07090a",
+		"backgroundColor": "#07090a",
 		"display": "minimal-ui",
 		"orientation": "portrait-primary",
-		"categories": ["business", "photo"]
+		"categories": ["portfolio", "technology"]
 	}
 }

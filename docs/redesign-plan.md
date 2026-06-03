@@ -517,7 +517,32 @@ Keep custom CSS for: animations, section structure, card styles, theme
 
 ---
 
-## 7. Key Design Decisions v2
+## 7. Mobile-First ⚠️ CRITICAL
+
+**Every phase, every section, must be tested at these breakpoints before being considered done:**
+
+| Breakpoint | Width | Device |
+|---|---|---|
+| Small phone | 375px | iPhone SE, Android compact |
+| Large phone | 480px | iPhone 14, Pixel |
+| Tablet | 768px | iPad portrait |
+| Desktop | 1024px+ | Laptop, monitor |
+
+### Mobile design rules (non-negotiable)
+1. **No horizontal scroll** — at any breakpoint. Content must fit the viewport.
+2. **Navigation stays horizontal** — no stacking to vertical on small screens (text-based nav is compact enough)
+3. **All grids collapse to 1 column** at ≤768px — skills, work, posts, bento
+4. **Avatar scales down** — 96px on desktop → 80px on tablet → 72px on phone
+5. **Hero shrinks proportionally** — `min-height: max(60vh, 400px)` desktop → `max(50vh, 360px)` tablet → `max(50vh, 320px)` phone
+6. **Social links stack** — `row` on desktop, `column` on phone (stretch to full width)
+7. **Section padding tightens** — from `var(--space-2xl)` on desktop to `var(--space-l)` on phone
+8. **Text stays readable** — minimum 16px body, 28px hero name even on phone
+9. **Touch targets** — minimum 44px height for clickable elements (nav links, pills, buttons)
+10. **Teaching pills wrap** — no overflow, pills wrap to next line
+
+---
+
+## 7b. Key Design Decisions v2
 
 ### Decision 1: Game-Dev Flair, Not Game-Dev Theme
 Don't make the site look like a video game UI. Instead, use subtle references:
@@ -599,7 +624,7 @@ uiverse     | Button glow, custom cursor (optional)
 2. **Three-thread narrative** — Game dev roots → AI engineering present → Teaching legacy (now backed by a Master's)
 3. **Personality** — The site feels like *you*: game-dev flair (pixel icons, terminal labels), engineering precision (clean dark theme), teaching warmth (human "Now" section)
 4. **Dark & clean** — Matches the quality bar of leanrada/maxmilkin
-5. **Responsive** — Works and looks good on mobile
+5. **Responsive (mobile-first)** — Polished and easily navigable on phones (375px+), tablets (768px), and desktops. No horizontal scroll ever. All touch targets ≥44px.
 6. **Fast** — No heavy frameworks, minimal JS, optimized CSS
 7. **Accessible** — Keyboard navigation, screen readers, semantic HTML
 8. **Easy to maintain** — "Now" section is a markdown file, cursor is one-line toggle, skills are data-driven

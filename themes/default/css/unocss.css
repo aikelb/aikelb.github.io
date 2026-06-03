@@ -401,13 +401,9 @@ input:where([type='button'], [type='reset'], [type='submit']),
   display: none !important;
 }
 /* layer: default */
-.m0{margin:calc(var(--spacing) * 0);}
-.m157\.943{margin:calc(var(--spacing) * 157.943);}
-.m243\.853{margin:calc(var(--spacing) * 243.853);}
-.m265\.817{margin:calc(var(--spacing) * 265.817);}
-.m466\.712{margin:calc(var(--spacing) * 466.712);}
 .me{margin-inline-end:calc(var(--spacing) * 4);}
-.b{border-width:1px;}
+.p2{padding:calc(var(--spacing) * 2);}
 .inline{display:inline;}
+.resize{resize:both;}
 .relative{position:relative;}
 .filter{filter:var(--un-blur,) var(--un-brightness,) var(--un-contrast,) var(--un-grayscale,) var(--un-hue-rotate,) var(--un-invert,) var(--un-saturate,) var(--un-sepia,) var(--un-drop-shadow,);}
