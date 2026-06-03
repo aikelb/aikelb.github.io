@@ -1,247 +1,291 @@
-# Terminal-Inspired Design Spec
+# Terminal-Inspired Design Spec v2
 
-> Based on leanrada.com's terminal aesthetic + our content
+> Inspired by leanrada.com · Colors: Tokyo Night · Accessible to all
 
 ---
 
 ## 1. Font System
 
-**JetBrains Mono everywhere.** No sans-serif. No Inter. Pure monospace.
+**JetBrains Mono** for accents and code elements. **Inter** for body text.
 
 ```css
---font-body:    'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
---font-heading: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+--font-body:    'Inter', system-ui, -apple-system, sans-serif;
 --font-mono:    'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
 ```
 
-Leanrada uses Iosevka/Space Mono for everything. We use JetBrains Mono (already loaded). One font, one voice.
+Body text uses Inter for readability. Mono is reserved for prompts, code, labels, dates, and terminal flourishes — developers notice it, regular visitors just read clean text.
 
----
+Font sizes are web-standard, not actual terminal sizes:
 
-## 2. Color Palette (Terminal)
-
-```css
---bg-void:       #0a0c0f;      /* Terminal background */
---bg-surface:    #111418;      /* Slightly lighter bg */
---bg-elevated:   #181c21;      /* Card backgrounds */
---text-primary:  #c9d1d9;      /* Main text (like ls output) */
---text-secondary:#8b949e;      /* Muted (like git diff) */
---text-muted:    #484f58;      /* Very dim */
---accent:        #58a6ff;      /* Keep blue accent for links */
---green:         #3fb950;      /* Terminal green for prompts/status */
---border:        #21262d;      /* Subtle borders */
---border-hover:  #30363d;      /* Hover borders */
 ```
-
-Accent stays blue (#58a6ff) for brand consistency. Green (#3fb950) for terminal prompts and status indicators.
-
----
-
-## 3. Typography Scale
-
-Leanrada uses 16px body, 24px headings. Terminal-inspired means smaller, denser type.
-
-```css
---text-body:   14px;           /* Terminal default */
---text-small:  12px;           /* Meta, dates, prompts */
---text-h1:     20px;           /* Section headings */
---text-h2:     16px;           /* Card titles */
---text-hero:   clamp(24px, 5vw, 48px);  /* Hero name */
+--text-xs:   0.75rem;    /* 12px — meta, dates, prompts */
+--text-sm:   0.875rem;   /* 14px — secondary text */
+--text-base: 1rem;       /* 16px — body */
+--text-lg:   1.25rem;    /* 20px — card titles, section headings */
+--text-xl:   1.5rem;     /* 24px — section titles */
+--text-2xl:  2rem;       /* 32px — hero tagline */
+--text-3xl:  clamp(2.5rem, 6vw, 4rem);  /* Hero name */
 ```
 
 ---
 
-## 4. Section Layout (Terminal Commands)
-
-Each section gets a terminal-style header:
+## 2. Tokyo Night Color Palette
 
 ```
-┌─ ABOUT ─────────────────────────────────────┐
-│  $ cat about.md                             │
-│                                              │
-│  I build tools at INNO-VERSE, where I        │
-│  work on AI-powered software. (...)          │
+╔══════════════════════════════════════════════════╗
+║  #1a1b26  bg-void        Deep void              ║
+║  #24283b  bg-surface     Card / section bg       ║
+║  #292e42  bg-elevated    Hover states            ║
+║  #a9b1d6  text-primary   Main text (soft white)  ║
+║  #787c99  text-secondary Muted text              ║
+║  #565f89  text-muted     Very dim                ║
+║  #7aa2f7  accent         Links, highlights       ║
+║  #9ece6a  green          Prompts, status, success ║
+║  #7dcfff  cyan           Tags, secondary accent   ║
+║  #bb9af7  purple         Special highlights       ║
+║  #e0af68  yellow         Warnings, dates          ║
+║  #3b4261  border         Subtle borders           ║
+║  #565f89  border-hover   Hover borders            ║
+╚══════════════════════════════════════════════════╝
+```
+
+Adapted from Tokyo Night with slight adjustments for web readability:
+- Background slightly lighter than original (#1a1b26 instead of pure black)
+- Text slightly brighter for contrast on websites
+- Accent kept in the cool blue range (#7aa2f7)
+
+---
+
+## 3. Design Principle: Terminal Hints, Not Terminal Theme
+
+The terminal aesthetic is a **whisper**, not a shout. Developers who read it smile. Everyone else just sees a clean dark website.
+
+### What this means in practice:
+
+| Too geeky ❌ | Just right ✅ |
+|---|---|
+| `$ sudo cat /home/aitor/about.md` | `$ about` in mono, small, muted |
+| Green text everywhere | Green only on prompts (small, subtle) |
+| `ls -la` with fake permissions | Clean list with mono labels |
+| Fake terminal window chrome | Just text. No borders around sections. |
+| `root@aitor:~#` | `aitor@lozano` in nav, small |
+
+### The rule:
+- **Content** is in Inter (body font). It's for everyone.
+- **Labels, prompts, dates** are in JetBrains Mono. They're for texture.
+- Never let the terminal gimmick compete with the content.
+
+---
+
+## 4. Hero
+
+```
+┌──────────────────────────────────────────────┐
+│  (canvas particles — blue, soft)              │
+│                                               │
+│         Aitor Lozano                         │
+│         Game Developer & Software Engineer   │
+│         14+ years building games,             │
+│         tools, and AI █                      │
+│                                               │
+│         [github] [mastodon] [bluesky]        │
+│                                               │
+│         aitor@lozano:~$ █                    │
 └──────────────────────────────────────────────┘
 ```
 
-No `[N.001]` — replace with terminal prompts:
-- `$ cat about.md`
-- `$ cat now.md`
-- `$ ls work/`
-- `$ cat teaching.md`
-- `$ which skills`
-- `$ ls posts/ | head -3`
-- `$ uptime` (stats)
+- Name: big, bold, Inter
+- Tagline: "Game Developer & Software Engineer" — games first, matches career
+- Sub: "14+ years building games, tools, and AI" — games first, tools second, AI third
+- Blinking cursor: subtle, small, after the prompt at bottom
+- Prompt `aitor@lozano:~$` sits below the links, small, muted green — a quiet signature
+- Canvas particles: use Tokyo Night blue (#7aa2f7) with some cyan (#7dcfff)
 
 ---
 
-## 5. Homepage Sections (Terminal Rewrite)
+## 5. Section Design
 
-### Hero
+Each section has a subtle terminal-style header. The prompt is small, muted, in JetBrains Mono. The heading is regular-sized, in Inter, so everyone reads it.
+
 ```
-┌─────────────────────────────────────────────┐
-│  (canvas particles)                          │
-│                                              │
-│        aitor@lozano:~$ whoami                │
-│        Aitor Lozano                         │
-│        Software Engineer & Game Developer   │
-│        14+ years building for AI,           │
-│        games & the web. █                   │
-│                                              │
-│        [github] [mastodon] [bluesky]        │
-└─────────────────────────────────────────────┘
+┌─ ABOUT ──────────────────────────────────────┐
+│  $ about                                     │
+│  ─────────────────────────                   │
+│                                               │
+│  I build tools at INNO-VERSE, where I work    │
+│  on AI-powered software. Before that, I       │
+│  spent over a decade making games at          │
+│  PlayMedusa — shipping Unity3D titles for     │
+│  Steam, Meta Quest, and iOS.                  │
+│                                               │
+│  I also teach. From 2014 to 2020 I was an     │
+│  external lecturer at ULPGC, and recently     │
+│  completed a Master's in Teacher Training.    │
+│                                               │
+│  Based in the Canary Islands.                 │
+│  Remote since 2011.                           │
+└───────────────────────────────────────────────┘
 ```
-- Blinking cursor after tagline (CSS animation)
-- Terminal prompt `aitor@lozano:~$` in green, name in white
 
-### About
-```
-$ cat about.md
+Section headers pattern:
+- `$ about` — small mono prompt in muted green
+- Thin divider line
+- Content in Inter, readable
 
-I build tools at INNO-VERSE, where I work on
-AI-powered software. Before that, I spent over
-a decade making games at PlayMedusa — shipping
-Unity3D titles for Steam, Meta Quest, and iOS.
+---
 
-I also teach. From 2014 to 2020 I was an
-external lecturer at ULPGC, and recently
-completed a Master's in Teacher Training.
-I've mentored startups at Exel Gaming
-Accelerator in Riyadh and community game jams
-in Gran Canaria.
-
-Based in the Canary Islands. Remote since 2011.
-```
+## 6. All Sections (Condensed)
 
 ### Now
 ```
-$ cat now.md
+$ now
 
-[🤖] Working on:  AI-powered dev tools @ INNO-VERSE
-[📚] Reading:     The Wise Man's Fear (P. Rothfuss)
-[🎮] Playing:     Things I enjoy when not coding
+🤖 Working on    AI-powered dev tools @ INNO-VERSE
+📚 Reading       The Wise Man's Fear (P. Rothfuss)
+🎮 Playing       Things I enjoy when not coding
 
 Last updated: June 2026
 ```
 
-Terminal-style list with `[icon]` prefixes.
+Simple list. No cards. Icons + labels in Inter.
 
 ### Work
 ```
-$ ls work/
+$ work
 
-▸ INNO-VERSE       Software Engineer      Oct 2025 – Present
-▸ Exel by Merak    EIR                     Mar – Oct 2025
-▸ Aurita Games     CEO                     Jan 2020 – Oct 2025
-▸ PlayMedusa       Game Developer          Jun 2011 – Present
-▸ 30 Parallel      Senior Developer        Jan 2018 – Jan 2020
-▸ Relativity       Lead Developer          Jan – Dec 2017
-
-$ cat work/inno-verse.md
-Building AI-powered development tools.
-LangChain, Python, FastAPI.
+  INNO-VERSE       Software Engineer      Oct 2025 – Present
+  Exel by Merak    EIR                    Mar – Oct 2025
+  Aurita Games     CEO                    Jan 2020 – Oct 2025
+  PlayMedusa       Game Developer         Jun 2011 – Present
+  30 Parallel      Senior Developer       Jan 2018 – Jan 2020
+  Relativity       Lead Developer         Jan – Dec 2017
 ```
 
-Instead of cards, use a terminal file listing. Each "file" is clickable/hoverable. Hovering expands details (like `cat`).
+- Clean table-like layout. No card borders.
+- Each row is hoverable — hover reveals a detail line below
+- Hover detail: indented, muted color, appears below the row
+
+```
+  INNO-VERSE       Software Engineer      Oct 2025 – Present
+    → Building AI-powered development tools. LangChain, Python, FastAPI.
+  Exel by Merak    EIR                    Mar – Oct 2025
+    → Gaming accelerator in Riyadh. Technical mentorship & startup advising.
+```
 
 ### Teaching
 ```
-$ cat teaching.md
+$ teaching
 
-## ULPGC — External teacher (2014–2020)
-Year-long university course in game design and
-programming. Design patterns, multiplayer, gamefeel.
+ULPGC — External teacher (2014–2020)
+Year-long university course in game design and programming.
 
-    Slides available:
-    juiciness.md  juiciness-ii.md  devtips.md
-    design-patterns.md  multiplayer.md  perifericos.md
-    persistencia.md  raycast.md  reveal.md
+    juiciness  juiciness-ii  devtips  design-patterns
+    multiplayer  perifericos  persistencia  raycast
 
-## EOI — Teacher (2022)
+EOI — Teacher (2022)
 110-hour course. Unity, C#, game programming patterns.
 
-## ACADEVI — Mentor (2014–2019)
+ACADEVI — Mentor (2014–2019)
 Island Jam mentor. Unity3D courses at basic/advanced levels.
 
-$ whoami --credentials
 🎓 Master's in Teacher Training (2024–2025)
 ```
 
+Slide links as inline mono pills (already have these, keep them).
+
 ### Skills
 ```
-$ which skills
+$ skills
 
-Languages:       python  csharp  javascript  lua  solidity
-AI / Backend:    langchain  fastapi  nodejs  hardhat
-Engines:         unity3d  defold  unreal
-Tools:           git  rider  windows  osx  linux
-
-$ uptime --summary
-14+ years coding, 80+ games published,
-9 slide decks, 14 posts, remote since 2011
-🇮🇨 Canary Islands
+Languages    Python  C#  JavaScript  Lua  Solidity
+AI / Backend LangChain  FastAPI  Node.js  Hardhat
+Engines      Unity3D  Defold  Unreal
+Tools        Git  Rider  Windows  macOS  Linux
 ```
 
-Instead of pill badges, use space-separated terminal-style keywords. Simpler, cleaner, more authentic.
+- Label in mono (muted), values in Inter
+- No pill badges. Clean text.
+- Three sections, stacked vertically (not columns)
 
-### Posts
+### Writing
 ```
-$ ls posts/ | tail -6
+$ writing
 
--rw-r--r--  FoundryVTT + Raspberry Pi 3
--rw-r--r--  Streaming local de vídeos en Unity3D
--rw-r--r--  Servir build WebGL de Unity con NGINX
-
-$ cat posts/ | wc -l
-14
+FoundryVTT + Raspberry Pi 3               ·  guide
+Streaming local de vídeos en Unity3D      ·  guide
+Servir build WebGL de Unity con NGINX     ·  guide
+→ All posts (14)
 ```
 
-Linux `ls -l` style listing with permissions and filenames. Each line is a link.
+- Title (Inter), separator (mono dot), category tag (mono muted)
+- Simple list, no cards
+- Each row is a link
+
+### Stats
+```
+$ stats
+
+  14+           80+           9              14
+  years coding  games pub.    slide decks    posts written
+
+  Remote since 2011 · Canary Islands 🇮🇨
+```
+
+- Numbers in Inter, large, accent color
+- Labels in mono, small, muted below each number
+- No bento grid. Just a clean row of stats.
 
 ### Footer
 ```
-───────────────────────────────────────────────
-$ exit 0
+─────────────────────────────────────────
 github · mastodon · bluesky · rss
 © 2025 Aitor Lozano
+
+$ exit 0
 ```
+
+- Divider line
+- Social links
+- Copyright
+- `$ exit 0` as a tiny terminal signature
 
 ---
 
-## 6. Card / Interactive Behavior
+## 7. Navigation
 
-No cards. Instead:
-- **Work**: Terminal file listing. Hover a "file" → shows inline `cat` output (the detail text) with a subtle background highlight.
-- **Teaching slides**: `ls` listing. Each slide name is a link pill.
-- **Posts**: `ls -l` style list. Date as timestamp, title as filename.
-- **Stats**: `uptime` / `whoami` command output style — monospaced text block.
+```
+┌────────────────────────────────────────────┐
+│  aitor@lozano  About  Writing  Teaching    │
+└────────────────────────────────────────────┘
+```
 
-### Hover effects (leanrada-inspired, minimal)
-- List items: background `rgba(88,166,255,0.05)` on hover, 150ms transition
-- Links: color shift from secondary to primary
-- Slide pills: background shift on hover (already have this)
-- **No transforms, no shadows, no glows.** Just color changes.
+- `aitor@lozano` in mono, muted, as logo — links to home
+- Nav items in Inter, uppercase, small
+- Active state: subtle underline or accent color
+- Sticky with backdrop blur (kept from current design)
+- **No** terminal prompt in nav. Keep it clean. The prompt lives in the hero.
 
 ---
 
-## 7. Navigation (Terminal Tabs)
+## 8. Interactive Behavior
 
-```
-┌──────────────────────────────────────────────┐
-│  aitor@lozano:~$  [about] [writing] [teaching] │
-└──────────────────────────────────────────────┘
-```
+### Row hover (work, posts, skills)
+- Background shift: `rgba(122, 162, 247, 0.05)` — very subtle
+- Transition: 150ms
+- No transform, no shadow, no glow
 
-- Logo: `aitor@lozano:~$` in monospace, green prompt
-- Nav items: pill-style tabs (like browser tabs or terminal tmux tabs)
-- Active tab: highlighted with accent bg
-- Sticky with backdrop blur (keep the blur the user likes)
+### Links
+- Color: accent → text-primary on hover
+- Transition: 150ms
+
+### Scroll reveals
+- Keep current system (IntersectionObserver, translateY fade)
+- But make it snappier: 300ms duration instead of 400ms
+- Respect `prefers-reduced-motion`
 
 ---
 
-## 8. Terminal Cursor (Hero)
-
-Blinking cursor at end of hero tagline:
+## 9. Terminal Cursor (Hero)
 
 ```css
 @keyframes blink {
@@ -251,49 +295,50 @@ Blinking cursor at end of hero tagline:
 
 .hero-cursor {
     animation: blink 1s step-end infinite;
-    color: var(--accent);
+    color: var(--green);
 }
 ```
 
-```html
-<p class="hero-sub">14+ years building for AI, games &amp; the web.<span class="hero-cursor">█</span></p>
-```
+Small green block cursor at the end of the prompt line. Subtle.
 
 ---
 
-## 9. Visual Density
+## 10. Layout
 
-Leanrada is dense. Two columns for content sections. We can do:
-- Desktop: single column, max-width 720px (terminal width)
-- Mobile: full width, smaller font
-
-Terminal aesthetic works best with a constrained width (like an actual terminal window).
-
----
-
-## 10. What stays the same
-
-- Canvas particle hero (already working, user can see it now)
-- Dark theme (already dark, just adjusted palette)
-- Accent color (#58a6ff)
-- Scroll reveal animations (but simpler, subtler)
-- Mobile-first responsive rules
-- Blur backdrop on nav
-- `prefers-reduced-motion` support
+- Max content width: **680px** (comfortable reading width, like a focused terminal)
+- Centered on page
+- Section spacing: `clamp(4rem, 8vh, 6rem)`
+- Single column only — no two-column layouts (terminal aesthetic)
+- Generous whitespace between sections
 
 ---
 
-## 11. What changes
+## 11. What stays from current design
 
-| Element | Current | Terminal |
+- ✅ Canvas particle hero (working, now Tokyo Night blue)
+- ✅ Dark theme (now Tokyo Night palette)
+- ✅ Blue accent (#7aa2f7 — Tokyo Night blue)
+- ✅ Backdrop blur on nav
+- ✅ Scroll reveal animations (snappier: 300ms)
+- ✅ Mobile-first responsive
+- ✅ `prefers-reduced-motion`
+- ✅ Inline `<script>` for canvas and observer
+
+---
+
+## 12. Summary of Changes from Current
+
+| Element | Current | Terminal v2 |
 |---|---|---|
-| Font | Inter + JetBrains Mono | JetBrains Mono everywhere |
-| Section labels | Pill badges `[N.001]` | `$ cat section.md` prompts |
-| Work | 6-card grid | Terminal file listing with inline expand |
-| Skills | Pill tags in 3 columns | Space-separated keywords |
-| Posts | 3-card grid | `ls -l` list |
-| Stats bento | 7-cell grid | `uptime` block + `whoami` output |
-| Nav pills | Rounded pill bg | TMUX-style tabs |
-| Hero | Name + tagline + links | + terminal prompt + blinking cursor |
-| Cards | Bordered boxes | Minimal list items with hover highlight |
-| Borders | 1px border on everything | Only where needed (dividers, not cards) |
+| Font | Inter + JetBrains Mono | Inter body, JetBrains Mono accents |
+| Colors | GitHub dark | Tokyo Night |
+| Accent | #58a6ff | #7aa2f7 (Tokyo Night blue) |
+| Hero tagline | "Software Engineer & Game Developer" | "Game Developer & Software Engineer" |
+| Hero sub | "14+ years building for AI, games & the web" | "14+ years building games, tools, and AI" |
+| Section headers | `[N.001] About` pill | `$ about` subtle prompt + Inter heading |
+| Work | 6 bordered cards | Clean rows with hover detail |
+| Skills | 3-column pill grid | Text rows, no pills |
+| Posts | 3-card grid | Row list |
+| Stats | Bento grid | Clean number row + text |
+| Cards | Border + bg on everything | Only where needed |
+| Max width | 960px | 680px |
