@@ -6,8 +6,6 @@ layout: base
 <section class="hero">
     <canvas class="hero-canvas" id="hero-canvas" aria-hidden="true"></canvas>
     <div class="hero-content">
-        <img class="hero-avatar" src="/assets/img/cats.jpg" alt="Marvel &amp; Haru" width="100" height="100" loading="eager" eleventy:ignore>
-        <h1 class="hero-name">Aitor Lozano</h1>
         <p class="hero-tagline">Game Developer &amp; Software Engineer</p>
         <p class="hero-sub">14+ years building games, tools, and AI</p>
         <div class="hero-links">
@@ -24,7 +22,6 @@ layout: base
                 Bluesky
             </a>
         </div>
-        <p class="hero-prompt"><span>aitor@lozano</span>:~$</p>
     </div>
 </section>
 
@@ -32,7 +29,7 @@ layout: base
 <div class="content-columns">
 
 <section class="section anim-reveal" id="about">
-    <p class="section-prompt">$ about</p>
+    <h2 class="section-title">About</h2>
     <hr class="section-divider" aria-hidden="true">
     <div class="about-text">
         <p>I build tools at <strong>INNO-VERSE</strong>, where I work on AI-powered software. Before that, I spent over a decade making games at <strong>PlayMedusa</strong> — shipping Unity3D titles for Steam, Meta Quest, and iOS.</p>
@@ -42,7 +39,7 @@ layout: base
 </section>
 
 <section class="section anim-reveal" id="now">
-    <p class="section-prompt">$ now</p>
+    <h2 class="section-title">Now</h2>
     <hr class="section-divider" aria-hidden="true">
     <ul class="now-list">
         <li class="now-item">
@@ -81,7 +78,7 @@ layout: base
 
 <!-- Work -->
 <section class="section anim-reveal" id="work">
-    <p class="section-prompt">$ work</p>
+    <h2 class="section-title">Work</h2>
     <hr class="section-divider" aria-hidden="true">
     <div class="work-table">
         <div class="work-row work-row--current">
@@ -127,7 +124,7 @@ layout: base
 <div class="content-columns">
 
 <section class="section anim-reveal" id="teaching">
-    <p class="section-prompt">$ teaching</p>
+    <h2 class="section-title">Teaching</h2>
     <hr class="section-divider" aria-hidden="true">
     <div class="teaching-list">
         <div class="teaching-entry">
@@ -160,7 +157,7 @@ layout: base
 </section>
 
 <section class="section anim-reveal" id="skills">
-    <p class="section-prompt">$ skills</p>
+    <h2 class="section-title">Skills</h2>
     <hr class="section-divider" aria-hidden="true">
     <div class="skills-block">
         <div class="skills-row">
@@ -186,7 +183,7 @@ layout: base
 
 <!-- Writing -->
 <section class="section anim-reveal" id="writing">
-    <p class="section-prompt">$ writing</p>
+    <h2 class="section-title">Writing</h2>
     <hr class="section-divider" aria-hidden="true">
     <div class="posts-list">
         {%- set latestPosts = collections._posts | sortBy('date', true) | slice(0, 4) %}
@@ -202,7 +199,7 @@ layout: base
 
 <!-- Stats Bento -->
 <section class="section anim-reveal" id="stats">
-    <p class="section-prompt">$ stats</p>
+    <h2 class="section-title">By the numbers</h2>
     <hr class="section-divider" aria-hidden="true">
     <div class="bento-grid">
         <div class="bento-cell">

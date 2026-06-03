@@ -131,19 +131,20 @@ a:hover {
     padding: var(--space-2xl) var(--space-m);
 }
 
-.section-prompt {
-    font-family: var(--font-mono);
-    font-size: var(--text-xs);
-    color: var(--green);
+.section-title {
+    font-family: var(--font-sans);
+    font-size: var(--text-xl);
+    font-weight: 600;
+    color: var(--text-primary);
     margin: 0 0 var(--space-2xs) 0;
-    opacity: 0.6;
+    letter-spacing: -0.01em;
 }
 
 .section-divider {
     border: none;
     border-top: 1px solid var(--border);
-    margin: var(--space-s) 0 var(--space-l) 0;
-    opacity: 0.4;
+    margin: var(--space-xs) 0 var(--space-l) 0;
+    opacity: 0.35;
 }
 
 /* --- Two-column layout (leanrada pattern) --- */
