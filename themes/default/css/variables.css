@@ -52,7 +52,7 @@
     --border-radius: 16px;
     --focus-ring: 0 0 0 2px var(--bg-void), 0 0 0 4px var(--accent);
 
-    /* Backwards compat */
+    /* Backwards compat — legacy Elva token aliases */
     --background: var(--bg-void);
     --background-soft: var(--bg-surface);
     --foreground: var(--text-primary);
@@ -83,4 +83,22 @@
     --step-5:  var(--text-xl);
     --step-6:  var(--text-hero);
     --section-pad: var(--space-2xl);
+    --transition-base: var(--transition-fast);
+    --white: var(--text-primary);
+    --black: #0d1117;
+    --size-step-1: var(--text-lg);
+    --space-s-2xl: var(--space-2xl);
+    --space-s-l: var(--space-s);
+    --space-s-m: var(--space-xs);
+    --space-m-3xl: var(--space-xl);
+
+    /* Nord palette → Tokyo Night mappings (legacy components) */
+    --nord0:  var(--bg-void);       /* darkest bg → void */
+    --nord5:  var(--text-primary);  /* light text → primary */
+    --nord9:  var(--accent);        /* blue → accent */
+    --nord10: var(--cyan);          /* light blue → cyan */
+    --nord11: #f7768e;              /* red (error) */
+    --nord12: var(--yellow);        /* orange → yellow */
+    --nord13: var(--yellow);        /* yellow → yellow */
+    --nord14: var(--green);         /* green → green */
 }

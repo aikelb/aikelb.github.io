@@ -79,6 +79,11 @@
     </head>
 
     <body class="{% set space = joiner(" ") -%}{% for tag in ta -%}{{ space() }}{{ tag | slugify }}{% endfor -%}">
+        <!-- aurora -->
+        <div class="aurora-banner">
+            <canvas id="hero-canvas" aria-hidden="true"></canvas>
+        </div>
+
         <!-- header -->
         {% include "header.njk" %}
 
@@ -93,5 +98,61 @@
         {% js 'defer' %}{% include '../../../node_modules/@alpinejs/intersect/dist/cdn.js' %}{% endjs -%}
         {% js 'defer' %}{% include '../js/scripts.js' %}{% endjs -%}
         <script src="{% getBundleFileUrl 'js', 'defer' %}?v={% version %}" defer></script>
+
+        <!-- aurora canvas -->
+        <script>
+(function() {
+    var canvas = document.getElementById('hero-canvas');
+    if (!canvas) return;
+    var ctx = canvas.getContext('2d');
+    var width = 0, height = 0;
+    var blobs = [
+        { x: 0, y: 0, ox: 0.2, oy: 0.35, radius: 400, vx: 0.03, vy: 0.05, color: 'rgba(122, 162, 247, 0.35)' },
+        { x: 0, y: 0, ox: 0.75, oy: 0.55, radius: 420, vx: -0.04, vy: 0.03, color: 'rgba(187, 154, 247, 0.30)' },
+        { x: 0, y: 0, ox: 0.45, oy: 0.25, radius: 350, vx: 0.05, vy: -0.04, color: 'rgba(125, 207, 255, 0.28)' }
+    ];
+    var mouse = { x: 0, y: 0, tx: 0, ty: 0, ease: 0.06 };
+    function resize() {
+        width = canvas.width = canvas.offsetWidth;
+        height = canvas.height = canvas.offsetHeight;
+        blobs.forEach(function(b) { b.x = b.ox * width; b.y = b.oy * height; });
+        mouse.x = mouse.tx = width / 2;
+        mouse.y = mouse.ty = height / 2;
+    }
+    var time = 0;
+    function draw() {
+        time += 0.001;
+        ctx.fillStyle = '#1a1b26';
+        ctx.fillRect(0, 0, width, height);
+        mouse.x += (mouse.tx - mouse.x) * mouse.ease;
+        mouse.y += (mouse.ty - mouse.y) * mouse.ease;
+        ctx.globalCompositeOperation = 'screen';
+        blobs.forEach(function(b, i) {
+            var dx = Math.sin(time * 15 + i) * (width * 0.07);
+            var dy = Math.cos(time * 12 + i) * (height * 0.07);
+            var tx = b.ox * width + dx + (mouse.x - width / 2) * 0.12;
+            var ty = b.oy * height + dy + (mouse.y - height / 2) * 0.12;
+            var g = ctx.createRadialGradient(tx, ty, 0, tx, ty, b.radius);
+            g.addColorStop(0, b.color);
+            g.addColorStop(0.4, b.color.replace(/[\d.]+(?=\))/, '0.12'));
+            g.addColorStop(1, 'rgba(0,0,0,0)');
+            ctx.beginPath();
+            ctx.arc(tx, ty, b.radius, 0, Math.PI * 2);
+            ctx.fillStyle = g;
+            ctx.fill();
+        });
+        ctx.globalCompositeOperation = 'source-over';
+        requestAnimationFrame(draw);
+    }
+    resize();
+    draw();
+    window.addEventListener('resize', resize);
+    window.addEventListener('mousemove', function(e) {
+        var r = canvas.getBoundingClientRect();
+        mouse.tx = e.clientX - r.left;
+        mouse.ty = e.clientY - r.top;
+    });
+})();
+        </script>
     </body>
 </html>

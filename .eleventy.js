@@ -64,13 +64,15 @@ export default async function(eleventyConfig) {
 
     // Global Settings --------------------------------
 
+    const theme = 'default';
+
     eleventyConfig.addGlobalData('settings', {
         // these get merged with content/_data/settings.js
         url: process.env.URL || process.env.CF_PAGES_URL || 'http://localhost:8080',
         isProduction: process.env.NODE_ENV === 'production',
         isStaging: (process.env.URL && process.env.URL.includes('github.io')) || (process.env.CF_PAGES_BRANCH && process.env.CF_PAGES_BRANCH !== 'main') || (process.env.ELEVENTY_RUN_MODE && process.env.ELEVENTY_RUN_MODE !== 'build') || false,
         year: new Date().getFullYear(),
-        theme: 'default'
+        theme
     });
 
     // Watch Targets ----------------------------------
@@ -93,8 +95,8 @@ export default async function(eleventyConfig) {
 
     // development only css bundle for opengraph generation
     if (process.env.ELEVENTY_RUN_MODE && process.env.ELEVENTY_RUN_MODE !== 'build') {
-        const cssTemplate = fs.readFileSync(path.resolve(`themes/${eleventyConfig.globalData.settings.theme}/_layouts/`, 'css-opengraph.njk'), 'utf-8');
-        eleventyConfig.addTemplate('css-opengraph.njk', cssTemplate, { theme: eleventyConfig.globalData.settings.theme });
+        const cssTemplate = fs.readFileSync(path.resolve(`themes/${theme}/_layouts/`, 'css-opengraph.njk'), 'utf-8');
+        eleventyConfig.addTemplate('css-opengraph.njk', cssTemplate, { theme });
     }
 
     const robotsTemplate = fs.readFileSync(path.resolve('elva/templates/', 'robots.njk'), 'utf-8');
@@ -165,7 +167,7 @@ export default async function(eleventyConfig) {
 
     eleventyConfig.addPassthroughCopy({'./content/assets/img/favicon.ico': './favicon.ico'});
     eleventyConfig.addPassthroughCopy({'./content/assets/img': './assets/img'});
-    eleventyConfig.addPassthroughCopy({[`./themes/${eleventyConfig.globalData.settings.theme}/fonts`]: './assets/fonts'});
+    eleventyConfig.addPassthroughCopy({[`./themes/${theme}/fonts`]: './assets/fonts'});
     eleventyConfig.addPassthroughCopy({'./content/assets/files': './assets/files'});
 
     // Markdown ----------------------------------------
@@ -189,7 +191,7 @@ export default async function(eleventyConfig) {
 
     // 11ty Settings -----------------------------------
 
-    eleventyConfig.logger.message(`Theme: ${eleventyConfig.globalData.settings.theme}`);
+    eleventyConfig.logger.message(`Theme: ${theme}`);
 
     return {
         markdownTemplateEngine: 'njk',
@@ -203,8 +205,8 @@ export default async function(eleventyConfig) {
             input: 'content',
             output: 'dist',
             data: '_data',
-            includes: `../themes/${eleventyConfig.globalData.settings.theme}/_includes`,
-            layouts: `../themes/${eleventyConfig.globalData.settings.theme}/_layouts`
+            includes: `../themes/${theme}/_includes`,
+            layouts: `../themes/${theme}/_layouts`
         }
     }
 }

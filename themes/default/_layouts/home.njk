@@ -2,37 +2,24 @@
 layout: base
 ---
 
-<!-- Aurora banner beneath navbar -->
-<div class="aurora-banner">
-    <canvas id="hero-canvas" aria-hidden="true"></canvas>
-</div>
-
 <!-- Page wrapper to enforce grid limits -->
 <div class="page-container">
 
-    <!-- Row 1: About (Full-width) -->
-    <div class="content-full">
+    <!-- Row 1: About & Experience side by side -->
+    <div class="content-columns">
         <section class="section anim-reveal" id="about">
             <header class="section-header">
                 <span class="section-index">[01 // about]</span>
-                <h2 class="section-title">About Me</h2>
             </header>
-            <hr class="section-divider" aria-hidden="true">
             <div class="about-text">
-                <p>Hi, I'm Aitor. I'm a programmer based in the Canary Islands. Right now I work at <strong>INNO-VERSE</strong>, building AI agents. Before that, I spent over a decade at <strong>PlayMedusa</strong> making games — the kind you'd find on Steam, Meta Quest, or the App Store.</p>
-                <p>I used to lecture at the <strong>University of Las Palmas</strong>, teaching game programming to undergrads. I've helped out at a few community game jams and mentored startups through the <strong>Exel Gaming Accelerator</strong> in Riyadh. I recently finished a Master's in Teacher Training, which turned out to be harder than I expected.</p>
+                <p>I build AI-powered developer tools and have shipped 80+ games across PC, console, VR, and mobile. I also lecture on game programming and mentor startups. Based in the Canary Islands. <a href="/about/">More about me →</a></p>
             </div>
         </section>
-    </div>
 
-    <!-- Row 2: Experience / CV (Full-width, 960px) -->
-    <div class="content-full">
         <section class="section anim-reveal" id="work">
             <header class="section-header">
                 <span class="section-index">[02 // experience]</span>
-                <h2 class="section-title">Professional Experience</h2>
             </header>
-            <hr class="section-divider" aria-hidden="true">
             <div class="work-table">
                 <div class="work-row work-row--current">
                     <span class="work-company">INNO-VERSE</span>
@@ -74,58 +61,28 @@ layout: base
         </section>
     </div>
 
-    <!-- Row 3: Teaching & Slides (Left) & Projects Spotlight (Right) -->
-    <div class="content-columns">
-        <section class="section anim-reveal" id="teaching">
+    <!-- Row 3: Notes -->
+    <div class="content-full">
+        <section class="section anim-reveal" id="notes">
             <header class="section-header">
-                <span class="section-index">[03 // talks &amp; teaching]</span>
-                <h2 class="section-title">Teaching &amp; Slides</h2>
+                <span class="section-index">[03 // notes]</span>
             </header>
-            <hr class="section-divider" aria-hidden="true">
-            <div class="teaching-list">
-                <div class="teaching-entry">
-                    <h3>ULPGC — Universidad de Las Palmas</h3>
-                    <p class="teaching-meta">Lecturer · 2014 – 2020</p>
-                    <p class="teaching-desc">Game programming slide decks for talks and lectures:</p>
-                    <div class="teaching-pills">
-                        <a class="teaching-pill" href="https://slides.aitorlozano.com/juiciness">juiciness</a>
-                        <a class="teaching-pill" href="https://slides.aitorlozano.com/juiciness-ii">juiciness-ii</a>
-                        <a class="teaching-pill" href="https://slides.aitorlozano.com/devtips">devtips</a>
-                        <a class="teaching-pill" href="https://slides.aitorlozano.com/design-patterns/">design-patterns</a>
-                        <a class="teaching-pill" href="https://slides.aitorlozano.com/multiplayer/slides">multiplayer</a>
-                        <a class="teaching-pill" href="https://slides.aitorlozano.com/perifericos">perifericos</a>
-                        <a class="teaching-pill" href="https://slides.aitorlozano.com/persistencia">persistencia</a>
-                        <a class="teaching-pill" href="https://slides.aitorlozano.com/raycast">raycast</a>
-                    </div>
-                </div>
-                <div class="teaching-entry">
-                    <h3>EOI — University Courses</h3>
-                    <p class="teaching-meta">Unity3D Specialist · 2022</p>
-                    <p class="teaching-desc">110-hour curriculum covering programming patterns, gamefeel, and rendering.</p>
-                </div>
-            </div>
-            <p class="teaching-cred">Master's in Teacher Training for Secondary Education (2025)</p>
-        </section>
-
-        <section class="section anim-reveal" id="writing">
-            <header class="section-header">
-                <span class="section-index">[04 // spotlights]</span>
-                <h2 class="section-title">Project Spotlights</h2>
-            </header>
-            <hr class="section-divider" aria-hidden="true">
-            <p class="writing-intro" style="margin-bottom: var(--space-s); font-size: var(--text-sm);">Selected articles, design notes, and specific project showcases:</p>
             <div class="posts-list">
                 {%- set latestPosts = collections._posts | sortBy('date', true) %}
                 {%- for post in latestPosts %}
-                {%- if loop.index0 < 4 %}
+                {%- if loop.index0 < 6 %}
                 <a href="{{ post.url }}" class="post-row">
                     <span class="post-row-title">{{ post.data.title }}</span>
-                    <span class="post-row-tag">{{ post.data.tags | filterPrivateTags | first or 'project' }}</span>
+                    <span class="post-row-tags">
+                        {%- for tag in post.data.tags | filterPrivateTags %}
+                        <span class="post-row-tag">{{ tag }}</span>
+                        {%- endfor %}
+                    </span>
                 </a>
                 {%- endif %}
                 {%- endfor %}
             </div>
-            <a href="/writing/" class="posts-more">→ browse all showcases ({{ collections._posts | languageFilter | length }})</a>
+            <a href="/writing/" class="posts-more">→ browse all notes ({{ collections._posts | languageFilter | length }})</a>
         </section>
     </div>
 
@@ -145,39 +102,39 @@ layout: base
                 <div class="bento-cell">
                     <strong class="bento-cell-heading">I work with</strong>
                     <div class="bento-tags">
-                        <span class="bento-tag">Python</span>
-                        <span class="bento-tag">C#</span>
-                        <span class="bento-tag">JavaScript</span>
-                        <span class="bento-tag">Lua</span>
-                        <span class="bento-tag">Solidity</span>
-                        <span class="bento-tag">Unity3D</span>
-                        <span class="bento-tag">Defold</span>
-                        <span class="bento-tag">LangChain</span>
-                        <span class="bento-tag">FastAPI</span>
-                        <span class="bento-tag">Node.js</span>
-                        <span class="bento-tag">Hardhat</span>
-                        <span class="bento-tag">Unreal Engine</span>
-                        <span class="bento-tag">Git</span>
-                        <span class="bento-tag">Rider</span>
+                        <span class="bento-tag">python</span>
+                        <span class="bento-tag">c#</span>
+                        <span class="bento-tag">javascript</span>
+                        <span class="bento-tag">lua</span>
+                        <span class="bento-tag">solidity</span>
+                        <span class="bento-tag">unity3d</span>
+                        <span class="bento-tag">defold</span>
+                        <span class="bento-tag">langchain</span>
+                        <span class="bento-tag">fastapi</span>
+                        <span class="bento-tag">node.js</span>
+                        <span class="bento-tag">hardhat</span>
+                        <span class="bento-tag">unreal</span>
+                        <span class="bento-tag">git</span>
+                        <span class="bento-tag">rider</span>
                     </div>
                 </div>
                 <div class="bento-cell">
                     <strong class="bento-cell-heading">Looking into</strong>
                     <div class="bento-tags">
-                        <span class="bento-tag">Arch</span>
-                        <span class="bento-tag">Neovim</span>
-                        <span class="bento-tag">Defold</span>
-                        <span class="bento-tag">Zen Browser</span>
+                        <span class="bento-tag">arch</span>
+                        <span class="bento-tag">neovim</span>
+                        <span class="bento-tag">defold</span>
+                        <span class="bento-tag">zen</span>
                     </div>
                 </div>
                 <div class="bento-cell">
                     <strong class="bento-cell-heading">Software I like</strong>
                     <div class="bento-tags">
-                        <span class="bento-tag">Hedgedoc</span>
-                        <span class="bento-tag">Blinko</span>
-                        <span class="bento-tag">Obsidian</span>
-                        <span class="bento-tag">Planka</span>
-                        <span class="bento-tag">Ghostty</span>
+                        <span class="bento-tag">hedgedoc</span>
+                        <span class="bento-tag">blinko</span>
+                        <span class="bento-tag">obsidian</span>
+                        <span class="bento-tag">planka</span>
+                        <span class="bento-tag">ghostty</span>
                     </div>
                 </div>
             </div>
@@ -186,80 +143,6 @@ layout: base
 
 </div>
 <!-- end page-container -->
-
-<!-- Ambient Aurora Canvas -->
-<script>
-(function() {
-    var canvas = document.getElementById('hero-canvas');
-    if (!canvas) return;
-    var ctx = canvas.getContext('2d');
-
-    var width = 0;
-    var height = 0;
-
-    var blobs = [
-        { x: 0, y: 0, ox: 0.25, oy: 0.35, radius: 260, vx: 0.02, vy: 0.03, color: 'rgba(122, 162, 247, 0.16)' },
-        { x: 0, y: 0, ox: 0.72, oy: 0.55, radius: 280, vx: -0.03, vy: 0.02, color: 'rgba(187, 154, 247, 0.13)' },
-        { x: 0, y: 0, ox: 0.48, oy: 0.25, radius: 230, vx: 0.03, vy: -0.03, color: 'rgba(125, 207, 255, 0.12)' }
-    ];
-
-    var mouse = { x: 0, y: 0, tx: 0, ty: 0, ease: 0.04 };
-
-    function resize() {
-        width = canvas.width = canvas.offsetWidth;
-        height = canvas.height = canvas.offsetHeight;
-        blobs.forEach(function(b) {
-            b.x = b.ox * width;
-            b.y = b.oy * height;
-        });
-        mouse.x = mouse.tx = width / 2;
-        mouse.y = mouse.ty = height / 2;
-    }
-
-    var time = 0;
-    function draw() {
-        time += 0.0006;
-        ctx.fillStyle = '#1a1b26';
-        ctx.fillRect(0, 0, width, height);
-
-        mouse.x += (mouse.tx - mouse.x) * mouse.ease;
-        mouse.y += (mouse.ty - mouse.y) * mouse.ease;
-
-        ctx.globalCompositeOperation = 'screen';
-
-        blobs.forEach(function(b, index) {
-            var driftX = Math.sin(time * 10 + index) * (width * 0.04);
-            var driftY = Math.cos(time * 8 + index) * (height * 0.04);
-            var targetX = b.ox * width + driftX + (mouse.x - width / 2) * 0.05;
-            var targetY = b.oy * height + driftY + (mouse.y - height / 2) * 0.05;
-
-            var grad = ctx.createRadialGradient(targetX, targetY, 0, targetX, targetY, b.radius);
-            grad.addColorStop(0, b.color);
-            grad.addColorStop(0.4, b.color.replace(/[\d.]+(?=\))/, '0.12'));
-            grad.addColorStop(1, 'rgba(0,0,0,0)');
-
-            ctx.beginPath();
-            ctx.arc(targetX, targetY, b.radius, 0, Math.PI * 2);
-            ctx.fillStyle = grad;
-            ctx.fill();
-        });
-
-        ctx.globalCompositeOperation = 'source-over';
-        requestAnimationFrame(draw);
-    }
-
-    resize();
-    draw();
-
-    window.addEventListener('resize', resize);
-
-    window.addEventListener('mousemove', function(e) {
-        var rect = canvas.getBoundingClientRect();
-        mouse.tx = e.clientX - rect.left;
-        mouse.ty = e.clientY - rect.top;
-    });
-})();
-</script>
 
 <!-- Scroll Reveals -->
 <script>

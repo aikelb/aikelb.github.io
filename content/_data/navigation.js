@@ -5,8 +5,12 @@ export default {
 			url: '/'
 		},
 		{
-			text: 'Teaching',
-			url: '/teaching/'
+			text: 'Notes',
+			url: '/writing/'
+		},
+		{
+			text: 'About',
+			url: '/about/'
 		}
     ]
 };
