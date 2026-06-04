@@ -107,11 +107,12 @@
     var ctx = canvas.getContext('2d');
     var width = 0, height = 0;
     var blobs = [
-        { x: 0, y: 0, ox: 0.2, oy: 0.35, radius: 400, vx: 0.03, vy: 0.05, color: 'rgba(122, 162, 247, 0.35)' },
-        { x: 0, y: 0, ox: 0.75, oy: 0.55, radius: 420, vx: -0.04, vy: 0.03, color: 'rgba(187, 154, 247, 0.30)' },
-        { x: 0, y: 0, ox: 0.45, oy: 0.25, radius: 350, vx: 0.05, vy: -0.04, color: 'rgba(125, 207, 255, 0.28)' }
+        { x: 0, y: 0, ox: 0.50, oy: 0.28, radius: 320, vx: 0.022, vy: -0.018, color: 'rgba(125, 207, 255, 0.09)' },
+        { x: 0, y: 0, ox: 0.25, oy: 0.52, radius: 380, vx: 0.015, vy: 0.020, color: 'rgba(122, 162, 247, 0.12)' },
+        { x: 0, y: 0, ox: 0.72, oy: 0.60, radius: 340, vx: -0.018, vy: 0.014, color: 'rgba(187, 154, 247, 0.10)' },
+        { x: 0, y: 0, ox: 0.45, oy: 0.48, radius: 380, vx: 0.020, vy: -0.016, color: 'rgba(125, 207, 255, 0.09)' }
     ];
-    var mouse = { x: 0, y: 0, tx: 0, ty: 0, ease: 0.06 };
+    var mouse = { x: 0, y: 0, tx: 0, ty: 0, ease: 0.03 };
     function resize() {
         width = canvas.width = canvas.offsetWidth;
         height = canvas.height = canvas.offsetHeight;
@@ -121,20 +122,21 @@
     }
     var time = 0;
     function draw() {
-        time += 0.001;
+        time += 0.0004;
         ctx.fillStyle = '#1a1b26';
         ctx.fillRect(0, 0, width, height);
         mouse.x += (mouse.tx - mouse.x) * mouse.ease;
         mouse.y += (mouse.ty - mouse.y) * mouse.ease;
         ctx.globalCompositeOperation = 'screen';
         blobs.forEach(function(b, i) {
-            var dx = Math.sin(time * 15 + i) * (width * 0.07);
-            var dy = Math.cos(time * 12 + i) * (height * 0.07);
-            var tx = b.ox * width + dx + (mouse.x - width / 2) * 0.12;
-            var ty = b.oy * height + dy + (mouse.y - height / 2) * 0.12;
+            var dx = Math.sin(time * 8 + i) * (width * 0.10);
+            var dy = Math.cos(time * 6 + i) * (height * 0.10);
+            var tx = b.ox * width + dx + (mouse.x - width / 2) * 0.06;
+            var ty = b.oy * height + dy + (mouse.y - height / 2) * 0.06;
             var g = ctx.createRadialGradient(tx, ty, 0, tx, ty, b.radius);
             g.addColorStop(0, b.color);
-            g.addColorStop(0.4, b.color.replace(/[\d.]+(?=\))/, '0.12'));
+            g.addColorStop(0.25, b.color.replace(/[\d.]+(?=\))/, '0.08'));
+            g.addColorStop(0.55, b.color.replace(/[\d.]+(?=\))/, '0.03'));
             g.addColorStop(1, 'rgba(0,0,0,0)');
             ctx.beginPath();
             ctx.arc(tx, ty, b.radius, 0, Math.PI * 2);
