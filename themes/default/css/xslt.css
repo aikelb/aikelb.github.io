@@ -1,27 +1,36 @@
-{% include './reset.css' %}
 {% include './variables.css' %}
-{% include './styles.css' %}
+
+.rss-xslt {
+    font-family: var(--font-sans);
+    color: var(--text);
+    background: var(--bg);
+    padding: var(--space-m);
+    line-height: 1.5;
+}
 
 .rss-xslt h1 {
-    margin-top: var(--space-s-l);
+    margin-top: var(--space-m);
+    font-size: var(--text-xl);
+    font-weight: 700;
+    color: var(--text);
 }
 
 .rss-xslt .posts {
     list-style: none;
-    margin: var(--space-s-l) 0 0 0;
+    margin: var(--space-m) 0 0 0;
     padding: 0;
 }
 
 .rss-xslt .posts li {
-    margin-bottom: var(--space-s-m);
+    margin-bottom: var(--space-s);
+}
 
-    &:last-child {
-        margin-bottom: 0;
-    }
+.rss-xslt .posts li:last-child {
+    margin-bottom: 0;
 }
 
 .rss-xslt .posts span {
-    color: var(--foreground-soft);
-    font-size: var(--step--1);
+    color: var(--text-muted);
+    font-size: var(--text-xs);
     display: block;
 }

@@ -38,10 +38,8 @@
         <link rel="apple-touch-icon" href="{{ "/assets/img/icon-180.png" | htmlBaseUrl(settings.url) | cdnify }}">
 
         <!-- styles -->
-        {% css %}{% include '../css/reset.css' %}{% endcss -%}
         {% css %}{% include '../css/unocss.css' %}{% endcss -%}
         {% css %}{% include '../css/variables.css' %}{% endcss -%}
-        {% css %}{% include '../css/styles.css' %}{% endcss -%}
         {% css %}{% include '../css/redesign.css' %}{% endcss -%}
         {% css 'defer' %}{% include '../css/defer.css' %}{% endcss -%}
         {% css 'defer' %}{% include '../css/components/syntax.css' %}{% endcss -%}
@@ -56,7 +54,7 @@
         <!-- fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
         <!-- preload / prefetch -->
         {% if (settings.isProduction or settings.isStaging) and settings.cdn %}<link rel="dns-prefetch" href="https://i0.wp.com/">{% endif %}
@@ -107,12 +105,12 @@
     var ctx = canvas.getContext('2d');
     var width = 0, height = 0;
     var blobs = [
-        { x: 0, y: 0, ox: 0.50, oy: 0.28, radius: 320, vx: 0.022, vy: -0.018, color: 'rgba(125, 207, 255, 0.09)' },
-        { x: 0, y: 0, ox: 0.25, oy: 0.52, radius: 380, vx: 0.015, vy: 0.020, color: 'rgba(122, 162, 247, 0.12)' },
-        { x: 0, y: 0, ox: 0.72, oy: 0.60, radius: 340, vx: -0.018, vy: 0.014, color: 'rgba(187, 154, 247, 0.10)' },
-        { x: 0, y: 0, ox: 0.45, oy: 0.48, radius: 380, vx: 0.020, vy: -0.016, color: 'rgba(125, 207, 255, 0.09)' }
+        { x: 0, y: 0, ox: 0.50, oy: 0.32, radius: 360, vx: 0.022, vy: -0.018, color: 'rgba(127, 177, 157, 0.14)' },
+        { x: 0, y: 0, ox: 0.22, oy: 0.55, radius: 400, vx: 0.016, vy: 0.022, color: 'rgba(127, 173, 166, 0.10)' },
+        { x: 0, y: 0, ox: 0.78, oy: 0.48, radius: 340, vx: -0.020, vy: 0.014, color: 'rgba(216, 154, 119, 0.09)' },
+        { x: 0, y: 0, ox: 0.40, oy: 0.44, radius: 380, vx: 0.018, vy: -0.016, color: 'rgba(127, 177, 157, 0.11)' }
     ];
-    var mouse = { x: 0, y: 0, tx: 0, ty: 0, ease: 0.03 };
+    var mouse = { x: 0, y: 0, tx: 0, ty: 0, ease: 0.04 };
     function resize() {
         width = canvas.width = canvas.offsetWidth;
         height = canvas.height = canvas.offsetHeight;
@@ -120,23 +118,26 @@
         mouse.x = mouse.tx = width / 2;
         mouse.y = mouse.ty = height / 2;
     }
+    function bgColor() {
+        return document.documentElement.dataset.theme === 'light' ? '#F8F8F4' : '#111412';
+    }
     var time = 0;
     function draw() {
-        time += 0.0004;
-        ctx.fillStyle = '#1a1b26';
+        time += 0.0006;
+        ctx.fillStyle = bgColor();
         ctx.fillRect(0, 0, width, height);
         mouse.x += (mouse.tx - mouse.x) * mouse.ease;
         mouse.y += (mouse.ty - mouse.y) * mouse.ease;
         ctx.globalCompositeOperation = 'screen';
         blobs.forEach(function(b, i) {
-            var dx = Math.sin(time * 8 + i) * (width * 0.10);
-            var dy = Math.cos(time * 6 + i) * (height * 0.10);
-            var tx = b.ox * width + dx + (mouse.x - width / 2) * 0.06;
-            var ty = b.oy * height + dy + (mouse.y - height / 2) * 0.06;
+            var dx = Math.sin(time * 10 + i) * (width * 0.10);
+            var dy = Math.cos(time * 8 + i) * (height * 0.10);
+            var tx = b.ox * width + dx + (mouse.x - width / 2) * 0.07;
+            var ty = b.oy * height + dy + (mouse.y - height / 2) * 0.07;
             var g = ctx.createRadialGradient(tx, ty, 0, tx, ty, b.radius);
             g.addColorStop(0, b.color);
-            g.addColorStop(0.25, b.color.replace(/[\d.]+(?=\))/, '0.08'));
-            g.addColorStop(0.55, b.color.replace(/[\d.]+(?=\))/, '0.03'));
+            g.addColorStop(0.25, b.color.replace(/[\d.]+(?=\))/, '0.10'));
+            g.addColorStop(0.55, b.color.replace(/[\d.]+(?=\))/, '0.04'));
             g.addColorStop(1, 'rgba(0,0,0,0)');
             ctx.beginPath();
             ctx.arc(tx, ty, b.radius, 0, Math.PI * 2);

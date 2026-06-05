@@ -5,6 +5,11 @@ layout: base
 <!-- Page wrapper to enforce grid limits -->
 <div class="page-container">
 
+    <!-- Hero -->
+    <div class="hero-statement">
+        <p class="hero-line">I build software, games, and tools that people enjoy using.</p>
+    </div>
+
     <!-- Row 1: About & Experience side by side -->
     <div class="content-columns">
         <section class="section anim-reveal" id="about">
@@ -61,12 +66,13 @@ layout: base
         </section>
     </div>
 
+    <div class="content-body">
+        <p class="pull-quote anim-reveal">The hardest part of software isn't writing code. It's making complexity feel simple.</p>
+    </div>
+
     <!-- Row 3: Notes -->
-    <div class="content-full">
+    <div class="content-body">
         <section class="section anim-reveal" id="notes">
-            <header class="section-header">
-                <span class="section-index">[03 // notes]</span>
-            </header>
             <div class="posts-list">
                 {%- set latestPosts = collections._posts | sortBy('date', true) %}
                 {%- for post in latestPosts %}
@@ -86,10 +92,12 @@ layout: base
         </section>
     </div>
 
-    <!-- Row 4: Bento Grid -->
-    <div class="content-full">
-        <section class="section anim-reveal" id="stats">
-            <div class="bento-grid">
+</div>
+<!-- end page-container -->
+
+<!-- Row 4: Bento Grid (full-width) -->
+<section class="section anim-reveal" id="stats" style="padding-top:var(--space-xl)">
+        <div class="bento-grid">
                 <div class="bento-cell">
                     <span class="bento-number">14+</span>
                     <span class="bento-label">years coding</span>
@@ -139,11 +147,7 @@ layout: base
                     </div>
                 </div>
             </div>
-        </section>
-    </div>
-
-</div>
-<!-- end page-container -->
+</section>
 
 <!-- Scroll Reveals -->
 <script>

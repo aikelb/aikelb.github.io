@@ -1,104 +1,112 @@
 :root {
-    /* Tokyo Night Dark Theme */
-    --bg-void:       #1a1b26;
-    --bg-surface:    #24283b;
-    --bg-elevated:   #292e42;
-    --text-primary:  #f7f8fc;
-    --text-secondary:#a9b1d6;
-    --text-muted:    #787c99;
+    /* ═══════════════════════════════════════
+       Midnight Sage
+       ═══════════════════════════════════════ */
 
-    /* Accents */
-    --accent:        #7aa2f7;
-    --accent-glow:   rgba(122, 162, 247, 0.15);
-    --green:         #9ece6a;
-    --cyan:          #7dcfff;
-    --purple:        #bb9af7;
-    --yellow:        #e0af68;
-    --border:        #3b4261;
-    --border-hover:  #565f89;
+    /* ── Surfaces ──────────────────── */
+    --bg:            #F8F8F4;
+    --surface:       #FFFFFF;
+    --surface-alt:   #F1F2EC;
 
-    /* Typography */
-    --font-sans:     'Inter', system-ui, -apple-system, sans-serif;
-    --font-mono:     'JetBrains Mono', 'Fira Code', monospace;
+    /* ── Text ──────────────────────── */
+    --text:           #1C1E1B;
+    --text-secondary: #4D524B;
+    --text-muted:     #73786F;
 
-    /* Fluid type scale */
-    --text-xs:   clamp(0.69rem, 0.67rem + 0.09vw, 0.75rem);
-    --text-sm:   clamp(0.83rem, 0.80rem + 0.17vw, 0.94rem);
-    --text-base: clamp(1.00rem, 0.95rem + 0.27vw, 1.13rem);
-    --text-lg:   clamp(1.20rem, 1.12rem + 0.41vw, 1.44rem);
-    --text-xl:   clamp(1.44rem, 1.32rem + 0.59vw, 1.75rem);
-    --text-2xl:  clamp(1.73rem, 1.56rem + 0.85vw, 2.25rem);
-    --text-3xl:  clamp(2.07rem, 1.83rem + 1.20vw, 2.75rem);
-    --text-hero: clamp(2.49rem, 2.15rem + 1.68vw, 4.00rem);
+    /* ── Borders ───────────────────── */
+    --border:         #D8DDD3;
+    --border-hover:   #C4CABE;
 
-    /* Spacing */
-    --space-3xs: clamp(0.25rem, 0.24rem + 0.06vw, 0.31rem);
-    --space-2xs: clamp(0.50rem, 0.47rem + 0.14vw, 0.63rem);
-    --space-xs:  clamp(0.75rem, 0.71rem + 0.20vw, 0.94rem);
-    --space-s:   clamp(1.00rem, 0.95rem + 0.27vw, 1.25rem);
-    --space-m:   clamp(1.50rem, 1.42rem + 0.41vw, 1.88rem);
-    --space-l:   clamp(2.00rem, 1.89rem + 0.54vw, 2.50rem);
-    --space-xl:  clamp(3.00rem, 2.84rem + 0.81vw, 3.75rem);
-    --space-2xl: clamp(4.00rem, 3.79rem + 1.08vw, 5.00rem);
+    /* ── Brand ─────────────────────── */
+    --primary:        #4F7C6B;
+    --primary-hover:  #416757;
+    --accent:         #B76E4C;
+    --accent-soft:    #EBD6CB;
+    --accent-hover:   #9E5D3E;
 
-    /* Layout */
-    --page-width:    960px;
+    /* ── Semantic ──────────────────── */
+    --green:          #4F7C6B;
+    --cyan:           #5B8C85;
+    --purple:         #6B4F7C;
+    --yellow:         #C4A24E;
+    --red:            #C4564F;
 
-    /* Transitions */
-    --transition-fast: 150ms ease;
-    --transition-smooth: 200ms cubic-bezier(0.8, 0, 1, 1);
+    /* ── Decorative ────────────────── */
+    --highlight:      #D9E5D8;
+    --code-bg:        #EEF2EC;
 
-    /* Visual */
-    --border-radius: 16px;
-    --focus-ring: 0 0 0 2px var(--bg-void), 0 0 0 4px var(--accent);
+    /* ── Shadows ───────────────────── */
+    --shadow-sm:      0 1px 2px rgba(0, 0, 0, 0.04);
+    --shadow-md:      0 4px 12px rgba(0, 0, 0, 0.05);
 
-    /* Backwards compat — legacy Elva token aliases */
-    --background: var(--bg-void);
-    --background-soft: var(--bg-surface);
-    --foreground: var(--text-primary);
-    --foreground-soft: var(--text-secondary);
-    --link: var(--accent);
-    --link-hover: var(--text-primary);
-    --divider: var(--border);
-    --code-background: var(--bg-elevated);
-    --code-default: var(--text-primary);
-    --code-regex: #d2a8ff;
-    --code-tag: var(--green);
-    --code-comment: var(--text-muted);
-    --code-selector: var(--cyan);
-    --code-number: var(--purple);
-    --code-function: var(--accent);
-    --focus-outline: 0.3ch solid var(--accent);
-    --font-base: var(--font-sans);
-    --font-headings: var(--font-sans);
-    --tracking: -0.01em;
-    --tracking-s: -0.02em;
-    --step--2: var(--text-xs);
-    --step--1: var(--text-sm);
-    --step-0:  var(--text-base);
-    --step-1:  var(--text-lg);
-    --step-2:  var(--text-xl);
-    --step-3:  var(--text-xl);
-    --step-4:  var(--text-2xl);
-    --step-5:  var(--text-xl);
-    --step-6:  var(--text-hero);
-    --section-pad: var(--space-2xl);
-    --transition-base: var(--transition-fast);
-    --white: var(--text-primary);
-    --black: #0d1117;
-    --size-step-1: var(--text-lg);
-    --space-s-2xl: var(--space-2xl);
-    --space-s-l: var(--space-s);
-    --space-s-m: var(--space-xs);
-    --space-m-3xl: var(--space-xl);
+    /* ── Typography ────────────────── */
+    --font-sans:     'Geist', 'Inter', 'SF Pro Display', -apple-system, system-ui, sans-serif;
+    --font-mono:     'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
+    --text-xs:       0.813rem;
+    --text-sm:       0.938rem;
+    --text-base:     1.125rem;
+    --text-lg:       1.25rem;
+    --text-xl:       1.5rem;
+    --text-2xl:      2rem;
+    --text-3xl:      2.5rem;
+    --text-hero:     clamp(3.5rem, 9vw, 6.5rem);
 
-    /* Nord palette → Tokyo Night mappings (legacy components) */
-    --nord0:  var(--bg-void);       /* darkest bg → void */
-    --nord5:  var(--text-primary);  /* light text → primary */
-    --nord9:  var(--accent);        /* blue → accent */
-    --nord10: var(--cyan);          /* light blue → cyan */
-    --nord11: #f7768e;              /* red (error) */
-    --nord12: var(--yellow);        /* orange → yellow */
-    --nord13: var(--yellow);        /* yellow → yellow */
-    --nord14: var(--green);         /* green → green */
+    /* ── Spacing ───────────────────── */
+    --space-3xs: 0.25rem;
+    --space-2xs: 0.5rem;
+    --space-xs:  0.75rem;
+    --space-s:   1rem;
+    --space-m:   1.5rem;
+    --space-l:   2.25rem;
+    --space-xl:  3.5rem;
+    --space-2xl: 5rem;
+
+    /* ── Layout ────────────────────── */
+    --page-width:     800px;
+    --content-width:  600px;
+
+    /* ── Motion ────────────────────── */
+    --ease-out:       cubic-bezier(0.16, 1, 0.3, 1);
+    --duration-fast:  180ms;
+    --duration-base:  300ms;
+    --duration-slow:  500ms;
+
+    /* ── Visual ────────────────────── */
+    --radius-sm:      6px;
+    --radius-md:      10px;
+    --radius-lg:      16px;
+    --radius-full:    9999px;
+}
+
+/* ── Dark Mode ─────────────────────── */
+
+[data-theme="dark"] {
+    --bg:            #111412;
+    --surface:       #1A1F1C;
+    --surface-alt:   #232925;
+
+    --text:           #F4F5F1;
+    --text-secondary: #D0D5CE;
+    --text-muted:     #9AA198;
+
+    --border:         #313834;
+    --border-hover:   #454D48;
+
+    --primary:        #7FB19D;
+    --primary-hover:  #97C3B1;
+    --accent:         #D89A77;
+    --accent-soft:    #48352B;
+    --accent-hover:   #E5B596;
+
+    --green:          #7FB19D;
+    --cyan:           #7FADA6;
+    --purple:         #A68EBF;
+    --yellow:         #D4B96A;
+    --red:            #D4817B;
+
+    --highlight:      #2C3933;
+    --code-bg:        #161B18;
+
+    --shadow-sm:      0 1px 2px rgba(0, 0, 0, 0.4);
+    --shadow-md:      0 4px 12px rgba(0, 0, 0, 0.5);
 }
