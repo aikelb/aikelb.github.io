@@ -6,16 +6,16 @@ export default defineConfig({
 
 	theme: {
 		colors: {
-			bg:      { DEFAULT: "#F8F8F4", surface: "#FFFFFF", alt: "#F1F2EC" },
-			text:    { DEFAULT: "#1C1E1B", secondary: "#4D524B", muted: "#73786F" },
-			border:  { DEFAULT: "#D8DDD3", hover: "#C4CABE" },
-			primary: { DEFAULT: "#4F7C6B", hover: "#416757" },
-			accent:  { DEFAULT: "#B76E4C", soft: "#EBD6CB", hover: "#9E5D3E" },
-			green:   { DEFAULT: "#4F7C6B" },
-			cyan:    { DEFAULT: "#5B8C85" },
-			purple:  { DEFAULT: "#6B4F7C" },
-			yellow:  { DEFAULT: "#C4A24E" },
-			red:     { DEFAULT: "#C4564F" },
+			bg:      { DEFAULT: "#F3F1EB", surface: "#F8F7F2", alt: "#ECE9E1" },
+			text:    { DEFAULT: "#1A1A18", secondary: "#575750", muted: "#7C7B73" },
+			border:  { DEFAULT: "#D6D3CA", hover: "#C4C1B6" },
+			primary: { DEFAULT: "#566257", hover: "#475148" },
+			accent:  { DEFAULT: "#8B6B4E", soft: "#E8DFD4", hover: "#73583F" },
+			green:   { DEFAULT: "#566257" },
+			cyan:    { DEFAULT: "#5E726E" },
+			purple:  { DEFAULT: "#6B5E7A" },
+			yellow:  { DEFAULT: "#9E8B5A" },
+			red:     { DEFAULT: "#A85E54" },
 		},
 		fontFamily: {
 			sans: "'Geist', 'Inter', 'SF Pro Display', -apple-system, system-ui, sans-serif",

@@ -1,43 +1,43 @@
 :root {
     /* ═══════════════════════════════════════
-       Midnight Sage
+       Japanese Editorial — Paper · Ink · Moss · Wood
        ═══════════════════════════════════════ */
 
-    /* ── Surfaces ──────────────────── */
-    --bg:            #F8F8F4;
-    --surface:       #FFFFFF;
-    --surface-alt:   #F1F2EC;
+    /* ── Surfaces (washi paper) ────── */
+    --bg:            #F3F1EB;
+    --surface:       #F8F7F2;
+    --surface-alt:   #ECE9E1;
 
-    /* ── Text ──────────────────────── */
-    --text:           #1C1E1B;
-    --text-secondary: #4D524B;
-    --text-muted:     #73786F;
+    /* ── Text (sumi ink) ───────────── */
+    --text:           #1A1A18;
+    --text-secondary: #575750;
+    --text-muted:     #7C7B73;
 
-    /* ── Borders ───────────────────── */
-    --border:         #D8DDD3;
-    --border-hover:   #C4CABE;
+    /* ── Borders (barely there) ────── */
+    --border:         #D6D3CA;
+    --border-hover:   #C4C1B6;
 
     /* ── Brand ─────────────────────── */
-    --primary:        #4F7C6B;
-    --primary-hover:  #416757;
-    --accent:         #B76E4C;
-    --accent-soft:    #EBD6CB;
-    --accent-hover:   #9E5D3E;
+    --primary:        #566257;
+    --primary-hover:  #475148;
+    --accent:         #8B6B4E;
+    --accent-soft:    #E8DFD4;
+    --accent-hover:   #73583F;
 
     /* ── Semantic ──────────────────── */
-    --green:          #4F7C6B;
-    --cyan:           #5B8C85;
-    --purple:         #6B4F7C;
-    --yellow:         #C4A24E;
-    --red:            #C4564F;
+    --green:          #566257;
+    --cyan:           #5E726E;
+    --purple:         #6B5E7A;
+    --yellow:         #9E8B5A;
+    --red:            #A85E54;
 
     /* ── Decorative ────────────────── */
-    --highlight:      #D9E5D8;
-    --code-bg:        #EEF2EC;
+    --highlight:      #E5E2D8;
+    --code-bg:        #EDEAE3;
 
     /* ── Shadows ───────────────────── */
-    --shadow-sm:      0 1px 2px rgba(0, 0, 0, 0.04);
-    --shadow-md:      0 4px 12px rgba(0, 0, 0, 0.05);
+    --shadow-sm:      0 1px 2px rgba(0, 0, 0, 0.03);
+    --shadow-md:      0 2px 8px rgba(0, 0, 0, 0.04);
 
     /* ── Typography ────────────────── */
     --font-sans:     'Geist', 'Inter', 'SF Pro Display', -apple-system, system-ui, sans-serif;
@@ -67,46 +67,46 @@
 
     /* ── Motion ────────────────────── */
     --ease-out:       cubic-bezier(0.16, 1, 0.3, 1);
-    --duration-fast:  180ms;
-    --duration-base:  300ms;
-    --duration-slow:  500ms;
+    --duration-fast:  200ms;
+    --duration-base:  350ms;
+    --duration-slow:  550ms;
 
     /* ── Visual ────────────────────── */
-    --radius-sm:      6px;
-    --radius-md:      10px;
-    --radius-lg:      16px;
+    --radius-sm:      4px;
+    --radius-md:      8px;
+    --radius-lg:      14px;
     --radius-full:    9999px;
 }
 
-/* ── Dark Mode ─────────────────────── */
+/* ── Dark Mode (charcoal paper) ────── */
 
 [data-theme="dark"] {
-    --bg:            #111412;
-    --surface:       #1A1F1C;
-    --surface-alt:   #232925;
+    --bg:            #141513;
+    --surface:       #1B1D1A;
+    --surface-alt:   #252824;
 
-    --text:           #F4F5F1;
-    --text-secondary: #D0D5CE;
-    --text-muted:     #9AA198;
+    --text:           #F0EEE8;
+    --text-secondary: #C6C4BC;
+    --text-muted:     #9E9B92;
 
-    --border:         #313834;
-    --border-hover:   #454D48;
+    --border:         #2E302B;
+    --border-hover:   #3E403A;
 
-    --primary:        #7FB19D;
-    --primary-hover:  #97C3B1;
-    --accent:         #D89A77;
-    --accent-soft:    #48352B;
-    --accent-hover:   #E5B596;
+    --primary:        #93A08E;
+    --primary-hover:  #A5B3A0;
+    --accent:         #B89573;
+    --accent-soft:    #3D342C;
+    --accent-hover:   #C9A582;
 
-    --green:          #7FB19D;
-    --cyan:           #7FADA6;
-    --purple:         #A68EBF;
-    --yellow:         #D4B96A;
-    --red:            #D4817B;
+    --green:          #93A08E;
+    --cyan:           #8A9E98;
+    --purple:         #9E91AD;
+    --yellow:         #B8A87A;
+    --red:            #C48078;
 
-    --highlight:      #2C3933;
-    --code-bg:        #161B18;
+    --highlight:      #2A2D28;
+    --code-bg:        #181A17;
 
     --shadow-sm:      0 1px 2px rgba(0, 0, 0, 0.4);
-    --shadow-md:      0 4px 12px rgba(0, 0, 0, 0.5);
+    --shadow-md:      0 2px 8px rgba(0, 0, 0, 0.5);
 }

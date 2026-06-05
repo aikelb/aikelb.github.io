@@ -207,10 +207,11 @@ a:hover { color: var(--accent); }
 .pull-quote {
     font-family: var(--font-sans);
     font-size: var(--text-lg);
-    color: var(--text-secondary);
-    line-height: 1.5;
+    color: var(--text-muted);
+    line-height: 1.6;
     font-style: italic;
-    padding: var(--space-xl) 0 var(--space-l);
+    padding: var(--space-2xl) 0 var(--space-xl);
+    max-width: 28ch;
 }
 
 /* ── Sections ──────────────────────────── */
@@ -506,8 +507,9 @@ a:hover { color: var(--accent); }
 
 .footer-redesign {
     border-top: 1px solid var(--border);
-    padding: var(--space-l) var(--space-m);
+    padding: var(--space-xl) var(--space-m) var(--space-l);
     text-align: center;
+    color: var(--text-muted);
 }
 
 .footer-social {
@@ -527,7 +529,6 @@ a:hover { color: var(--accent); }
 .footer-social a:hover { color: var(--text); }
 
 .footer-copy {
-    font-family: var(--font-mono);
     font-size: var(--text-xs);
     color: var(--text-muted);
 }
@@ -676,7 +677,7 @@ a:hover { color: var(--accent); }
     align-items: baseline;
     gap: var(--space-xs);
     flex-wrap: wrap;
-    padding: var(--space-3xs) var(--space-xs);
+    padding: var(--space-2xs) var(--space-xs);
     border-bottom: 1px solid var(--border);
     transition: background var(--duration-fast) var(--ease-out);
     margin: 0 calc(-1 * var(--space-xs));
