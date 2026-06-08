@@ -1,4 +1,20 @@
 document.addEventListener('alpine:init', () => {
+
+    Alpine.data('observation', () => {
+        const quotes = [
+            { label: 'Observation #01', text: 'The hardest part of software<br>isn\'t writing code.<br>It\'s making complexity feel simple.' },
+            { label: 'Observation #02', text: 'The hardest systems to maintain<br>are usually the easiest to start.' },
+            { label: 'Observation #03', text: 'Good architecture is often<br>the result of limitations,<br>not freedom.' },
+            { label: 'Observation #04', text: 'Performance is a feature<br>users feel before<br>they understand.' },
+        ];
+        const pick = quotes[Math.floor(Math.random() * quotes.length)];
+        return {
+            label: pick.label,
+            text: pick.text,
+        };
+    });
+
+
     Alpine.store('elva', {
         init() {
             this.theme = localStorage.getItem('theme') === null ? window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light' : localStorage.getItem('theme')

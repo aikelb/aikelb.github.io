@@ -7,7 +7,9 @@ layout: base
 
     <!-- Hero -->
     <div class="hero-statement">
-        <p class="hero-line">I build software, games, and tools that people enjoy using.</p>
+        <h1 class="hero-headline">I build software,<br>games, and tools.</h1>
+        <p class="hero-sub">that people enjoy using.</p>
+        <p class="hero-note">Based in Canary Islands · Building AI products · 2025</p>
     </div>
 
     <!-- Row 1: About & Experience side by side -->
@@ -23,51 +25,96 @@ layout: base
 
         <section class="section anim-reveal" id="work">
             <header class="section-header">
-                <span class="section-index">[02 // experience]</span>
+                <span class="section-index">[02 // selected work]</span>
             </header>
-            <div class="work-table">
-                <div class="work-row work-row--current">
-                    <span class="work-company">INNO-VERSE</span>
-                    <span class="work-role">Software Engineer</span>
-                    <span class="work-dates">2025 – Present</span>
-                    <span class="work-detail">Building AI agents. Python, FastAPI, LangChain.</span>
+            <div class="work-timeline">
+                <div class="work-entry" x-data="{ open: false }" :class="open ? 'work-entry--open' : ''">
+                    <div class="work-entry-head" @click="open = !open">
+                        <span class="work-entry-dot"></span>
+                        <span class="work-entry-name">AI Agent Platform</span>
+                        <span class="work-entry-year">2025 – Present</span>
+                    </div>
+                    <div class="work-entry-body" :class="open ? 'work-entry-body--open' : ''">
+                        <div class="work-entry-tags">
+                            <span>python</span><span>fastapi</span><span>langchain</span>
+                        </div>
+                        <p class="work-entry-desc">Python, FastAPI, LangChain. Reducing manual workflows through intelligent automation across the development lifecycle.</p>
+                    </div>
                 </div>
-                <div class="work-row">
-                    <span class="work-company">Exel by Merak</span>
-                    <span class="work-role">Entrepreneur in Residence</span>
-                    <span class="work-dates">2025</span>
-                    <span class="work-detail">Advising gaming startups in Riyadh accelerator programs. Mentorship &amp; code reviews.</span>
+                <div class="work-entry" x-data="{ open: false }" :class="open ? 'work-entry--open' : ''">
+                    <div class="work-entry-head" @click="open = !open">
+                        <span class="work-entry-dot"></span>
+                        <span class="work-entry-name">Gaming Accelerator</span>
+                        <span class="work-entry-year">2025</span>
+                    </div>
+                    <div class="work-entry-body" :class="open ? 'work-entry-body--open' : ''">
+                        <div class="work-entry-tags">
+                            <span>unity</span><span>mentorship</span><span>strategy</span>
+                        </div>
+                        <p class="work-entry-desc">Technical mentorship, code reviews, and product strategy for early-stage teams at Exel by Merak.</p>
+                    </div>
                 </div>
-                <div class="work-row">
-                    <span class="work-company">Aurita Games</span>
-                    <span class="work-role">CEO &amp; Game Developer</span>
-                    <span class="work-dates">2020 – 2025</span>
-                    <span class="work-detail">Directed production of over 80+ web, PC, and cozy mobile game assets.</span>
+                <div class="work-entry" x-data="{ open: false }" :class="open ? 'work-entry--open' : ''">
+                    <div class="work-entry-head" @click="open = !open">
+                        <span class="work-entry-dot"></span>
+                        <span class="work-entry-name">Aurita Games</span>
+                        <span class="work-entry-year">2020 – 2025</span>
+                    </div>
+                    <div class="work-entry-body" :class="open ? 'work-entry-body--open' : ''">
+                        <div class="work-entry-tags">
+                            <span>unity</span><span>defold</span><span>leadership</span>
+                        </div>
+                        <p class="work-entry-desc">Transitioned from freelance work to a small company. Design, development, and client relationships across web, PC, and mobile.</p>
+                    </div>
                 </div>
-                <div class="work-row">
-                    <span class="work-company">PlayMedusa</span>
-                    <span class="work-role">Game Developer</span>
-                    <span class="work-dates">2011 – 2025</span>
-                    <span class="work-detail">14 years shipping game designs and programming services across mobile, PC, VR.</span>
+                <div class="work-entry" x-data="{ open: false }" :class="open ? 'work-entry--open' : ''">
+                    <div class="work-entry-head" @click="open = !open">
+                        <span class="work-entry-dot"></span>
+                        <span class="work-entry-name">PlayMedusa</span>
+                        <span class="work-entry-year">2011 – Present</span>
+                    </div>
+                    <div class="work-entry-body" :class="open ? 'work-entry-body--open' : ''">
+                        <div class="work-entry-tags">
+                            <span>unity</span><span>c#</span><span>vr</span><span>steam</span>
+                        </div>
+                        <p class="work-entry-desc">Programming, design, and client work for Steam, Meta Quest, Nintendo Switch, and iOS.</p>
+                    </div>
                 </div>
-                <div class="work-row">
-                    <span class="work-company">30 Parallel Games</span>
-                    <span class="work-role">Senior Developer</span>
-                    <span class="work-dates">2018 – 2020</span>
-                    <span class="work-detail">Built real-time multiplayer VR systems and decentralized application backends.</span>
+                <div class="work-entry" x-data="{ open: false }" :class="open ? 'work-entry--open' : ''">
+                    <div class="work-entry-head" @click="open = !open">
+                        <span class="work-entry-dot"></span>
+                        <span class="work-entry-name">30 Parallel Games</span>
+                        <span class="work-entry-year">2018 – 2020</span>
+                    </div>
+                    <div class="work-entry-body" :class="open ? 'work-entry-body--open' : ''">
+                        <div class="work-entry-tags">
+                            <span>unity</span><span>photon</span><span>vr</span>
+                        </div>
+                        <p class="work-entry-desc">Decentralized backends and immersive networked experiences for room-scale VR applications.</p>
+                    </div>
                 </div>
-                <div class="work-row">
-                    <span class="work-company">Relativity Studios</span>
-                    <span class="work-role">Lead Developer</span>
-                    <span class="work-dates">2017</span>
-                    <span class="work-detail">Led team of 5 on Barbie™ mobile games (surpassed 10 Million+ downloads).</span>
+                <div class="work-entry" x-data="{ open: false }" :class="open ? 'work-entry--open' : ''">
+                    <div class="work-entry-head" @click="open = !open">
+                        <span class="work-entry-dot"></span>
+                        <span class="work-entry-name">Barbie™ Mobile Games</span>
+                        <span class="work-entry-year">2017</span>
+                    </div>
+                    <div class="work-entry-body" :class="open ? 'work-entry-body--open' : ''">
+                        <div class="work-entry-tags">
+                            <span>unity</span><span>mobile</span><span>leadership</span>
+                        </div>
+                        <p class="work-entry-desc">Shipped titles that crossed 10 million downloads worldwide across iOS and Android.</p>
+                    </div>
                 </div>
             </div>
         </section>
     </div>
 
-    <div class="content-body">
-        <p class="pull-quote anim-reveal">The hardest part of software isn't writing code. It's making complexity feel simple.</p>
+    <div class="content-body" x-data="observation">
+        <div class="artifact anim-reveal">
+            <span class="artifact-label" x-text="label"></span>
+            <p class="artifact-text" x-html="text"></p>
+        </div>
     </div>
 
     <!-- Row 3: Notes -->
