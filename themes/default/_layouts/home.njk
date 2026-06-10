@@ -28,7 +28,7 @@ layout: base
                 <span class="section-index">[02 // selected work]</span>
             </header>
             <div class="work-timeline">
-                <div class="work-entry" x-data="{ open: false }" :class="open ? 'work-entry--open' : ''">
+                <div class="work-entry work-entry--current" x-data="{ open: false }" :class="open ? 'work-entry--open' : ''">
                     <div class="work-entry-head" @click="open = !open">
                         <span class="work-entry-dot"></span>
                         <span class="work-entry-name">AI Agent Platform</span>
@@ -67,7 +67,7 @@ layout: base
                         <p class="work-entry-desc">Transitioned from freelance work to a small company. Design, development, and client relationships across web, PC, and mobile.</p>
                     </div>
                 </div>
-                <div class="work-entry" x-data="{ open: false }" :class="open ? 'work-entry--open' : ''">
+                <div class="work-entry work-entry--current" x-data="{ open: false }" :class="open ? 'work-entry--open' : ''">
                     <div class="work-entry-head" @click="open = !open">
                         <span class="work-entry-dot"></span>
                         <span class="work-entry-name">PlayMedusa</span>

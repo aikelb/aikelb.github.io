@@ -280,12 +280,13 @@ a:hover { color: var(--accent); }
 .work-timeline {
     position: relative;
     border-left: 1px solid var(--border);
+    margin-left: var(--space-s);
 }
 
 .work-entry {
     position: relative;
-    padding: 0 0 var(--space-m) var(--space-m);
-    max-width: 38ch;
+    padding: 0 0 var(--space-m) var(--space-s);
+    max-width: 34ch;
 }
 
 .work-entry:last-child {
@@ -309,7 +310,7 @@ a:hover { color: var(--accent); }
 
 .work-entry-dot {
     position: absolute;
-    left: calc(-1 * var(--space-m) - 3px);
+    left: calc(-1 * var(--space-s) - 3px);
     top: 1rem;
     width: 6px;
     height: 6px;
@@ -325,9 +326,19 @@ a:hover { color: var(--accent); }
 }
 
 .work-entry--open .work-entry-dot {
-    width: 8px;
-    height: 8px;
-    left: calc(-1 * var(--space-m) - 4px);
+    width: 7px;
+    height: 7px;
+    left: calc(-1 * var(--space-s) - 3.5px);
+}
+
+.work-entry--current .work-entry-dot {
+    background: var(--primary);
+    animation: radar-pulse 3s ease-in-out infinite;
+}
+
+@keyframes radar-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(86, 98, 87, 0.3); }
+    50%      { box-shadow: 0 0 0 6px rgba(86, 98, 87, 0); }
 }
 
 .work-entry-name {
@@ -918,7 +929,7 @@ figure > figcaption {
     .aurora-banner { height: 380px; }
     .section { padding: var(--space-m) 0; }
     .work-entry { max-width: none; }
-    .work-timeline { border-left: none; padding-left: 0; }
+    .work-timeline { border-left: none; margin-left: 0; }
     .work-entry-dot { display: none; }
     .bento-grid { grid-template-columns: 1fr 1fr; padding: 0 var(--space-s); }
     #content > .hentry,
