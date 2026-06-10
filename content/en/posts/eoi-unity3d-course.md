@@ -17,6 +17,6 @@ The curriculum covered:
 - Rendering pipelines and performance optimization
 - Building and shipping complete projects
 
-The course was aimed at postgraduate students transitioning into game development — many coming from traditional software engineering backgrounds. The biggest challenge wasn't teaching Unity itself but helping students un-learn enterprise patterns that don't apply to real-time interactive software.
+The course was aimed at postgraduate students transitioning into game development. Most came from traditional software engineering backgrounds. The biggest challenge wasn't teaching Unity itself but helping students un-learn enterprise patterns that don't apply to real-time interactive software.
 
 110 hours sounds like a lot, but game development is deep. By the end, every student had shipped a working prototype.

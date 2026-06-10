@@ -8,7 +8,7 @@ tags:
   - unity
 ---
 
-From 2014 to 2019 I mentored at the annual **Island Jam** in Gran Canaria — a local game jam that brings together students, hobbyists, and professionals for a weekend of rapid prototyping.
+From 2014 to 2019 I mentored at the annual **Island Jam** in Gran Canaria, a local game jam that brings together students, hobbyists, and professionals for a weekend of rapid prototyping.
 
 I also taught Unity3D courses at basic and advanced levels through **ACADEVI**, the Canary Islands game developer association, helping build the local dev community from the ground up.
 

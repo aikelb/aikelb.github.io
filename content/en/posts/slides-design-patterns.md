@@ -9,6 +9,6 @@ tags:
   - unity
 ---
 
-Common game programming patterns explained through Unity examples — observer, component, state machines, object pooling.
+Common game programming patterns explained through Unity examples: observer, component, state machines, object pooling.
 
 → [View slides](https://slides.aitorlozano.com/design-patterns/)

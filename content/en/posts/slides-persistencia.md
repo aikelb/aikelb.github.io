@@ -9,6 +9,6 @@ tags:
   - unity
 ---
 
-Game save systems and data persistence — PlayerPrefs, JSON serialization, cloud saves, and build pipeline considerations.
+Game save systems and data persistence: PlayerPrefs, JSON serialization, cloud saves, and build pipeline considerations.
 
 → [View slides](https://slides.aitorlozano.com/persistencia)

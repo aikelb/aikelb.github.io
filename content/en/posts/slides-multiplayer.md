@@ -10,6 +10,6 @@ tags:
   - unity
 ---
 
-Introduction to multiplayer game architecture — client-server model, Photon Unity Networking, state synchronization, and latency compensation.
+Introduction to multiplayer game architecture: client-server model, Photon Unity Networking, state synchronization, and latency compensation.
 
 → [View slides](https://slides.aitorlozano.com/multiplayer/slides)

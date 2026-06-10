@@ -19,7 +19,7 @@ layout: base
 
     <nav style="display: flex; gap: var(--space-m); margin-top: var(--space-l); font-family: var(--font-mono); font-size: var(--text-xs);">
         <a href="#work" style="color: var(--text-muted); border-bottom: 1px solid transparent; transition: all var(--duration-fast);">&rarr; // historical_timeline</a>
-        <a href="/writing/" style="color: var(--text-muted); border-bottom: 1px solid transparent; transition: all var(--duration-fast);">&rarr; // notebook_entries</a>
+        <a href="/tag/slides/" style="color: var(--text-muted); border-bottom: 1px solid transparent; transition: all var(--duration-fast);">&rarr; // slides</a>
     </nav>
 </section>
 
@@ -41,7 +41,7 @@ layout: base
                     <div class="work-entry-tags">
                         <span>python</span><span>fastapi</span><span>langchain</span><span>automation</span>
                     </div>
-                    <p class="work-entry-desc">Current professional focus. Building multi-agent systems, internal automation pipelines, and exploring how AI paradigms shift modern developer workflows.</p>
+                    <p class="work-entry-desc">AI Engineer at INNO-VERSE, building AI-powered development tools with Python, LangChain, and FastAPI.</p>
                 </div>
             </div>
         </div>
@@ -57,7 +57,23 @@ layout: base
                     <div class="work-entry-tags">
                         <span>unity</span><span>c#</span><span>vr</span><span>steam</span><span>switch</span>
                     </div>
-                    <p class="work-entry-desc">My professional home for over a decade. Built and designed interactive applications and games for external clients across mobile, VR, console, and web.</p>
+                    <p class="work-entry-desc">My professional home since 2011. Developed our own games while also providing design and development services to external clients, integrating with existing teams and codebases to ensure successful delivery across mobile, VR, console, and web.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="work-entry" x-data="{ open: false }" :class="open ? 'work-entry--open' : ''">
+            <div class="work-entry-head" @click="open = !open">
+                <span class="work-entry-dot"></span>
+                <span class="work-entry-name">Exel Gaming Accelerator</span>
+                <span class="work-entry-year">Mar 2025 – Oct 2025</span>
+            </div>
+            <div class="work-entry-body" :class="open ? 'work-entry-body--open' : ''">
+                <div class="work-entry-body-inner">
+                    <div class="work-entry-tags">
+                        <span>mentorship</span><span>entrepreneurship</span><span>gaming</span>
+                    </div>
+                    <p class="work-entry-desc">Entrepreneur in Residence at Exel by Merak in Riyadh. Mentored startup teams on technical strategy, advised on production and project development, and helped refine accelerator workflows and best practices.</p>
                 </div>
             </div>
         </div>
@@ -73,7 +89,7 @@ layout: base
                     <div class="work-entry-tags">
                         <span>unity</span><span>defold</span><span>product-strategy</span>
                     </div>
-                    <p class="work-entry-desc">Transitioned from independent freelancing to a focused micro-studio setup. Handled design, client relationships, and multiplatform delivery.</p>
+                    <p class="work-entry-desc">Founded and ran a micro-studio. Handled design, client relationships, and multiplatform delivery across 80+ projects. Stepped away in late 2025 to focus on AI full-time.</p>
                 </div>
             </div>
         </div>
@@ -89,7 +105,7 @@ layout: base
                     <div class="work-entry-tags">
                         <span>unity</span><span>photon</span><span>vr-networking</span>
                     </div>
-                    <p class="work-entry-desc">Architected networked systems and immersive backends for decentralized, room-scale multiplayer VR environments.</p>
+                    <p class="work-entry-desc">Implemented real-time multiplayer using Photon for Terra Alia, a language-learning RPG on Steam and Meta Quest. Also built a React dashboard and automated daemons for Bitponies, a blockchain-based collectible game.</p>
                 </div>
             </div>
         </div>
@@ -105,7 +121,7 @@ layout: base
                     <div class="work-entry-tags">
                         <span>unity</span><span>mobile</span><span>team-leadership</span>
                     </div>
-                    <p class="work-entry-desc">Led a development team of 5 at Relativity Studios, shipping high-profile titles reaching over 10 million mobile downloads globally.</p>
+                    <p class="work-entry-desc">Led a remote team of 5 developers across Spain at Relativity Studios. Shipped Barbie™ You Can Be Anything, surpassing 10 million mobile downloads. Also built an internal narrative management tool for American Girl World.</p>
                 </div>
             </div>
         </div>
@@ -121,7 +137,7 @@ layout: base
                     <div class="work-entry-tags">
                         <span>ulpgc</span><span>lectures</span><span>curriculum-design</span>
                     </div>
-                    <p class="work-entry-desc">University lecturer at ULPGC, engineering accelerator mentor, and curriculum consultant for game programming and mechanics design.</p>
+                    <p class="work-entry-desc">Delivered a year-long university course in game design and programming using Unity3D and C# at ULPGC. Curriculum covered design patterns, multiplayer development, game feel, and hands-on workshops.</p>
                 </div>
             </div>
         </div>

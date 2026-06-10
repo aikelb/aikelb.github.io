@@ -9,6 +9,6 @@ tags:
   - unity
 ---
 
-Understanding raycasting in Unity — Physics.Raycast, layer masks, hit detection, and practical examples for shooting, selection, and line-of-sight.
+Understanding raycasting in Unity: Physics.Raycast, layer masks, hit detection, and practical examples for shooting, selection, and line-of-sight.
 
 → [View slides](https://slides.aitorlozano.com/raycast)
