@@ -8,13 +8,13 @@ layout: base
         Hi, I'm Aitor.
     </h1>
     <p class="hero-text" style="font-size: var(--text-base); color: var(--text-secondary); line-height: 1.65; margin-bottom: var(--space-s);">
-        Developer, game maker, and teacher based in the Canary Islands.
+        Developer, game maker, and occasional teacher based in the Canary Islands.
     </p>
     <p class="hero-text" style="font-size: var(--text-base); color: var(--text-secondary); line-height: 1.65; margin-bottom: var(--space-s);">
-        Over the last 15 years I've shipped more than 80 interactive products across PC, VR, Nintendo Switch, mobile, and web platforms.
+        Over the past 15 years I've worked on more than 80 projects: small experiments, shipped titles on PC, VR, Nintendo Switch, mobile, and web. Learned a lot along the way.
     </p>
     <p class="hero-text" style="font-size: var(--text-base); color: var(--text-secondary); line-height: 1.65; margin-bottom: var(--space-m);">
-        My background is rooted in game development, real-time systems, and technical leadership. Today I'm increasingly focused on AI systems, multi-agent workflows, developer tooling, and modern automation pipelines.
+        My roots are in game development. Lately I've been working as an AI Engineer, building tooling, multi-agent workflows, and trying to understand where all of this is actually going.
     </p>
 
     <nav style="display: flex; gap: var(--space-m); margin-top: var(--space-l); font-family: var(--font-mono); font-size: var(--text-xs);">
@@ -37,10 +37,12 @@ layout: base
                 <span class="work-entry-year">2025 – Present</span>
             </div>
             <div class="work-entry-body" :class="open ? 'work-entry-body--open' : ''">
-                <div class="work-entry-tags">
-                    <span>python</span><span>fastapi</span><span>langchain</span><span>automation</span>
+                <div class="work-entry-body-inner">
+                    <div class="work-entry-tags">
+                        <span>python</span><span>fastapi</span><span>langchain</span><span>automation</span>
+                    </div>
+                    <p class="work-entry-desc">Current professional focus. Building multi-agent systems, internal automation pipelines, and exploring how AI paradigms shift modern developer workflows.</p>
                 </div>
-                <p class="work-entry-desc">Current professional focus. Building multi-agent systems, internal automation pipelines, and exploring how AI paradigms shift modern developer workflows.</p>
             </div>
         </div>
 
@@ -48,13 +50,15 @@ layout: base
             <div class="work-entry-head" @click="open = !open">
                 <span class="work-entry-dot"></span>
                 <span class="work-entry-name">PlayMedusa</span>
-                <span class="work-entry-year">2011 – 2025</span>
+                <span class="work-entry-year">2011 – Present</span>
             </div>
             <div class="work-entry-body" :class="open ? 'work-entry-body--open' : ''">
-                <div class="work-entry-tags">
-                    <span>unity</span><span>c#</span><span>vr</span><span>steam</span><span>switch</span>
+                <div class="work-entry-body-inner">
+                    <div class="work-entry-tags">
+                        <span>unity</span><span>c#</span><span>vr</span><span>steam</span><span>switch</span>
+                    </div>
+                    <p class="work-entry-desc">My professional home for over a decade. Built and designed interactive applications and games for external clients across mobile, VR, console, and web.</p>
                 </div>
-                <p class="work-entry-desc">My professional home for over a decade. Built and designed interactive applications and games for external clients across mobile, VR, console, and web.</p>
             </div>
         </div>
 
@@ -65,10 +69,12 @@ layout: base
                 <span class="work-entry-year">2020 – 2025</span>
             </div>
             <div class="work-entry-body" :class="open ? 'work-entry-body--open' : ''">
-                <div class="work-entry-tags">
-                    <span>unity</span><span>defold</span><span>product-strategy</span>
+                <div class="work-entry-body-inner">
+                    <div class="work-entry-tags">
+                        <span>unity</span><span>defold</span><span>product-strategy</span>
+                    </div>
+                    <p class="work-entry-desc">Transitioned from independent freelancing to a focused micro-studio setup. Handled design, client relationships, and multiplatform delivery.</p>
                 </div>
-                <p class="work-entry-desc">Transitioned from independent freelancing to a focused micro-studio setup. Handled design, client relationships, and multiplatform delivery.</p>
             </div>
         </div>
 
@@ -79,10 +85,12 @@ layout: base
                 <span class="work-entry-year">2018 – 2020</span>
             </div>
             <div class="work-entry-body" :class="open ? 'work-entry-body--open' : ''">
-                <div class="work-entry-tags">
-                    <span>unity</span><span>photon</span><span>vr-networking</span>
+                <div class="work-entry-body-inner">
+                    <div class="work-entry-tags">
+                        <span>unity</span><span>photon</span><span>vr-networking</span>
+                    </div>
+                    <p class="work-entry-desc">Architected networked systems and immersive backends for decentralized, room-scale multiplayer VR environments.</p>
                 </div>
-                <p class="work-entry-desc">Architected networked systems and immersive backends for decentralized, room-scale multiplayer VR environments.</p>
             </div>
         </div>
 
@@ -93,10 +101,12 @@ layout: base
                 <span class="work-entry-year">2017</span>
             </div>
             <div class="work-entry-body" :class="open ? 'work-entry-body--open' : ''">
-                <div class="work-entry-tags">
-                    <span>unity</span><span>mobile</span><span>team-leadership</span>
+                <div class="work-entry-body-inner">
+                    <div class="work-entry-tags">
+                        <span>unity</span><span>mobile</span><span>team-leadership</span>
+                    </div>
+                    <p class="work-entry-desc">Led a development team of 5 at Relativity Studios, shipping high-profile titles reaching over 10 million mobile downloads globally.</p>
                 </div>
-                <p class="work-entry-desc">Led a development team of 5 at Relativity Studios, shipping high-profile titles reaching over 10 million mobile downloads globally.</p>
             </div>
         </div>
 
@@ -107,10 +117,12 @@ layout: base
                 <span class="work-entry-year">2014 – 2025</span>
             </div>
             <div class="work-entry-body" :class="open ? 'work-entry-body--open' : ''">
-                <div class="work-entry-tags">
-                    <span>ulpgc</span><span>lectures</span><span>curriculum-design</span>
+                <div class="work-entry-body-inner">
+                    <div class="work-entry-tags">
+                        <span>ulpgc</span><span>lectures</span><span>curriculum-design</span>
+                    </div>
+                    <p class="work-entry-desc">University lecturer at ULPGC, engineering accelerator mentor, and curriculum consultant for game programming and mechanics design.</p>
                 </div>
-                <p class="work-entry-desc">University lecturer at ULPGC, engineering accelerator mentor, and curriculum consultant for game programming and mechanics design.</p>
             </div>
         </div>
 
@@ -143,28 +155,37 @@ layout: base
 <!-- Background & Context -->
 <section class="section anim-reveal" id="summary-context" style="border-top: 1px solid var(--border); padding-top: var(--space-xl); margin-top: var(--space-l);">
     <header class="section-header" style="margin-bottom: var(--space-l);">
-        <span class="section-index">[03 // index_metadata]</span>
+        <span class="section-index">[03 // profile_snapshot]</span>
     </header>
 
-    <!-- Observation (wide card) -->
-    <div class="metadata-card metadata-card--observation anim-reveal" x-data="observation">
-        <p class="metadata-card-text" x-html="text"></p>
-    </div>
-
-    <!-- Career Metrics Strip -->
-    <div class="metadata-metrics">
+    <!-- Career Metrics + Observation -->
+    <div class="metadata-metrics" x-data="observation">
         <span class="metadata-metrics-header">[career_metrics]</span>
-        <div class="metadata-metrics-numbers">
-            <div>
-                <div class="metadata-metrics-number">15+</div>
-                <div class="metadata-metrics-context">years of activity</div>
+        <div class="metadata-metrics-body">
+            <div class="metadata-metrics-left">
+                <div class="metadata-metrics-numbers">
+                    <div>
+                        <div class="metadata-metrics-number">15+</div>
+                        <div class="metadata-metrics-context">years of activity</div>
+                    </div>
+                    <div>
+                        <div class="metadata-metrics-number">80+</div>
+                        <div class="metadata-metrics-context">shipped products</div>
+                    </div>
+                </div>
+                <div class="metadata-metrics-platforms">
+                    <span>PC</span><span aria-hidden="true" style="opacity:.4">·</span>
+                    <span>VR</span><span aria-hidden="true" style="opacity:.4">·</span>
+                    <span>Nintendo Switch</span><span aria-hidden="true" style="opacity:.4">·</span>
+                    <span>Mobile</span><span aria-hidden="true" style="opacity:.4">·</span>
+                    <span>Web</span>
+                </div>
             </div>
-            <div>
-                <div class="metadata-metrics-number">80+</div>
-                <div class="metadata-metrics-context">shipped products</div>
+            <div class="metadata-metrics-quote">
+                <span class="metadata-metrics-quote-label">OBSERVATION</span>
+                <p x-html="text"></p>
             </div>
         </div>
-        <div class="metadata-metrics-platforms">PC · VR · Nintendo Switch · Mobile · Web</div>
     </div>
 
     <!-- Archive Grid -->
@@ -180,28 +201,36 @@ layout: base
 
         <!-- native_expertise -->
         <div class="metadata-card">
-            <span class="metadata-card-header" style="color: var(--text-muted);">[native_expertise]</span>
-            <div class="metadata-card-tags metadata-card-tags--outline">
-                <span>C#</span><span>Unity3D</span><span>VR Netcode</span><span>Lua</span><span>Mobile</span><span>C++</span><span>WebGL</span>
+            <span class="metadata-card-header">[native_expertise]</span>
+            <div class="metadata-card-tags">
+                <span>c#</span><span>unity3d</span><span>vr netcode</span><span>lua</span><span>mobile</span><span>c++</span><span>webgl</span>
             </div>
         </div>
 
         <!-- career_domains -->
+        <div class="metadata-card metadata-card--wide">
+            <span class="metadata-card-header">[career_domains]</span>
+            <div class="metadata-card-tags">
+                <span>game development</span><span>ai systems</span><span>developer tooling</span><span>education</span><span>technical leadership</span><span>vr</span><span>automation</span><span>interactive design</span>
+            </div>
+        </div>
+
+        <!-- availability -->
         <div class="metadata-card">
-            <span class="metadata-card-header" style="color: var(--text-muted);">[career_domains]</span>
-            <div class="metadata-card-tags metadata-card-tags--outline">
-                <span>Game Development</span><span>AI Systems</span><span>Developer Tooling</span><span>Education</span><span>Technical Leadership</span><span>VR</span><span>Automation</span><span>Interactive Design</span>
+            <span class="metadata-card-header">[availability]</span>
+            <div class="metadata-availability">
+                <div><span class="avail-key">status</span><span class="avail-val">employed · not looking</span></div>
+                <div><span class="avail-key">timezone</span><span class="avail-val">UTC+1 · Canary Islands</span></div>
+                <div><span class="avail-key">preferred</span><span class="avail-val">full-time · remote</span></div>
             </div>
         </div>
 
         <!-- environment_nodes -->
-        <div class="metadata-card">
-            <span class="metadata-card-header" style="color: var(--text-muted);">[environment_nodes]</span>
-            <div style="position: relative; width: 100%; height: 110px; overflow: hidden; border-radius: var(--radius-sm); border: 1px solid var(--border); margin-top: var(--space-xs);">
-                <img src="/assets/img/cats.jpg" alt="Marvel &amp; Haru" loading="lazy" eleventy:ignore style="width: 100%; height: 100%; object-fit: cover; filter: grayscale(40%); transition: filter 0.3s ease;">
-            </div>
-            <span style="font-size: var(--text-xs); color: var(--text-secondary); line-height: 1.4; margin-top: var(--space-2xs); display: block;">
-                Marvel &amp; Haru — providing daily operational support and office oversight.
+        <div class="metadata-card metadata-card--environment">
+            <img src="/assets/img/cats.jpg" alt="Marvel &amp; Haru" loading="lazy" eleventy:ignore class="metadata-card-bg">
+            <span class="metadata-card-header">[environment_nodes]</span>
+            <span class="metadata-card-sub">
+                Marvel &amp; Haru, providing daily operational support and office oversight.
             </span>
         </div>
 
@@ -226,5 +255,32 @@ layout: base
             });
         });
     });
+})();
+</script>
+
+<script>
+(function() {
+    var el = document.getElementById('footer-weather');
+    if (!el) return;
+    var lat = 28.1248, lon = -15.4300;
+    var url = 'https://api.open-meteo.com/v1/forecast?latitude=' + lat +
+              '&longitude=' + lon +
+              '&current=temperature_2m,weather_code&temperature_unit=celsius&timezone=Atlantic%2FCanary';
+    fetch(url)
+        .then(function(r) { return r.json(); })
+        .then(function(d) {
+            var temp = Math.round(d.current.temperature_2m);
+            var code = d.current.weather_code;
+            var icons = {0:'☀️',1:'🌤',2:'⛅',3:'☁️',45:'🌫',48:'🌫',51:'🌦',53:'🌦',55:'🌧',
+                61:'🌧',63:'🌧',65:'🌧',71:'🌨',73:'🌨',75:'🌨',80:'🌦',81:'🌦',
+                82:'🌧',95:'⛈',96:'⛈',99:'⛈'};
+            var icon = icons[code] || '🌡';
+            el.querySelector('.footer-weather-icon').textContent = icon;
+            el.querySelector('.footer-weather-text').textContent =
+                'Las Palmas · ' + temp + '°C';
+        })
+        .catch(function() {
+            el.style.display = 'none';
+        });
 })();
 </script>

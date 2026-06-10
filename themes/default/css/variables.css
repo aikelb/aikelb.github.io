@@ -81,23 +81,23 @@
 /* ── Dark Mode (surgical teal developer-tool aesthetic) ────── */
 
 [data-theme="dark"] {
-    --bg:            #0b0d0c;
-    --surface:       #121514;
-    --surface-alt:   #181c1a;
+    --bg:            #1a1c1b;
+    --surface:       #222524;
+    --surface-alt:   #2a2e2c;
 
-    --text:           #f2f5f4;
-    --text-secondary: #9ca7a5;
-    --text-muted:     #64726f;
+    --text:           #eef1f0;
+    --text-secondary: #a8b4b2;
+    --text-muted:     #6e7d7a;
 
-    --border:         #1f2422;
-    --border-hover:   #2e3734;
+    --border:         #2e3432;
+    --border-hover:   #424f4b;
 
     --primary:        #2dd4bf;
     --primary-hover:  #5eeadb;
     --accent:         #0f766e;
-    --accent-soft:    rgba(15, 118, 110, 0.15);
+    --accent-soft:    #0f766e26;
     --accent-hover:   #14b8a6;
-    --accent-dim:     rgba(15, 118, 110, 0.15);
+    --accent-dim:     #0f766e26;
 
     --green:          #2dd4bf;
     --cyan:           #0f766e;
@@ -105,9 +105,9 @@
     --yellow:         #b8a85a;
     --red:            #c47878;
 
-    --highlight:      rgba(15, 118, 110, 0.12);
-    --code-bg:        #0f1412;
+    --highlight:      #0f766e1f;
+    --code-bg:        #1e2220;
 
     --shadow-sm:      0 1px 2px rgba(0, 0, 0, 0.6);
-    --shadow-md:      0 2px 8px rgba(0, 0, 0, 0.7);
+    --shadow-md:      0 2px 8px rgba(0, 0, 0, 0.66);
 }
