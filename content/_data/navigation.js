@@ -1,7 +1,7 @@
 export default {
     en: [
 		{
-			text: 'Home',
+			text: 'Work',
 			url: '/'
 		},
 		{

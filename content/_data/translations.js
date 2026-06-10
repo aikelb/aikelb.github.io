@@ -5,8 +5,8 @@ export default {
             rssTitle: 'RSS Feed',
             jsonTitle: 'JSON Feed',
             blogrollTitle: 'Blogroll',
-            description: 'Software Engineer & Game Developer. 14+ years building for AI, games, and the web.',
-            opengraphDefaultAlt: 'Aitor Lozano — Software Engineer & Game Developer'
+            description: 'Developer, game maker, and teacher. 15 years building games, software, and interactive experiences.',
+            opengraphDefaultAlt: 'Aitor Lozano — Developer, game maker, and teacher'
         },
         header: {
             skipLink: 'Skip to content',

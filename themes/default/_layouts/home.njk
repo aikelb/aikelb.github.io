@@ -2,198 +2,210 @@
 layout: base
 ---
 
-<!-- Page wrapper to enforce grid limits -->
-<div class="page-container">
+<!-- Welcome / Hero -->
+<section class="section hero-statement anim-reveal" id="welcome" style="max-width: 52ch; padding: var(--space-xl) 0 var(--space-m);">
+    <h1 class="hero-greeting" style="font-size: var(--text-2xl); letter-spacing: -.03em; margin-bottom: var(--space-m); font-weight: 600;">
+        Hi, I'm Aitor.
+    </h1>
+    <p class="hero-text" style="font-size: var(--text-base); color: var(--text-secondary); line-height: 1.65; margin-bottom: var(--space-s);">
+        Developer, game maker, and teacher based in the Canary Islands.
+    </p>
+    <p class="hero-text" style="font-size: var(--text-base); color: var(--text-secondary); line-height: 1.65; margin-bottom: var(--space-s);">
+        Over the last 15 years I've shipped more than 80 interactive products across PC, VR, Nintendo Switch, mobile, and web platforms.
+    </p>
+    <p class="hero-text" style="font-size: var(--text-base); color: var(--text-secondary); line-height: 1.65; margin-bottom: var(--space-m);">
+        My background is rooted in game development, real-time systems, and technical leadership. Today I'm increasingly focused on AI systems, multi-agent workflows, developer tooling, and modern automation pipelines.
+    </p>
 
-    <!-- Hero -->
-    <div class="hero-statement">
-        <h1 class="hero-headline">I build software,<br>games, and tools.</h1>
-        <p class="hero-sub">that people enjoy using.</p>
-        <p class="hero-note">Based in Canary Islands · Building AI products · 2025</p>
-    </div>
+    <nav style="display: flex; gap: var(--space-m); margin-top: var(--space-l); font-family: var(--font-mono); font-size: var(--text-xs);">
+        <a href="#work" style="color: var(--text-muted); border-bottom: 1px solid transparent; transition: all var(--duration-fast);">&rarr; // historical_timeline</a>
+        <a href="/writing/" style="color: var(--text-muted); border-bottom: 1px solid transparent; transition: all var(--duration-fast);">&rarr; // notebook_entries</a>
+    </nav>
+</section>
 
-    <!-- Row 1: About & Experience side by side -->
-    <div class="content-columns">
-        <section class="section anim-reveal" id="about">
-            <header class="section-header">
-                <span class="section-index">[01 // about]</span>
-            </header>
-            <div class="about-text">
-                <p>I build AI-powered developer tools and have shipped 80+ games across PC, console, VR, and mobile. I also lecture on game programming and mentor startups. Based in the Canary Islands. <a href="/about/">More about me →</a></p>
+<!-- Timeline -->
+<section class="section anim-reveal" id="work">
+    <header class="section-header">
+        <span class="section-index">[01 // timeline]</span>
+    </header>
+    <div class="work-timeline">
+
+        <div class="work-entry work-entry--current" x-data="{ open: true }" :class="open ? 'work-entry--open' : ''">
+            <div class="work-entry-head" @click="open = !open">
+                <span class="work-entry-dot"></span>
+                <span class="work-entry-name">AI &amp; Developer Tools</span>
+                <span class="work-entry-year">2025 – Present</span>
             </div>
-        </section>
-
-        <section class="section anim-reveal" id="work">
-            <header class="section-header">
-                <span class="section-index">[02 // selected work]</span>
-            </header>
-            <div class="work-timeline">
-                <div class="work-entry work-entry--current" x-data="{ open: false }" :class="open ? 'work-entry--open' : ''">
-                    <div class="work-entry-head" @click="open = !open">
-                        <span class="work-entry-dot"></span>
-                        <span class="work-entry-name">AI Agent Platform</span>
-                        <span class="work-entry-year">2025 – Present</span>
-                    </div>
-                    <div class="work-entry-body" :class="open ? 'work-entry-body--open' : ''">
-                        <div class="work-entry-tags">
-                            <span>python</span><span>fastapi</span><span>langchain</span>
-                        </div>
-                        <p class="work-entry-desc">Python, FastAPI, LangChain. Reducing manual workflows through intelligent automation across the development lifecycle.</p>
-                    </div>
+            <div class="work-entry-body" :class="open ? 'work-entry-body--open' : ''">
+                <div class="work-entry-tags">
+                    <span>python</span><span>fastapi</span><span>langchain</span><span>automation</span>
                 </div>
-                <div class="work-entry" x-data="{ open: false }" :class="open ? 'work-entry--open' : ''">
-                    <div class="work-entry-head" @click="open = !open">
-                        <span class="work-entry-dot"></span>
-                        <span class="work-entry-name">Gaming Accelerator</span>
-                        <span class="work-entry-year">2025</span>
-                    </div>
-                    <div class="work-entry-body" :class="open ? 'work-entry-body--open' : ''">
-                        <div class="work-entry-tags">
-                            <span>unity</span><span>mentorship</span><span>strategy</span>
-                        </div>
-                        <p class="work-entry-desc">Technical mentorship, code reviews, and product strategy for early-stage teams at Exel by Merak.</p>
-                    </div>
-                </div>
-                <div class="work-entry" x-data="{ open: false }" :class="open ? 'work-entry--open' : ''">
-                    <div class="work-entry-head" @click="open = !open">
-                        <span class="work-entry-dot"></span>
-                        <span class="work-entry-name">Aurita Games</span>
-                        <span class="work-entry-year">2020 – 2025</span>
-                    </div>
-                    <div class="work-entry-body" :class="open ? 'work-entry-body--open' : ''">
-                        <div class="work-entry-tags">
-                            <span>unity</span><span>defold</span><span>leadership</span>
-                        </div>
-                        <p class="work-entry-desc">Transitioned from freelance work to a small company. Design, development, and client relationships across web, PC, and mobile.</p>
-                    </div>
-                </div>
-                <div class="work-entry work-entry--current" x-data="{ open: false }" :class="open ? 'work-entry--open' : ''">
-                    <div class="work-entry-head" @click="open = !open">
-                        <span class="work-entry-dot"></span>
-                        <span class="work-entry-name">PlayMedusa</span>
-                        <span class="work-entry-year">2011 – Present</span>
-                    </div>
-                    <div class="work-entry-body" :class="open ? 'work-entry-body--open' : ''">
-                        <div class="work-entry-tags">
-                            <span>unity</span><span>c#</span><span>vr</span><span>steam</span>
-                        </div>
-                        <p class="work-entry-desc">Programming, design, and client work for Steam, Meta Quest, Nintendo Switch, and iOS.</p>
-                    </div>
-                </div>
-                <div class="work-entry" x-data="{ open: false }" :class="open ? 'work-entry--open' : ''">
-                    <div class="work-entry-head" @click="open = !open">
-                        <span class="work-entry-dot"></span>
-                        <span class="work-entry-name">30 Parallel Games</span>
-                        <span class="work-entry-year">2018 – 2020</span>
-                    </div>
-                    <div class="work-entry-body" :class="open ? 'work-entry-body--open' : ''">
-                        <div class="work-entry-tags">
-                            <span>unity</span><span>photon</span><span>vr</span>
-                        </div>
-                        <p class="work-entry-desc">Decentralized backends and immersive networked experiences for room-scale VR applications.</p>
-                    </div>
-                </div>
-                <div class="work-entry" x-data="{ open: false }" :class="open ? 'work-entry--open' : ''">
-                    <div class="work-entry-head" @click="open = !open">
-                        <span class="work-entry-dot"></span>
-                        <span class="work-entry-name">Barbie™ Mobile Games</span>
-                        <span class="work-entry-year">2017</span>
-                    </div>
-                    <div class="work-entry-body" :class="open ? 'work-entry-body--open' : ''">
-                        <div class="work-entry-tags">
-                            <span>unity</span><span>mobile</span><span>leadership</span>
-                        </div>
-                        <p class="work-entry-desc">Shipped titles that crossed 10 million downloads worldwide across iOS and Android.</p>
-                    </div>
-                </div>
+                <p class="work-entry-desc">Current professional focus. Building multi-agent systems, internal automation pipelines, and exploring how AI paradigms shift modern developer workflows.</p>
             </div>
-        </section>
-    </div>
-
-    <div class="content-body" x-data="observation">
-        <div class="artifact anim-reveal">
-            <span class="artifact-label" x-text="label"></span>
-            <p class="artifact-text" x-html="text"></p>
         </div>
-    </div>
 
-    <!-- Row 3: Notes -->
-    <div class="content-body">
-        <section class="section anim-reveal" id="notes">
-            <div class="posts-list">
-                {%- set latestPosts = collections._posts | sortBy('date', true) %}
-                {%- for post in latestPosts %}
-                {%- if loop.index0 < 6 %}
-                <a href="{{ post.url }}" class="post-row">
-                    <span class="post-row-title">{{ post.data.title }}</span>
-                    <span class="post-row-tags">
-                        {%- for tag in post.data.tags | filterPrivateTags %}
-                        <span class="post-row-tag">{{ tag }}</span>
-                        {%- endfor %}
-                    </span>
-                </a>
-                {%- endif %}
+        <div class="work-entry" x-data="{ open: false }" :class="open ? 'work-entry--open' : ''">
+            <div class="work-entry-head" @click="open = !open">
+                <span class="work-entry-dot"></span>
+                <span class="work-entry-name">PlayMedusa</span>
+                <span class="work-entry-year">2011 – 2025</span>
+            </div>
+            <div class="work-entry-body" :class="open ? 'work-entry-body--open' : ''">
+                <div class="work-entry-tags">
+                    <span>unity</span><span>c#</span><span>vr</span><span>steam</span><span>switch</span>
+                </div>
+                <p class="work-entry-desc">My professional home for over a decade. Built and designed interactive applications and games for external clients across mobile, VR, console, and web.</p>
+            </div>
+        </div>
+
+        <div class="work-entry" x-data="{ open: false }" :class="open ? 'work-entry--open' : ''">
+            <div class="work-entry-head" @click="open = !open">
+                <span class="work-entry-dot"></span>
+                <span class="work-entry-name">Aurita Games</span>
+                <span class="work-entry-year">2020 – 2025</span>
+            </div>
+            <div class="work-entry-body" :class="open ? 'work-entry-body--open' : ''">
+                <div class="work-entry-tags">
+                    <span>unity</span><span>defold</span><span>product-strategy</span>
+                </div>
+                <p class="work-entry-desc">Transitioned from independent freelancing to a focused micro-studio setup. Handled design, client relationships, and multiplatform delivery.</p>
+            </div>
+        </div>
+
+        <div class="work-entry" x-data="{ open: false }" :class="open ? 'work-entry--open' : ''">
+            <div class="work-entry-head" @click="open = !open">
+                <span class="work-entry-dot"></span>
+                <span class="work-entry-name">30 Parallel Games</span>
+                <span class="work-entry-year">2018 – 2020</span>
+            </div>
+            <div class="work-entry-body" :class="open ? 'work-entry-body--open' : ''">
+                <div class="work-entry-tags">
+                    <span>unity</span><span>photon</span><span>vr-networking</span>
+                </div>
+                <p class="work-entry-desc">Architected networked systems and immersive backends for decentralized, room-scale multiplayer VR environments.</p>
+            </div>
+        </div>
+
+        <div class="work-entry" x-data="{ open: false }" :class="open ? 'work-entry--open' : ''">
+            <div class="work-entry-head" @click="open = !open">
+                <span class="work-entry-dot"></span>
+                <span class="work-entry-name">Barbie™ Mobile Games</span>
+                <span class="work-entry-year">2017</span>
+            </div>
+            <div class="work-entry-body" :class="open ? 'work-entry-body--open' : ''">
+                <div class="work-entry-tags">
+                    <span>unity</span><span>mobile</span><span>team-leadership</span>
+                </div>
+                <p class="work-entry-desc">Led a development team of 5 at Relativity Studios, shipping high-profile titles reaching over 10 million mobile downloads globally.</p>
+            </div>
+        </div>
+
+        <div class="work-entry" x-data="{ open: false }" :class="open ? 'work-entry--open' : ''">
+            <div class="work-entry-head" @click="open = !open">
+                <span class="work-entry-dot"></span>
+                <span class="work-entry-name">Teaching &amp; Mentoring</span>
+                <span class="work-entry-year">2014 – 2025</span>
+            </div>
+            <div class="work-entry-body" :class="open ? 'work-entry-body--open' : ''">
+                <div class="work-entry-tags">
+                    <span>ulpgc</span><span>lectures</span><span>curriculum-design</span>
+                </div>
+                <p class="work-entry-desc">University lecturer at ULPGC, engineering accelerator mentor, and curriculum consultant for game programming and mechanics design.</p>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- Notebook -->
+<section class="section anim-reveal" id="notes">
+    <header class="section-header">
+        <span class="section-index">[02 // notebook]</span>
+    </header>
+    <div class="posts-list">
+        {%- set latestPosts = collections._posts | sortBy('date', true) %}
+        {%- for post in latestPosts %}
+        {%- if loop.index0 < 6 %}
+        <a href="{{ post.url }}" class="post-row">
+            <span class="post-row-title">{{ post.data.title }}</span>
+            <span class="post-row-tags">
+                {%- for tag in post.data.tags | filterPrivateTags %}
+                <span class="post-row-tag">{{ tag }}</span>
                 {%- endfor %}
-            </div>
-            <a href="/writing/" class="posts-more">→ browse all notes ({{ collections._posts | languageFilter | length }})</a>
-        </section>
+            </span>
+        </a>
+        {%- endif %}
+        {%- endfor %}
+    </div>
+    <a href="/writing/" class="posts-more">→ // browse_all_notes ({{ collections._posts | languageFilter | length }})</a>
+</section>
+
+<!-- Background & Context -->
+<section class="section anim-reveal" id="summary-context" style="border-top: 1px solid var(--border); padding-top: var(--space-xl); margin-top: var(--space-l);">
+    <header class="section-header" style="margin-bottom: var(--space-l);">
+        <span class="section-index">[03 // index_metadata]</span>
+    </header>
+
+    <!-- Observation (wide card) -->
+    <div class="metadata-card metadata-card--observation anim-reveal" x-data="observation">
+        <p class="metadata-card-text" x-html="text"></p>
     </div>
 
-</div>
-<!-- end page-container -->
-
-<!-- Row 4: Bento Grid (full-width) -->
-<section class="section anim-reveal" id="stats" style="padding-top:var(--space-xl)">
-        <div class="bento-grid">
-                <div class="bento-cell">
-                    <span class="bento-number">14+</span>
-                    <span class="bento-label">years coding</span>
-                    <span class="bento-number" style="margin-top:var(--space-2xs)">80+</span>
-                    <span class="bento-label">games published</span>
-                </div>
-                <div class="bento-cell bento-cell--cat bento-cell--tall">
-                    <img src="/assets/img/cats.jpg" alt="Marvel &amp; Haru" loading="lazy" eleventy:ignore>
-                </div>
-                <div class="bento-cell">
-                    <strong class="bento-cell-heading">Currently</strong>
-                    <div class="bento-tags">
-                        <span class="bento-tag">python</span>
-                        <span class="bento-tag">fastapi</span>
-                        <span class="bento-tag">langchain</span>
-                        <span class="bento-tag">git</span>
-                        <span class="bento-tag">picotron</span>
-                    </div>
-                </div>
-                <div class="bento-cell">
-                    <strong class="bento-cell-heading">Previously</strong>
-                    <div class="bento-tags">
-                        <span class="bento-tag bento-tag--muted">c#</span>
-                        <span class="bento-tag bento-tag--muted">javascript</span>
-                        <span class="bento-tag bento-tag--muted">node.js</span>
-                        <span class="bento-tag bento-tag--muted">lua</span>
-                        <span class="bento-tag bento-tag--muted">solidity</span>
-                        <span class="bento-tag bento-tag--muted">hardhat</span>
-                        <span class="bento-tag bento-tag--muted">unreal</span>
-                        <span class="bento-tag bento-tag--muted">defold</span>
-                        <span class="bento-tag bento-tag--muted">unity3d</span>
-                        <span class="bento-tag bento-tag--muted">rider</span>
-                    </div>
-                </div>
-                <div class="bento-cell">
-                    <strong class="bento-cell-heading">Toolbox</strong>
-                    <div class="bento-tags">
-                        <span class="bento-tag">neovim</span>
-                        <span class="bento-tag">ghostty</span>
-                        <span class="bento-tag">obsidian</span>
-                        <span class="bento-tag">omarchy</span>
-                        <span class="bento-tag">osx</span>
-                        <span class="bento-tag">zen</span>
-                        <span class="bento-tag">gopass</span>
-                        <span class="bento-tag">lazydocker</span>
-                        <span class="bento-tag">lazygit</span>
-                    </div>
-                </div>
+    <!-- Career Metrics Strip -->
+    <div class="metadata-metrics">
+        <span class="metadata-metrics-header">[career_metrics]</span>
+        <div class="metadata-metrics-numbers">
+            <div>
+                <div class="metadata-metrics-number">15+</div>
+                <div class="metadata-metrics-context">years of activity</div>
             </div>
+            <div>
+                <div class="metadata-metrics-number">80+</div>
+                <div class="metadata-metrics-context">shipped products</div>
+            </div>
+        </div>
+        <div class="metadata-metrics-platforms">PC · VR · Nintendo Switch · Mobile · Web</div>
+    </div>
+
+    <!-- Archive Grid -->
+    <div class="metadata-grid">
+
+        <!-- active_stack -->
+        <div class="metadata-card">
+            <span class="metadata-card-header">[active_stack]</span>
+            <div class="metadata-card-tags">
+                <span>python</span><span>fastapi</span><span>langchain</span><span>picotron</span><span>pico-8</span>
+            </div>
+        </div>
+
+        <!-- native_expertise -->
+        <div class="metadata-card">
+            <span class="metadata-card-header" style="color: var(--text-muted);">[native_expertise]</span>
+            <div class="metadata-card-tags metadata-card-tags--outline">
+                <span>C#</span><span>Unity3D</span><span>VR Netcode</span><span>Lua</span><span>Mobile</span><span>C++</span><span>WebGL</span>
+            </div>
+        </div>
+
+        <!-- career_domains -->
+        <div class="metadata-card">
+            <span class="metadata-card-header" style="color: var(--text-muted);">[career_domains]</span>
+            <div class="metadata-card-tags metadata-card-tags--outline">
+                <span>Game Development</span><span>AI Systems</span><span>Developer Tooling</span><span>Education</span><span>Technical Leadership</span><span>VR</span><span>Automation</span><span>Interactive Design</span>
+            </div>
+        </div>
+
+        <!-- environment_nodes -->
+        <div class="metadata-card">
+            <span class="metadata-card-header" style="color: var(--text-muted);">[environment_nodes]</span>
+            <div style="position: relative; width: 100%; height: 110px; overflow: hidden; border-radius: var(--radius-sm); border: 1px solid var(--border); margin-top: var(--space-xs);">
+                <img src="/assets/img/cats.jpg" alt="Marvel &amp; Haru" loading="lazy" eleventy:ignore style="width: 100%; height: 100%; object-fit: cover; filter: grayscale(40%); transition: filter 0.3s ease;">
+            </div>
+            <span style="font-size: var(--text-xs); color: var(--text-secondary); line-height: 1.4; margin-top: var(--space-2xs); display: block;">
+                Marvel &amp; Haru — providing daily operational support and office oversight.
+            </span>
+        </div>
+
+    </div>
 </section>
 
 <!-- Scroll Reveals -->

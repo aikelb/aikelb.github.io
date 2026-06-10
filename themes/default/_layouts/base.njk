@@ -77,18 +77,36 @@
     </head>
 
     <body class="{% set space = joiner(" ") -%}{% for tag in ta -%}{{ space() }}{{ tag | slugify }}{% endfor -%}">
-        <!-- aurora -->
-        <div class="aurora-banner">
-            <canvas id="hero-canvas" aria-hidden="true"></canvas>
+
+        <!-- Aurora Glow -->
+        <div class="aurora-glow" aria-hidden="true">
+            <div class="aurora-orb aurora-orb--1"></div>
+            <div class="aurora-orb aurora-orb--2"></div>
+            <div class="aurora-orb aurora-orb--3"></div>
         </div>
 
-        <!-- header -->
-        {% include "header.njk" %}
+        <!-- Sticky Topbar Header -->
+        <header class="header">
+            <div class="header-inner">
+                <a href="/" class="header-branding">Aitor Lozano</a>
+                <nav class="header-nav">
+                    <a href="/" {% if page.url == '/' %}aria-current="page"{% endif %}>Work</a>
+                    <a href="/writing/" {% if page.url == '/writing/' %}aria-current="page"{% endif %}>Notes</a>
+                    <a href="/about/" {% if page.url == '/about/' %}aria-current="page"{% endif %}>About</a>
+                </nav>
+                <button class="theme-toggle" @click="$store.elva.themeToggle()" :aria-label="$store.elva.theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'">
+                    <svg class="theme-toggle-sun" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                    <svg class="theme-toggle-moon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                </button>
+            </div>
+        </header>
 
-        <!-- content -->
-        <main id="content">{{ content | safe }}</main>
+        <!-- Main Content -->
+        <main class="main-content">
+            {{ content | safe }}
+        </main>
 
-        <!-- footer -->
+        <!-- Footer -->
         {% include "footer.njk" %}
 
         <!-- scripts -->
@@ -97,65 +115,6 @@
         {% js 'defer' %}{% include '../js/scripts.js' %}{% endjs -%}
         <script src="{% getBundleFileUrl 'js', 'defer' %}?v={% version %}" defer></script>
 
-        <!-- aurora canvas -->
-        <script>
-(function() {
-    var canvas = document.getElementById('hero-canvas');
-    if (!canvas) return;
-    var ctx = canvas.getContext('2d');
-    var width = 0, height = 0;
-    var blobs = [
-        { x: 0, y: 0, ox: 0.50, oy: 0.32, radius: 380, vx: 0.020, vy: -0.016, color: 'rgba(147, 160, 142, 0.12)' },
-        { x: 0, y: 0, ox: 0.22, oy: 0.55, radius: 420, vx: 0.014, vy: 0.020, color: 'rgba(138, 158, 152, 0.09)' },
-        { x: 0, y: 0, ox: 0.78, oy: 0.48, radius: 350, vx: -0.018, vy: 0.012, color: 'rgba(184, 149, 115, 0.08)' },
-        { x: 0, y: 0, ox: 0.40, oy: 0.44, radius: 400, vx: 0.016, vy: -0.014, color: 'rgba(147, 160, 142, 0.10)' }
-    ];
-    var mouse = { x: 0, y: 0, tx: 0, ty: 0, ease: 0.04 };
-    function resize() {
-        width = canvas.width = canvas.offsetWidth;
-        height = canvas.height = canvas.offsetHeight;
-        blobs.forEach(function(b) { b.x = b.ox * width; b.y = b.oy * height; });
-        mouse.x = mouse.tx = width / 2;
-        mouse.y = mouse.ty = height / 2;
-    }
-    function bgColor() {
-        return document.documentElement.dataset.theme === 'light' ? '#F3F1EB' : '#141513';
-    }
-    var time = 0;
-    function draw() {
-        time += 0.0006;
-        ctx.fillStyle = bgColor();
-        ctx.fillRect(0, 0, width, height);
-        mouse.x += (mouse.tx - mouse.x) * mouse.ease;
-        mouse.y += (mouse.ty - mouse.y) * mouse.ease;
-        ctx.globalCompositeOperation = 'screen';
-        blobs.forEach(function(b, i) {
-            var dx = Math.sin(time * 10 + i) * (width * 0.10);
-            var dy = Math.cos(time * 8 + i) * (height * 0.10);
-            var tx = b.ox * width + dx + (mouse.x - width / 2) * 0.07;
-            var ty = b.oy * height + dy + (mouse.y - height / 2) * 0.07;
-            var g = ctx.createRadialGradient(tx, ty, 0, tx, ty, b.radius);
-            g.addColorStop(0, b.color);
-            g.addColorStop(0.25, b.color.replace(/[\d.]+(?=\))/, '0.10'));
-            g.addColorStop(0.55, b.color.replace(/[\d.]+(?=\))/, '0.04'));
-            g.addColorStop(1, 'rgba(0,0,0,0)');
-            ctx.beginPath();
-            ctx.arc(tx, ty, b.radius, 0, Math.PI * 2);
-            ctx.fillStyle = g;
-            ctx.fill();
-        });
-        ctx.globalCompositeOperation = 'source-over';
-        requestAnimationFrame(draw);
-    }
-    resize();
-    draw();
-    window.addEventListener('resize', resize);
-    window.addEventListener('mousemove', function(e) {
-        var r = canvas.getBoundingClientRect();
-        mouse.tx = e.clientX - r.left;
-        mouse.ty = e.clientY - r.top;
-    });
-})();
-        </script>
+
     </body>
 </html>
