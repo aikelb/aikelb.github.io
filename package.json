@@ -1,26 +1,22 @@
 {
-  "name": "elva",
-  "version": "3.2.1",
-  "description": "A multilingual, clean, green, 11ty starter theme",
-  "main": "index.js",
+  "name": "aitorlozano.com",
+  "version": "1.0.0",
+  "description": "Personal portfolio of Aitor Lozano, built with 11ty (based on the Elva starter theme)",
+  "private": true,
   "type": "module",
+  "packageManager": "pnpm@10.24.0",
   "scripts": {
-    "unocss": "unocss",
-    "build": "unocss && rimraf dist && npx @11ty/eleventy",
-    "build:prod": "unocss && export NODE_ENV=production && rimraf dist && npx @11ty/eleventy",
-    "build:stage": "unocss && export NODE_ENV=staging && rimraf dist && npx @11ty/eleventy",
-    "dev": "unocss && npx @11ty/eleventy --watch --serve --incremental",
-    "start": "unocss && rimraf dist && npx @11ty/eleventy --serve",
+    "build": "rimraf dist && npx @11ty/eleventy",
+    "build:prod": "export NODE_ENV=production && rimraf dist && npx @11ty/eleventy",
+    "build:stage": "export NODE_ENV=staging && rimraf dist && npx @11ty/eleventy",
+    "dev": "npx @11ty/eleventy --watch --serve --incremental",
+    "start": "rimraf dist && npx @11ty/eleventy --serve",
     "clean": "rimraf dist",
     "debug": "DEBUG=Eleventy* npm run dev",
-    "benchmark": "DEBUG=Eleventy:Benchmark* npm run build:prod",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "release-patch": "npm version patch --force && npm publish",
-    "release-minor": "npm version minor --force && npm publish",
-    "release-major": "npm version major --force && npm publish"
+    "benchmark": "DEBUG=Eleventy:Benchmark* npm run build:prod"
   },
   "bugs": {
-    "url": "https://github.com/scottsweb/elva/issues"
+    "url": "https://github.com/aikelb/elva/issues"
   },
   "keywords": [
     "eleventy",
@@ -35,9 +31,9 @@
     "alpine"
   ],
   "author": {
-    "name": "Scott Evans",
-    "url": "https://scott.ee",
-    "email": "git@scott.ee"
+    "name": "Aitor Lozano",
+    "url": "https://aitorlozano.com",
+    "email": "info@aitorlozano.com"
   },
   "license": "MIT",
   "dependencies": {
@@ -68,9 +64,6 @@
     "terser": "^5.46.1",
     "markdown-it": "^14.1.0",
     "@sindresorhus/slugify": "^2.2.1",
-    "nunjucks": "^3.2.4",
-    "unocss": "^66.1.0",
-    "@unocss/cli": "^66.1.0",
-    "@unocss/preset-wind4": "^66.1.0"
+    "nunjucks": "^3.2.4"
   }
 }

@@ -29,36 +29,5 @@ export default {
         light: 'Light',
         lightDarkToggle: 'Toggle dark/light theme',
         footer: 'The year is {{ year }}.'
-    },
-    sv: {
-        meta: {
-            title: 'Aitor Lozano',
-            rssTitle: 'RSS Feed',
-            jsonTitle: 'JSON Feed',
-            blogrollTitle: 'Blogroll',
-            description: 'Software Engineer & Game Developer. 14+ years building for AI, games, and the web.',
-            opengraphDefaultAlt: 'Aitor Lozano — Software Engineer & Game Developer'
-        },
-        header: {
-            skipLink: 'Hoppa till innehållet',
-            home: 'Hem'
-        },
-        readingTime: {
-            underMinute: 'Mindre än 1 minut att läsa',
-            minute: '1 minut till läsaren',
-            other: '{{ minutes }} minuter att läsa'
-        },
-        feeds: {
-            info: 'Detta är ett RSS feed. Kopiera och klistra in webbadressen i din flödesläsare. Besök <a href="https://aboutfeeds.com">About Feeds</a> för att lära dig mer om RSS.',
-            title: 'Nyligen publicerad'
-        },
-        tags: {
-            tagged: 'Taggade',
-            description: 'Allt innehåll taggat:'
-        },
-        dark: 'Mörk',
-        light: 'Ljus',
-        lightDarkToggle: 'Växla mellan mörkt/ljus tema',
-        footer: 'Året är {{ year }}.'
     }
 }

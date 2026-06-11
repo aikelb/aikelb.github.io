@@ -2,20 +2,26 @@
 layout: base
 ---
 <article class="hentry">
-    <header class="entry-header">
+    <header class="entry-header anim-reveal">
         <h1 class="entry-title">{{title}}</h1>
         <ul class="meta">
             <li class="meta-date">
                 <time class="entry-date published" datatime="{{ date | dateToRfc3339 }}">{{ date | formatDate }}</time>
             </li>
-            <li class="meta-reading-time">{{ content | readingTime }}</li>
+            {%- if not slides %}<li class="meta-reading-time">{{ content | readingTime }}</li>{% endif %}
             {%- for tag in tags | filterPrivateTags %}
 	        {%- set tagUrl %}/{{ lang }}/tag/{{ tag | slugify }}/{% endset %}
 	        <li class="meta-tag"><a href="{{ tagUrl | default_locale_url }}">{{ tag }}</a>{%- if not loop.last %}, {% endif %}</li>
 	        {%- endfor %}
         </ul>
     </header>
-    <div class="entry-content">
+    <div class="entry-content anim-reveal">
         {{ content | safe }}
     </div>
+    {%- if slides %}
+    <div class="slides-embed anim-reveal">
+        <iframe src="{{ slides }}" loading="lazy" allowfullscreen title="{{ title }} — slides"></iframe>
+    </div>
+    <a class="slides-open" href="{{ slides }}" target="_blank" rel="noopener">Open slides in full screen ↗</a>
+    {%- endif %}
 </article>

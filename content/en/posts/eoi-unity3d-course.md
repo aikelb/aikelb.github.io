@@ -8,7 +8,7 @@ tags:
   - gamedev
 ---
 
-In 2022 I designed and taught a 110-hour Unity3D course at **EOI** (Escuela de Organización Industrial), a Spanish business school.
+In 2022 I designed and taught a 110-hour Unity3D course at **EOI** (Escuela de Organización Industrial), a Spanish business school. My classes focused mostly on development patterns, building prototypes that put those patterns into practice.
 
 The curriculum covered:
 
@@ -19,4 +19,4 @@ The curriculum covered:
 
 The course was aimed at postgraduate students transitioning into game development. Most came from traditional software engineering backgrounds. The biggest challenge wasn't teaching Unity itself but helping students un-learn enterprise patterns that don't apply to real-time interactive software.
 
-110 hours sounds like a lot, but game development is deep. By the end, every student had shipped a working prototype.
+110 hours sounds like a lot, but game development is deep. By the end, every student had shipped a working prototype; finishing one was a requirement of the course.

@@ -402,10 +402,3 @@ input:where([type='button'], [type='reset'], [type='submit']),
 [hidden]:where(:not([hidden~='until-found'])) {
   display: none !important;
 }
-/* layer: default */
-.my{margin-block:calc(var(--spacing) * 4);}
-.me{margin-inline-end:calc(var(--spacing) * 4);}
-.border{border-width:1px;}
-.inline{display:inline;}
-.transition{transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,--un-gradient-from,--un-gradient-via,--un-gradient-to,opacity,box-shadow,transform,translate,scale,rotate,filter,-webkit-backdrop-filter,backdrop-filter;transition-timing-function:var(--un-ease, var(--default-transition-timingFunction));transition-duration:var(--un-duration, var(--default-transition-duration));}
-.filter{filter:var(--un-blur,) var(--un-brightness,) var(--un-contrast,) var(--un-grayscale,) var(--un-hue-rotate,) var(--un-invert,) var(--un-saturate,) var(--un-sepia,) var(--un-drop-shadow,);}

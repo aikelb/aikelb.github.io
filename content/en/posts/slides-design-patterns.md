@@ -1,6 +1,7 @@
 ---
 title: "Design Patterns"
 date: 2019-02-08
+slides: https://slides.aitorlozano.com/design-patterns/
 tags:
   - _posts
   - slides
@@ -11,4 +12,4 @@ tags:
 
 Common game programming patterns explained through Unity examples: observer, component, state machines, object pooling.
 
-→ [View slides](https://slides.aitorlozano.com/design-patterns/)
+Prepared for my game programming course at ULPGC. The deck is in Spanish.

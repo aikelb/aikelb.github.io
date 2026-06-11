@@ -38,12 +38,13 @@
         <link rel="apple-touch-icon" href="{{ "/assets/img/icon-180.png" | htmlBaseUrl(settings.url) | cdnify }}">
 
         <!-- styles -->
-        {% css %}{% include '../css/unocss.css' %}{% endcss -%}
+        {% css %}{% include '../css/reset.css' %}{% endcss -%}
         {% css %}{% include '../css/variables.css' %}{% endcss -%}
-        {% css %}{% include '../css/redesign.css' %}{% endcss -%}
+        {% css 'main' %}{% include '../css/redesign.css' %}{% endcss -%}
         {% css 'defer' %}{% include '../css/defer.css' %}{% endcss -%}
         {% css 'defer' %}{% include '../css/components/syntax.css' %}{% endcss -%}
 	    <style>{% getBundle 'css' %}</style>
+	    <link rel="stylesheet" href="{% getBundleFileUrl 'css', 'main' %}?v={% version %}">
 	    <link rel="stylesheet" href="{% getBundleFileUrl 'css', 'defer' %}?v={% version %}" fetchpriority="low">
 
         <!-- feeds -->
@@ -54,7 +55,7 @@
         <!-- fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
         <!-- preload / prefetch -->
         {% if (settings.isProduction or settings.isStaging) and settings.cdn %}<link rel="dns-prefetch" href="https://i0.wp.com/">{% endif %}
@@ -70,7 +71,7 @@
         {% if settings.author.fediverseUsername %}<meta name="fediverse:creator" content="{{ settings.author.fediverseUsername }}">{% endif %}
 
         <!-- set theme before page renders to stop fouc -->
-        {% js %}document.documentElement.dataset.theme = localStorage.getItem('theme') === null ? window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light' : localStorage.getItem('theme'){% endjs %}
+        {% js %}document.documentElement.classList.add('js');document.documentElement.dataset.theme = localStorage.getItem('theme') === null ? window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light' : localStorage.getItem('theme'){% endjs %}
         
         <!-- inline scripts -->
         <script>{% getBundle 'js' %}</script>
@@ -78,25 +79,8 @@
 
     <body class="{% set space = joiner(" ") -%}{% for tag in ta -%}{{ space() }}{{ tag | slugify }}{% endfor -%}">
 
-        <svg width="0" height="0" style="position:absolute">
-            <defs>
-                <filter id="aurora-dither" x="0%" y="0%" width="100%" height="100%"
-                        color-interpolation-filters="sRGB">
-                    <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3"
-                                  stitchTiles="stitch" result="noise"/>
-                    <feColorMatrix type="saturate" values="0" in="noise" result="grey"/>
-                    <feBlend in="SourceGraphic" in2="grey" mode="soft-light" result="blend"/>
-                    <feComposite in="blend" in2="SourceGraphic" operator="in"/>
-                </filter>
-            </defs>
-        </svg>
-
-        <!-- Aurora Glow -->
-        <div class="aurora-glow" aria-hidden="true">
-            <div class="aurora-orb aurora-orb--1"></div>
-            <div class="aurora-orb aurora-orb--2"></div>
-            <div class="aurora-orb aurora-orb--3"></div>
-        </div>
+        <!-- Drifting dot-field background -->
+        <canvas class="bg-dots" aria-hidden="true"></canvas>
 
         <!-- Sticky Topbar Header -->
         <header class="header">
@@ -125,6 +109,7 @@
         <!-- scripts -->
         {% js 'defer' %}{% include '../../../node_modules/alpinejs/dist/cdn.js' %}{% endjs -%}
         {% js 'defer' %}{% include '../../../node_modules/@alpinejs/intersect/dist/cdn.js' %}{% endjs -%}
+        {% js 'defer' %}{% include '../js/background.js' %}{% endjs -%}
         {% js 'defer' %}{% include '../js/scripts.js' %}{% endjs -%}
         <script src="{% getBundleFileUrl 'js', 'defer' %}?v={% version %}" defer></script>
 

@@ -1,7 +1,7 @@
 ---
 layout: base
 ---
-<div class="posts-list">
+<div class="posts-list anim-reveal">
     {% set postslist = collections._posts | languageFilter | sortBy('date', true) %}
     {% include "posts.njk" %}
     {{ content | safe }}

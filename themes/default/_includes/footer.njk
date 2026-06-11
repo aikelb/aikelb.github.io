@@ -47,12 +47,69 @@
 
         <!-- Weather widget + copyright row -->
         <div class="footer-bottom">
-            <span id="footer-weather" class="footer-weather" aria-live="polite">
-                <span class="footer-weather-icon" aria-hidden="true">◌</span>
-                <span class="footer-weather-text">loading weather…</span>
+            <span id="footer-weather" class="footer-weather" aria-live="polite" hidden>
+                <span class="footer-weather-icon" aria-hidden="true"></span>
+                <span class="footer-weather-text"></span>
             </span>
             <p class="footer-copy">&copy; {{ settings.year }} Aitor Lozano</p>
         </div>
 
     </div>
+
+    <script>
+    (function() {
+        var el = document.getElementById('footer-weather');
+        if (!el) return;
+
+        // monochrome stroke icons (currentColor), keyed by WMO weather-code group
+        var S = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">';
+        var cloud = '<path d="M17.5 18a4 4 0 0 0 0-8 6 6 0 0 0-11.5 1.5A3.5 3.5 0 0 0 6 18z"/>';
+        var icons = {
+            clear: S + '<circle cx="12" cy="12" r="4.5"/><path d="M12 3.5v1.5M12 19v1.5M3.5 12h1.5M19 12h1.5M6 6l1 1M17 17l1 1M18 6l-1 1M7 17l-1 1"/></svg>',
+            partly: S + '<circle cx="8" cy="8" r="3"/><path d="M8 2.5v1M2.5 8h1M4 4l.8.8M12 5l-1 1"/><path d="M17.5 19a3.5 3.5 0 0 0 0-7 5 5 0 0 0-9.6 1.2A3 3 0 0 0 8 19z"/></svg>',
+            cloud: S + cloud + '</svg>',
+            fog: S + cloud + '<path d="M5 21h10M8 18h9"/></svg>',
+            rain: S + cloud + '<path d="M8 20l-1 2M12 20l-1 2M16 20l-1 2"/></svg>',
+            snow: S + cloud + '<path d="M8 20.5h.01M12 21h.01M16 20.5h.01"/></svg>',
+            storm: S + cloud + '<path d="M12 18l-2 3h3l-2 3"/></svg>'
+        };
+
+        function iconFor(code) {
+            if (code === 0) return icons.clear;
+            if (code === 1 || code === 2) return icons.partly;
+            if (code === 3) return icons.cloud;
+            if (code === 45 || code === 48) return icons.fog;
+            if (code >= 71 && code <= 77 || code === 85 || code === 86) return icons.snow;
+            if (code >= 95) return icons.storm;
+            if (code >= 51) return icons.rain;
+            return icons.cloud;
+        }
+
+        function show(temp, code) {
+            el.querySelector('.footer-weather-icon').innerHTML = iconFor(code);
+            el.querySelector('.footer-weather-text').textContent = 'Las Palmas · ' + temp + '°C';
+            el.hidden = false;
+        }
+
+        try {
+            var cached = JSON.parse(sessionStorage.getItem('weather'));
+            if (cached && Date.now() - cached.t < 30 * 60 * 1000) {
+                show(cached.temp, cached.code);
+                return;
+            }
+        } catch (e) {}
+
+        var url = 'https://api.open-meteo.com/v1/forecast?latitude=28.1248&longitude=-15.4300' +
+                  '&current=temperature_2m,weather_code&temperature_unit=celsius&timezone=Atlantic%2FCanary';
+        fetch(url)
+            .then(function(r) { return r.json(); })
+            .then(function(d) {
+                var temp = Math.round(d.current.temperature_2m);
+                var code = d.current.weather_code;
+                try { sessionStorage.setItem('weather', JSON.stringify({ t: Date.now(), temp: temp, code: code })); } catch (e) {}
+                show(temp, code);
+            })
+            .catch(function() {});
+    })();
+    </script>
 </footer>

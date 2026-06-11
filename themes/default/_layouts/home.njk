@@ -3,55 +3,55 @@ layout: base
 ---
 
 <!-- Welcome / Hero -->
-<section class="section hero-statement anim-reveal" id="welcome" style="max-width: 52ch; padding: var(--space-xl) 0 var(--space-m);">
-    <h1 class="hero-greeting" style="font-size: var(--text-2xl); letter-spacing: -.03em; margin-bottom: var(--space-m); font-weight: 600;">
+<section class="section hero-statement anim-reveal" id="welcome">
+    <h1 class="hero-greeting">
         Hi, I'm Aitor.
     </h1>
-    <p class="hero-text" style="font-size: var(--text-base); color: var(--text-secondary); line-height: 1.65; margin-bottom: var(--space-s);">
+    <p class="hero-text">
         Developer, game maker, and occasional teacher based in the Canary Islands.
     </p>
-    <p class="hero-text" style="font-size: var(--text-base); color: var(--text-secondary); line-height: 1.65; margin-bottom: var(--space-s);">
+    <p class="hero-text">
         Over the past 15 years I've worked on more than 80 projects: small experiments, shipped titles on PC, VR, Nintendo Switch, mobile, and web. Learned a lot along the way.
     </p>
-    <p class="hero-text" style="font-size: var(--text-base); color: var(--text-secondary); line-height: 1.65; margin-bottom: var(--space-m);">
+    <p class="hero-text">
         My roots are in game development. Lately I've been working as an AI Engineer, building tooling, multi-agent workflows, and trying to understand where all of this is actually going.
     </p>
 
-    <nav style="display: flex; gap: var(--space-m); margin-top: var(--space-l); font-family: var(--font-mono); font-size: var(--text-xs);">
-        <a href="#work" style="color: var(--text-muted); border-bottom: 1px solid transparent; transition: all var(--duration-fast);">&rarr; // historical_timeline</a>
-        <a href="/tag/slides/" style="color: var(--text-muted); border-bottom: 1px solid transparent; transition: all var(--duration-fast);">&rarr; // slides</a>
+    <nav class="hero-links">
+        <a href="#work">&rarr; Timeline</a>
+        <a href="/tag/slides/">&rarr; Slides</a>
     </nav>
 </section>
 
 <!-- Timeline -->
 <section class="section anim-reveal" id="work">
     <header class="section-header">
-        <span class="section-index">[01 // timeline]</span>
+        <span class="section-index">[01 &middot; Timeline]</span>
     </header>
     <div class="work-timeline">
 
         <div class="work-entry work-entry--current" x-data="{ open: true }" :class="open ? 'work-entry--open' : ''">
-            <div class="work-entry-head" @click="open = !open">
+            <button type="button" class="work-entry-head" @click="open = !open" :aria-expanded="open">
                 <span class="work-entry-dot"></span>
                 <span class="work-entry-name">AI &amp; Developer Tools</span>
                 <span class="work-entry-year">2025 – Present</span>
-            </div>
+            </button>
             <div class="work-entry-body" :class="open ? 'work-entry-body--open' : ''">
                 <div class="work-entry-body-inner">
                     <div class="work-entry-tags">
                         <span>python</span><span>fastapi</span><span>langchain</span><span>automation</span>
                     </div>
-                    <p class="work-entry-desc">AI Engineer at INNO-VERSE, building AI-powered development tools with Python, LangChain, and FastAPI.</p>
+                    <p class="work-entry-desc">AI Engineer at INNO-VERSE, building developer tooling for AI agents and multi-agent workflows with Python, LangChain, and FastAPI.</p>
                 </div>
             </div>
         </div>
 
         <div class="work-entry" x-data="{ open: false }" :class="open ? 'work-entry--open' : ''">
-            <div class="work-entry-head" @click="open = !open">
+            <button type="button" class="work-entry-head" @click="open = !open" :aria-expanded="open">
                 <span class="work-entry-dot"></span>
                 <span class="work-entry-name">PlayMedusa</span>
                 <span class="work-entry-year">2011 – Present</span>
-            </div>
+            </button>
             <div class="work-entry-body" :class="open ? 'work-entry-body--open' : ''">
                 <div class="work-entry-body-inner">
                     <div class="work-entry-tags">
@@ -63,11 +63,11 @@ layout: base
         </div>
 
         <div class="work-entry" x-data="{ open: false }" :class="open ? 'work-entry--open' : ''">
-            <div class="work-entry-head" @click="open = !open">
+            <button type="button" class="work-entry-head" @click="open = !open" :aria-expanded="open">
                 <span class="work-entry-dot"></span>
                 <span class="work-entry-name">Exel Gaming Accelerator</span>
                 <span class="work-entry-year">Mar 2025 – Oct 2025</span>
-            </div>
+            </button>
             <div class="work-entry-body" :class="open ? 'work-entry-body--open' : ''">
                 <div class="work-entry-body-inner">
                     <div class="work-entry-tags">
@@ -79,11 +79,11 @@ layout: base
         </div>
 
         <div class="work-entry" x-data="{ open: false }" :class="open ? 'work-entry--open' : ''">
-            <div class="work-entry-head" @click="open = !open">
+            <button type="button" class="work-entry-head" @click="open = !open" :aria-expanded="open">
                 <span class="work-entry-dot"></span>
                 <span class="work-entry-name">Aurita Games</span>
                 <span class="work-entry-year">2020 – 2025</span>
-            </div>
+            </button>
             <div class="work-entry-body" :class="open ? 'work-entry-body--open' : ''">
                 <div class="work-entry-body-inner">
                     <div class="work-entry-tags">
@@ -95,11 +95,11 @@ layout: base
         </div>
 
         <div class="work-entry" x-data="{ open: false }" :class="open ? 'work-entry--open' : ''">
-            <div class="work-entry-head" @click="open = !open">
+            <button type="button" class="work-entry-head" @click="open = !open" :aria-expanded="open">
                 <span class="work-entry-dot"></span>
                 <span class="work-entry-name">30 Parallel Games</span>
                 <span class="work-entry-year">2018 – 2020</span>
-            </div>
+            </button>
             <div class="work-entry-body" :class="open ? 'work-entry-body--open' : ''">
                 <div class="work-entry-body-inner">
                     <div class="work-entry-tags">
@@ -111,33 +111,33 @@ layout: base
         </div>
 
         <div class="work-entry" x-data="{ open: false }" :class="open ? 'work-entry--open' : ''">
-            <div class="work-entry-head" @click="open = !open">
+            <button type="button" class="work-entry-head" @click="open = !open" :aria-expanded="open">
                 <span class="work-entry-dot"></span>
                 <span class="work-entry-name">Barbie™ Mobile Games</span>
                 <span class="work-entry-year">2017</span>
-            </div>
+            </button>
             <div class="work-entry-body" :class="open ? 'work-entry-body--open' : ''">
                 <div class="work-entry-body-inner">
                     <div class="work-entry-tags">
                         <span>unity</span><span>mobile</span><span>team-leadership</span>
                     </div>
-                    <p class="work-entry-desc">Led a remote team of 5 developers across Spain at Relativity Studios. Shipped Barbie™ You Can Be Anything, surpassing 10 million mobile downloads. Also built an internal narrative management tool for American Girl World.</p>
+                    <p class="work-entry-desc">Led a remote team of five developers at Relativity Studios. Contributed the final content patches to Barbie™ You Can Be Anything as it passed 10 million downloads, and improved the narrative tooling behind American Girl World.</p>
                 </div>
             </div>
         </div>
 
         <div class="work-entry" x-data="{ open: false }" :class="open ? 'work-entry--open' : ''">
-            <div class="work-entry-head" @click="open = !open">
+            <button type="button" class="work-entry-head" @click="open = !open" :aria-expanded="open">
                 <span class="work-entry-dot"></span>
                 <span class="work-entry-name">Teaching &amp; Mentoring</span>
                 <span class="work-entry-year">2014 – 2025</span>
-            </div>
+            </button>
             <div class="work-entry-body" :class="open ? 'work-entry-body--open' : ''">
                 <div class="work-entry-body-inner">
                     <div class="work-entry-tags">
                         <span>ulpgc</span><span>lectures</span><span>curriculum-design</span>
                     </div>
-                    <p class="work-entry-desc">Delivered a year-long university course in game design and programming using Unity3D and C# at ULPGC. Curriculum covered design patterns, multiplayer development, game feel, and hands-on workshops.</p>
+                    <p class="work-entry-desc">A year-long course in game design and programming with Unity3D and C# at ULPGC (2014-2020), a 110-hour specialist course at EOI (2022), Unity3D courses with ACADEVI, mentoring at local game jams, and startup mentoring at the Exel Gaming Accelerator (2025).</p>
                 </div>
             </div>
         </div>
@@ -148,7 +148,7 @@ layout: base
 <!-- Notebook -->
 <section class="section anim-reveal" id="notes">
     <header class="section-header">
-        <span class="section-index">[02 // notebook]</span>
+        <span class="section-index">[02 &middot; Notebook]</span>
     </header>
     <div class="posts-list">
         {%- set latestPosts = collections._posts | sortBy('date', true) %}
@@ -165,18 +165,18 @@ layout: base
         {%- endif %}
         {%- endfor %}
     </div>
-    <a href="/writing/" class="posts-more">→ // browse_all_notes ({{ collections._posts | languageFilter | length }})</a>
+    <a href="/writing/" class="posts-more">→ All notes ({{ collections._posts | languageFilter | length }})</a>
 </section>
 
 <!-- Background & Context -->
-<section class="section anim-reveal" id="summary-context" style="border-top: 1px solid var(--border); padding-top: var(--space-xl); margin-top: var(--space-l);">
-    <header class="section-header" style="margin-bottom: var(--space-l);">
-        <span class="section-index">[03 // profile_snapshot]</span>
+<section class="section section--divided anim-reveal" id="summary-context">
+    <header class="section-header">
+        <span class="section-index">[03 &middot; Snapshot]</span>
     </header>
 
     <!-- Career Metrics + Observation -->
     <div class="metadata-metrics" x-data="observation">
-        <span class="metadata-metrics-header">[career_metrics]</span>
+        <span class="metadata-metrics-header">[Career at a glance]</span>
         <div class="metadata-metrics-body">
             <div class="metadata-metrics-left">
                 <div class="metadata-metrics-numbers">
@@ -198,7 +198,7 @@ layout: base
                 </div>
             </div>
             <div class="metadata-metrics-quote">
-                <span class="metadata-metrics-quote-label">OBSERVATION</span>
+                <span class="metadata-metrics-quote-label">Observation</span>
                 <p x-html="text"></p>
             </div>
         </div>
@@ -209,7 +209,7 @@ layout: base
 
         <!-- active_stack -->
         <div class="metadata-card">
-            <span class="metadata-card-header">[active_stack]</span>
+            <span class="metadata-card-header">[Current stack]</span>
             <div class="metadata-card-tags">
                 <span>python</span><span>fastapi</span><span>langchain</span><span>picotron</span><span>pico-8</span>
             </div>
@@ -217,7 +217,7 @@ layout: base
 
         <!-- native_expertise -->
         <div class="metadata-card">
-            <span class="metadata-card-header">[native_expertise]</span>
+            <span class="metadata-card-header">[Game dev roots]</span>
             <div class="metadata-card-tags">
                 <span>c#</span><span>unity3d</span><span>vr netcode</span><span>lua</span><span>mobile</span><span>c++</span><span>webgl</span>
             </div>
@@ -225,7 +225,7 @@ layout: base
 
         <!-- career_domains -->
         <div class="metadata-card metadata-card--wide">
-            <span class="metadata-card-header">[career_domains]</span>
+            <span class="metadata-card-header">[Domains]</span>
             <div class="metadata-card-tags">
                 <span>game development</span><span>ai systems</span><span>developer tooling</span><span>education</span><span>technical leadership</span><span>vr</span><span>automation</span><span>interactive design</span>
             </div>
@@ -233,7 +233,7 @@ layout: base
 
         <!-- availability -->
         <div class="metadata-card">
-            <span class="metadata-card-header">[availability]</span>
+            <span class="metadata-card-header">[Availability]</span>
             <div class="metadata-availability">
                 <div><span class="avail-key">status</span><span class="avail-val">employed · not looking</span></div>
                 <div><span class="avail-key">timezone</span><span class="avail-val">UTC+1 · Canary Islands</span></div>
@@ -244,59 +244,11 @@ layout: base
         <!-- environment_nodes -->
         <div class="metadata-card metadata-card--environment">
             <img src="/assets/img/cats.jpg" alt="Marvel &amp; Haru" loading="lazy" eleventy:ignore class="metadata-card-bg">
-            <span class="metadata-card-header">[environment_nodes]</span>
+            <span class="metadata-card-header">[Office staff]</span>
             <span class="metadata-card-sub">
-                Marvel &amp; Haru, providing daily operational support and office oversight.
+                Marvel &amp; Haru, now providing remote support from my parents' place. Best cats in the world.
             </span>
         </div>
 
     </div>
 </section>
-
-<!-- Scroll Reveals -->
-<script>
-(function() {
-    requestAnimationFrame(function() {
-        requestAnimationFrame(function() {
-            var observer = new IntersectionObserver(function(entries) {
-                entries.forEach(function(entry) {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('is-visible');
-                    }
-                });
-            }, { threshold: 0.05 });
-
-            document.querySelectorAll('.anim-reveal').forEach(function(el) {
-                observer.observe(el);
-            });
-        });
-    });
-})();
-</script>
-
-<script>
-(function() {
-    var el = document.getElementById('footer-weather');
-    if (!el) return;
-    var lat = 28.1248, lon = -15.4300;
-    var url = 'https://api.open-meteo.com/v1/forecast?latitude=' + lat +
-              '&longitude=' + lon +
-              '&current=temperature_2m,weather_code&temperature_unit=celsius&timezone=Atlantic%2FCanary';
-    fetch(url)
-        .then(function(r) { return r.json(); })
-        .then(function(d) {
-            var temp = Math.round(d.current.temperature_2m);
-            var code = d.current.weather_code;
-            var icons = {0:'☀️',1:'🌤',2:'⛅',3:'☁️',45:'🌫',48:'🌫',51:'🌦',53:'🌦',55:'🌧',
-                61:'🌧',63:'🌧',65:'🌧',71:'🌨',73:'🌨',75:'🌨',80:'🌦',81:'🌦',
-                82:'🌧',95:'⛈',96:'⛈',99:'⛈'};
-            var icon = icons[code] || '🌡';
-            el.querySelector('.footer-weather-icon').textContent = icon;
-            el.querySelector('.footer-weather-text').textContent =
-                'Las Palmas · ' + temp + '°C';
-        })
-        .catch(function() {
-            el.style.display = 'none';
-        });
-})();
-</script>

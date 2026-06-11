@@ -1,6 +1,7 @@
 ---
 title: "Persistencia"
 date: 2016-11-25
+slides: https://slides.aitorlozano.com/persistencia/
 tags:
   - _posts
   - slides
@@ -11,4 +12,4 @@ tags:
 
 Game save systems and data persistence: PlayerPrefs, JSON serialization, cloud saves, and build pipeline considerations.
 
-→ [View slides](https://slides.aitorlozano.com/persistencia)
+Prepared for my game programming course at ULPGC. The deck is in Spanish.

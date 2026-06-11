@@ -1,6 +1,7 @@
 ---
 title: "Devtips"
 date: 2018-05-20
+slides: https://slides.aitorlozano.com/devtips/
 tags:
   - _posts
   - slides
@@ -11,4 +12,4 @@ tags:
 
 Practical workflows, debugging strategies, and shipping habits for game programming students.
 
-→ [View slides](https://slides.aitorlozano.com/devtips)
+Prepared for my game programming course at ULPGC. The deck is in Spanish.
