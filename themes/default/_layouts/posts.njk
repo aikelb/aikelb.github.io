@@ -1,8 +1,22 @@
 ---
 layout: base
 ---
-<div class="posts-list anim-reveal">
+<section class="section anim-reveal" x-data="{
+    notesFilter: location.hash.slice(1) || 'all',
+    init() {
+        var self = this;
+        window.addEventListener('hashchange', function() { self.notesFilter = location.hash.slice(1) || 'all'; });
+        this.$watch('notesFilter', function(v) { history.replaceState(null, '', v === 'all' ? location.pathname : '#' + v); });
+    }
+}">
+    <header class="section-header notes-header">
+        <button type="button" class="filter-tab" :class="{ 'filter-tab--active': notesFilter === 'all' }" @click="notesFilter = 'all'">[Notes]</button>
+        <span class="filter-sep" aria-hidden="true">·</span>
+        <button type="button" class="filter-tab" :class="{ 'filter-tab--active': notesFilter === 'slides' }" @click="notesFilter = 'slides'">[Slides]</button>
+    </header>
     {% set postslist = collections._posts | languageFilter | sortBy('date', true) %}
-    {% include "posts.njk" %}
+    <ul class="postlist">
+        {% include "posts.njk" %}
+    </ul>
     {{ content | safe }}
-</div>
+</section>

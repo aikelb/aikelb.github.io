@@ -320,7 +320,6 @@ a:hover { color: var(--accent); }
 
 .metadata-card {
     border: 1px solid var(--border);
-    /* use --bg as base so the transition never goes through rgba(0,0,0,0) */
     background: var(--bg);
     padding: var(--space-m);
     border-radius: var(--radius-lg);
@@ -469,15 +468,19 @@ a:hover { color: var(--accent); }
 
 .metadata-card-bg {
     object-fit: cover;
-    filter: grayscale(100%) brightness(.72) contrast(1.05);
     width: 100%;
     height: 100%;
-    transition: transform var(--duration-slow) var(--ease-out),
-                filter var(--duration-slow) var(--ease-out);
     z-index: 0;
     transform-origin: center;
     position: absolute;
     inset: 0;
+}
+
+/* Specificity (0,3,0) beats defer.css's [loading="lazy"].elva-loaded at (0,2,0) */
+.metadata-card.metadata-card--environment .metadata-card-bg {
+    filter: grayscale(85%) brightness(.72) contrast(1.05);
+    transition: transform var(--duration-slow) var(--ease-spring),
+                filter var(--duration-slow) var(--ease-out);
 }
 
 .metadata-card--environment {
@@ -492,8 +495,7 @@ a:hover { color: var(--accent); }
     overflow: hidden;
 }
 
-.metadata-card--environment:hover .metadata-card-bg {
-    /* ease toward the real photo, but keep it muted — no full-saturation pop */
+.metadata-card.metadata-card--environment:hover .metadata-card-bg {
     filter: grayscale(55%) brightness(.8) contrast(1.02);
     transform: scale(1.04);
 }
@@ -707,6 +709,45 @@ a:hover { color: var(--accent); }
     font-weight: 500;
     letter-spacing: 0.06em;
     text-transform: uppercase;
+}
+
+/* ── Filter Tabs ──────────────────────── */
+
+.filter-tabs {
+    display: flex;
+    gap: var(--space-2xs);
+    margin-bottom: var(--space-l);
+}
+
+.filter-tab {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 2px var(--space-xs);
+    cursor: pointer;
+    transition: color var(--duration-fast) var(--ease-out),
+                background var(--duration-fast) var(--ease-out),
+                border-color var(--duration-fast) var(--ease-out);
+}
+
+.filter-tab:hover {
+    color: var(--primary);
+    border-color: var(--primary);
+}
+
+.filter-tab--active {
+    color: var(--bg);
+    background: var(--primary);
+    border-color: var(--primary);
+}
+
+.filter-tab--active:hover {
+    color: var(--bg);
+    background: var(--primary-hover);
+    border-color: var(--primary-hover);
 }
 
 /* ── About ─────────────────────────────── */
@@ -1411,6 +1452,38 @@ html.is-leaving .main-content {
 .meta a { color: var(--text-secondary); text-decoration: none; }
 .meta a:hover { color: var(--accent); }
 
+/* ── Notes filter tabs ─────────────────── */
+
+.notes-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    margin-bottom: var(--space-l);
+}
+
+.filter-tab {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: color var(--duration-fast) var(--ease-out);
+}
+
+.filter-tab:hover { color: var(--primary); }
+.filter-tab--active { color: var(--primary); }
+
+.filter-sep {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--border);
+    pointer-events: none;
+}
+
 /* ── Notes list ────────────────────────── */
 
 .postlist {
@@ -1419,30 +1492,62 @@ html.is-leaving .main-content {
     padding: 0;
 }
 
+/* Grid container — grid-template-rows animates the row height cleanly */
 .postlist-item {
+    display: grid;
+    grid-template-rows: 1fr;
+    border-bottom: 1px solid var(--border);
+    transition: grid-template-rows 260ms var(--ease-out),
+                opacity 180ms var(--ease-out),
+                border-bottom-color 260ms var(--ease-out);
+}
+
+.postlist-item:first-child { border-top: 1px solid var(--border); }
+
+.postlist-item--hidden {
+    grid-template-rows: 0fr;
+    opacity: 0;
+    pointer-events: none;
+    border-bottom-color: transparent;
+}
+
+.postlist-item:first-child.postlist-item--hidden { border-top-color: transparent; }
+
+/* overflow:hidden on the inner wrapper is what makes 0fr collapse clip the content.
+   padding must also transition to 0 — otherwise it sets a minimum height the grid can't beat. */
+.postlist-item-inner {
+    overflow: hidden;
     display: flex;
     align-items: baseline;
     gap: var(--space-xs);
     flex-wrap: wrap;
     padding: var(--space-2xs) var(--space-xs);
-    border-bottom: 1px solid var(--border);
-    transition: background var(--duration-fast) var(--ease-out);
+    transition: background var(--duration-fast) var(--ease-out),
+                padding-top 260ms var(--ease-out),
+                padding-bottom 260ms var(--ease-out);
     margin: 0 calc(-1 * var(--space-xs));
     border-radius: var(--radius-sm);
 }
 
-.postlist-item:first-child { border-top: 1px solid var(--border); }
-.postlist-item:hover { background: var(--accent-soft); }
+.postlist-item--hidden .postlist-item-inner {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.postlist-item:hover .postlist-item-inner { background: var(--accent-soft); }
 
 .postlist-link {
     color: var(--text);
     font-size: var(--text-sm);
     font-weight: 500;
     text-decoration: none;
-    transition: color var(--duration-fast) var(--ease-out);
+    display: inline-block;
+    transition: color var(--duration-fast) var(--ease-out),
+                transform var(--duration-fast) var(--ease-spring);
 }
 
 .postlist-link:hover { color: var(--primary); }
+.postlist-item:hover .postlist-link { transform: translateX(3px); }
 
 .postlist-meta {
     display: flex;
@@ -1663,3 +1768,183 @@ figure > figcaption {
     .main-content > .posts-list { max-width: none; }
     .entry-title { font-size: var(--text-xl); }
 }
+
+/* ── Toolbox Easter Egg ────────────────── */
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    flex-shrink: 0;
+}
+
+.toolbox-wrapper {
+    position: relative;
+}
+
+.toolbox-btn.is-active {
+    color: var(--primary);
+}
+
+.toolbox-panel {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    width: 230px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-m);
+    z-index: 200;
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.96) translateY(-6px);
+    transform-origin: top right;
+    transition: opacity 160ms var(--ease-out),
+                transform 160ms var(--ease-spring);
+}
+
+.toolbox-panel.is-open {
+    opacity: 1;
+    pointer-events: auto;
+    transform: scale(1) translateY(0);
+}
+
+.toolbox-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-s);
+}
+
+.toolbox-title {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--primary);
+    font-weight: 500;
+    letter-spacing: 0.04em;
+}
+
+.toolbox-reset {
+    font-family: var(--font-mono);
+    font-size: .625rem;
+    color: var(--text-muted);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    transition: color var(--duration-fast) var(--ease-out);
+}
+
+.toolbox-reset:hover { color: var(--primary); }
+
+.toolbox-rows {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s);
+}
+
+.toolbox-row {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.toolbox-label {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: .625rem;
+    color: var(--text-muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.toolbox-val {
+    color: var(--primary);
+    min-width: 3ch;
+    text-align: right;
+}
+
+.toolbox-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 2px;
+    background: var(--border);
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+}
+
+.toolbox-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--primary);
+    cursor: pointer;
+    transition: transform 150ms var(--ease-spring);
+}
+
+.toolbox-slider:hover::-webkit-slider-thumb,
+.toolbox-slider:focus::-webkit-slider-thumb {
+    transform: scale(1.4);
+}
+
+.toolbox-slider::-moz-range-thumb {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--primary);
+    cursor: pointer;
+    border: none;
+}
+
+.toolbox-row--opts {
+    align-items: center;
+}
+
+.toolbox-row--color {
+    align-items: center;
+}
+
+.toolbox-opts {
+    display: flex;
+    gap: 4px;
+}
+
+.toolbox-opt {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 2px 7px;
+    cursor: pointer;
+    transition: color var(--duration-fast) var(--ease-out),
+                border-color var(--duration-fast) var(--ease-out);
+}
+
+.toolbox-opt:hover { color: var(--primary); }
+.toolbox-opt.is-active { color: var(--primary); border-color: color-mix(in srgb, var(--primary) 50%, var(--border)); }
+
+.toolbox-color {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 20px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    background: none;
+    cursor: pointer;
+    padding: 2px 3px;
+}
+
+.toolbox-color::-webkit-color-swatch-wrapper { padding: 0; }
+.toolbox-color::-webkit-color-swatch { border: none; border-radius: 3px; }
+.toolbox-color::-moz-color-swatch { border: none; border-radius: 3px; }

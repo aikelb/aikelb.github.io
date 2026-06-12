@@ -91,10 +91,72 @@
                     <a href="/writing/" {% if page.url == '/writing/' %}aria-current="page"{% endif %}>Notes</a>
                     <a href="/about/" {% if page.url == '/about/' %}aria-current="page"{% endif %}>About</a>
                 </nav>
-                <button class="theme-toggle" @click="$store.elva.themeToggle()" :aria-label="$store.elva.theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'">
-                    <svg class="theme-toggle-sun" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-                    <svg class="theme-toggle-moon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-                </button>
+                <!-- Theme toggle + dot-field toolbox grouped together -->
+                <div class="header-actions">
+                    <button class="theme-toggle" @click="$store.elva.themeToggle()" :aria-label="$store.elva.theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'">
+                        <svg class="theme-toggle-sun" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                        <svg class="theme-toggle-moon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                    </button>
+                    <div x-data="toolbox" class="toolbox-wrapper" x-effect="sync()" @click.outside="open = false" @keydown.escape.window="open = false">
+                        <button type="button" class="theme-toggle toolbox-btn" @click="open = !open" :class="{ 'is-active': open }" :aria-expanded="open.toString()" aria-label="Dot field settings">
+                            <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true">
+                                <circle cx="2.5" cy="2.5" r="1.5"/><circle cx="9.5" cy="2.5" r="1.5"/>
+                                <circle cx="2.5" cy="9.5" r="1.5"/><circle cx="9.5" cy="9.5" r="1.5"/>
+                            </svg>
+                        </button>
+                        <div class="toolbox-panel" :class="{ 'is-open': open }">
+                            <div class="toolbox-header">
+                                <span class="toolbox-title">[dot field]</span>
+                                <button type="button" class="toolbox-reset" @click="reset()">reset</button>
+                            </div>
+                            <div class="toolbox-rows">
+                                <label class="toolbox-row">
+                                    <span class="toolbox-label">density<span class="toolbox-val" x-text="spacing"></span></span>
+                                    <input type="range" class="toolbox-slider" min="16" max="60" step="4" x-model="spacing">
+                                </label>
+                                <label class="toolbox-row">
+                                    <span class="toolbox-label">fade<span class="toolbox-val" x-text="Math.round(minFade * 100) + '%'"></span></span>
+                                    <input type="range" class="toolbox-slider" min="0" max="1" step="0.05" x-model="minFade">
+                                </label>
+                                <label class="toolbox-row">
+                                    <span class="toolbox-label">parallax<span class="toolbox-val" x-text="Math.round(parallax * 100)"></span></span>
+                                    <input type="range" class="toolbox-slider" min="0" max="0.8" step="0.05" x-model="parallax">
+                                </label>
+                                <label class="toolbox-row">
+                                    <span class="toolbox-label">intensity<span class="toolbox-val" x-text="intensity.toFixed(1)"></span></span>
+                                    <input type="range" class="toolbox-slider" min="0.1" max="5" step="0.1" x-model="intensity">
+                                </label>
+                                <label class="toolbox-row">
+                                    <span class="toolbox-label">attraction<span class="toolbox-val" x-text="pointerStrength.toFixed(1)"></span></span>
+                                    <input type="range" class="toolbox-slider" min="0" max="3" step="0.1" x-model="pointerStrength">
+                                </label>
+                                <div class="toolbox-row toolbox-row--opts">
+                                    <span class="toolbox-label">pattern</span>
+                                    <div class="toolbox-opts">
+                                        <button type="button" class="toolbox-opt" :class="{ 'is-active': pattern === 'grid' }" @click="pattern = 'grid'">grid</button>
+                                        <button type="button" class="toolbox-opt" :class="{ 'is-active': pattern === 'hex' }" @click="pattern = 'hex'">hex</button>
+                                    </div>
+                                </div>
+                                <label class="toolbox-row">
+                                    <span class="toolbox-label">jitter<span class="toolbox-val" x-text="Math.round(jitter * 100) + '%'"></span></span>
+                                    <input type="range" class="toolbox-slider" min="0" max="1" step="0.05" x-model="jitter">
+                                </label>
+                                <label class="toolbox-row">
+                                    <span class="toolbox-label">wave dir<span class="toolbox-val" x-text="waveAngle + '°'"></span></span>
+                                    <input type="range" class="toolbox-slider" min="0" max="355" step="5" x-model="waveAngle">
+                                </label>
+                                <label class="toolbox-row">
+                                    <span class="toolbox-label">wave speed<span class="toolbox-val" x-text="(speed * 1000).toFixed(0)"></span></span>
+                                    <input type="range" class="toolbox-slider" min="0" max="0.1" step="0.002" x-model="speed">
+                                </label>
+                                <div class="toolbox-row toolbox-row--color">
+                                    <span class="toolbox-label">color</span>
+                                    <input type="color" class="toolbox-color" x-model="color">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </header>
 

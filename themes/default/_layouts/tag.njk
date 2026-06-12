@@ -5,7 +5,7 @@ layout: base
 
 {{ content | safe }}
 
-<div class="posts-list anim-reveal">
+<ul class="postlist anim-reveal" x-data="{ notesFilter: 'all' }">
     {% set postslist = collections[ tag ] | languageFilter | reverse %}
     {% include "posts.njk" %}
-</div>
+</ul>

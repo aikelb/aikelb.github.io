@@ -84,6 +84,63 @@
 
 document.addEventListener('alpine:init', () => {
 
+    // Toolbox easter egg — tweaks the dot-field background live via window.dotConfig
+    Alpine.data('toolbox', () => ({
+        open: false,
+        spacing:     36,
+        speed:       0.010,
+        minFade:     0.40,
+        parallax:    0.20,
+        intensity:       2.0,
+        color:           '#576257',
+        jitter:          0,
+        waveAngle:       45,
+        pattern:         'grid',
+        pointerStrength: 1.0,
+        init() {
+            var self = this;
+            var readPrimary = function() {
+                var c = getComputedStyle(document.documentElement).getPropertyValue('--primary').trim();
+                return /^#[0-9a-f]{6}$/i.test(c) ? c : null;
+            };
+            var p = readPrimary();
+            if (p) this.color = p;
+            // When the theme switches, clear any color override and sync to the new primary
+            new MutationObserver(function() {
+                if (window.dotConfig) window.dotConfig.color = null;
+                var p2 = readPrimary();
+                if (p2) self.color = p2;
+            }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+        },
+        sync() {
+            var c = window.dotConfig;
+            if (!c) return;
+            c.spacing         = +this.spacing;
+            c.speed           = +this.speed;
+            c.minFade         = +this.minFade;
+            c.parallax        = +this.parallax;
+            c.intensity       = +this.intensity;
+            c.color           = this.color || null;
+            c.jitter          = +this.jitter;
+            c.waveAngle       = +this.waveAngle;
+            c.pattern         = this.pattern;
+            c.pointerStrength = +this.pointerStrength;
+        },
+        reset() {
+            this.spacing         = 36;
+            this.speed           = 0.010;
+            this.minFade         = 0.40;
+            this.parallax        = 0.20;
+            this.intensity       = 2.0;
+            this.jitter          = 0;
+            this.waveAngle       = 45;
+            this.pattern         = 'grid';
+            this.pointerStrength = 1.0;
+            var c = getComputedStyle(document.documentElement).getPropertyValue('--primary').trim();
+            this.color = /^#[0-9a-f]{6}$/i.test(c) ? c : '#576257';
+        },
+    }));
+
     Alpine.data('observation', () => {
         const quotes = [
             { label: 'Observation #01', text: 'The hardest part of software<br>isn\'t writing code.<br>It\'s making complexity feel simple.' },
