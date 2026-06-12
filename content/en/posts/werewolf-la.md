@@ -7,16 +7,14 @@ tags:
   - unity
 ---
 
-[An American Werewolf in L.A.](https://playmedusa.itch.io/werewolf) is our tribute to '80s arcades and classic beat 'em ups. We created it for the Isla Calavera Fantasy Film Festival 2019, whose main theme that year was the werewolf, with stellar guests like Rick Baker and David Naughton. Both of them star in the game.
+[An American Werewolf in L.A.](https://www.nintendo.com/en-gb/Games/Nintendo-Switch-download-software/An-American-Werewolf-in-L-A-2176123.html) is our tribute to '80s arcades and the classic beat 'em ups we grew up with. We made it for the Isla Calavera Fantasy Film Festival in 2019, the year its theme was the werewolf. Two of the festival's guests, Rick Baker and David Naughton, ended up starring in the game.
 
-It began life in three arcade cabinets placed at the theater entrance, where festival-goers could play between screenings. We later released it for Windows.
+It started life as three arcade cabinets at the theater entrance, where people could play between screenings. We released it on Windows soon after.
 
-On February 24, 2022 it landed on the Nintendo eShop. We self-published it: no publisher, no marketing budget, just a small team and a lot of late nights. A huge milestone for us.
+On February 24, 2022, it reached the Nintendo eShop. We self-published it: no publisher, no marketing budget, just our small team and a lot of late nights.
 
-The Switch port was humbling. We had been building for PC and mobile for years, but console certification is a different beast. Memory budgets, platform-specific save systems, controller rebinding screens you never think about until Nintendo asks for them. Every screen had to work in both handheld and docked modes.
+The port was humbling. We'd spent years building for PC and mobile, but console certification is a different animal. Memory budgets, platform-specific save systems, controller rebinding screens you never think about until Nintendo asks for them. Every screen had to work in both handheld and docked modes.
 
-I'm not going to pretend it was a huge commercial success, and it wasn't. But seeing our game on the Nintendo eShop, next to titles from studios with actual budgets, felt like crossing a finish line we'd been running toward for years.
+It was never going to top the charts, and it didn't need to. Seeing our game on the eShop, sitting next to titles from studios with real budgets, felt like crossing a line we'd been walking toward for years.
 
-If you're attempting a console port for the first time: budget more time than you think for certification. The technical work is the easy part. The paperwork and compliance checks are what get you.
-
-More of our games live at [playmedusa.com](https://playmedusa.com).
+There's more of our work at [playmedusa.com](https://playmedusa.com).

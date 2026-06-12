@@ -8,4 +8,4 @@ tags:
   - gamedev
 ---
 
-An introduction to Aurita Games: our workflow, the projects we shipped, and the pitch we designed for investment.
+An introduction to Aurita Games: how we worked, the projects we shipped, and the pitch we put together for investors.

@@ -17,6 +17,12 @@
     --border:         #D6D3CA;
     --border-hover:   #C4C1B6;
 
+    /* ── Glass cards (plain rgba, NOT color-mix — color-mix interpolates badly
+       in transitions and flickered at the keyframe boundaries) ────── */
+    --glass:             rgba(248, 247, 242, 0.35);  /* --surface @ 35% */
+    --glass-hover:       rgba(248, 247, 242, 0.70);  /* --surface @ 70% */
+    --card-border-hover: #BABAB1;                    /* = --primary 22% over --border, pre-mixed */
+
     /* ── Brand ─────────────────────── */
     --primary:        #566257;
     --primary-hover:  #475148;
@@ -92,6 +98,10 @@
 
     --border:         #2e3432;
     --border-hover:   #424f4b;
+
+    --glass:             rgba(34, 37, 36, 0.35);  /* --surface @ 35% */
+    --glass-hover:       rgba(34, 37, 36, 0.70);  /* --surface @ 70% */
+    --card-border-hover: #2e5751;                 /* = --primary 22% over --border, pre-mixed */
 
     --primary:        #2dd4bf;
     --primary-hover:  #5eeadb;

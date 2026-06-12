@@ -10,6 +10,6 @@ tags:
   - unity
 ---
 
-A talk about game feel: screen shake, squash and stretch, hit stop, and the small details that make games feel good to play.
+A talk on game feel: screen shake, squash and stretch, hit stop, and the small touches that make a game feel good to play.
 
-Prepared for my game programming classes. The deck is in Spanish.
+Made for my game programming course at ULPGC. The deck is in Spanish.

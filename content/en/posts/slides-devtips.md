@@ -10,6 +10,6 @@ tags:
   - workflow
 ---
 
-Practical workflows, debugging strategies, and shipping habits for game programming students.
+Practical workflows, debugging tricks, and shipping habits for students learning to make games.
 
-Prepared for my game programming course at ULPGC. The deck is in Spanish.
+Made for my game programming course at ULPGC. The deck is in Spanish.

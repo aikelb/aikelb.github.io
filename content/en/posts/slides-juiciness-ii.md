@@ -1,6 +1,6 @@
 ---
 title: "Juiciness II"
-date: 2020-11-15
+date: 2020-05-20
 slides: https://slides.aitorlozano.com/juiciness-ii/
 tags:
   - _posts
@@ -10,6 +10,6 @@ tags:
   - unity
 ---
 
-Follow-up to the original Juiciness talk. More techniques, more examples, deeper dive into game feel mechanics.
+A follow-up to the first Juiciness talk: more techniques, more examples, and a deeper look at what makes a game feel good.
 
-Prepared for my game programming classes. The deck is in Spanish.
+Made for my game programming course at ULPGC. The deck is in Spanish.

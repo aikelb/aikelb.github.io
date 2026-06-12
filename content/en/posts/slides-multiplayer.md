@@ -11,6 +11,6 @@ tags:
   - unity
 ---
 
-Introduction to multiplayer game architecture: client-server model, Photon Unity Networking, state synchronization, and latency compensation.
+An introduction to multiplayer game architecture: the client-server model, Photon Unity Networking, state synchronization, and latency compensation.
 
-Prepared for my game programming course at ULPGC. The deck is in Spanish.
+Made for my game programming course at ULPGC. The deck is in Spanish.

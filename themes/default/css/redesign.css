@@ -320,23 +320,34 @@ a:hover { color: var(--accent); }
 
 .metadata-card {
     border: 1px solid var(--border);
-    background: var(--bg);
+    /* Static frosted glass: a semi-transparent surface tint over the dot field
+       (dots show through). Plain rgba vars, NOT color-mix — transitioning to/from
+       a color-mix() value interpolates erratically and was the flicker ("more
+       highlighted at both ends"). This now matches the flicker-free .slides-open
+       button, which also transitions to plain colour variables. */
+    background-color: var(--glass);
     padding: var(--space-m);
     border-radius: var(--radius-lg);
     gap: var(--space-xs);
     position: relative;
+    /* Keep the card permanently on its own GPU layer. A translucent element
+       blends over the canvas slightly differently when painted inline (static)
+       vs when promoted to a temporary layer for the hover transition — that
+       blend switch is the brightness pop at the start/end of the transition.
+       A permanent layer makes the blend consistent throughout. */
+    transform: translateZ(0);
     transition: border-color .6s var(--ease-out),
-                background .6s var(--ease-out);
+                background-color .6s var(--ease-out);
     flex-direction: column;
     display: flex;
 }
 
 .metadata-card:hover {
-    background: color-mix(in srgb, var(--surface) 60%, var(--bg));
-    border-color: color-mix(in srgb, var(--primary) 22%, var(--border));
+    background-color: var(--glass-hover);
+    border-color: var(--card-border-hover);
 }
 
-/* environment card manages its own layered background — don't tint it */
+/* environment card manages its own layered background */
 .metadata-card--environment,
 .metadata-card--environment:hover {
     background: none;
@@ -565,15 +576,24 @@ a:hover { color: var(--accent); }
 
 .metadata-metrics {
     border: 1px solid var(--border);
+    /* static frosted glass — plain rgba vars, no color-mix (see .metadata-card note) */
+    background-color: var(--glass);
     border-radius: var(--radius-lg);
     padding: var(--space-m);
     margin-bottom: var(--space-m);
+    position: relative;
+    /* permanent GPU layer to keep the translucent blend consistent — see .metadata-card note */
+    transform: translateZ(0);
     transition: border-color .6s var(--ease-out),
-                background .6s var(--ease-out);
+                background-color .6s var(--ease-out);
 }
 
 .metadata-metrics:hover {
-    background: color-mix(in srgb, var(--surface) 60%, transparent);
+    background-color: var(--glass-hover);
+    border-color: var(--card-border-hover);
+}
+
+.metadata-metrics:hover {
     border-color: color-mix(in srgb, var(--primary) 22%, var(--border));
 }
 

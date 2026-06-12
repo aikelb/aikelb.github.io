@@ -10,4 +10,4 @@ tags:
   - unity
 ---
 
-Introduction to procedural generation techniques for games, from basic randomness to coherent world-building. Prepared for the Exel Gaming Accelerator.
+An introduction to procedural generation for games, from basic randomness to coherent, hand-shaped worlds. Made for the Exel Gaming Accelerator in Riyadh.

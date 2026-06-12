@@ -10,6 +10,6 @@ tags:
   - vr
 ---
 
-A look at alternative input devices and peripherals for games: VR controllers, arcade sticks, custom hardware, and accessibility considerations.
+A look at alternative input devices for games: VR controllers, arcade sticks, custom hardware, and a few thoughts on accessibility.
 
-Prepared for my game programming course at ULPGC. The deck is in Spanish.
+Made for my game programming course at ULPGC. The deck is in Spanish.
