@@ -250,139 +250,17 @@ document.addEventListener("alpine:init", () => {
             this.ratio = this.coffee ? v / this.coffee : 0;
         },
 
-        // ── recipes ──
+        // ── recipes ── (math lives in v60-recipes.cjs, loaded before this file)
         get steps() {
-            if (this.method === "tetsu") return this._tetsu();
-            if (this.method === "hoffmann") return this._hoffmann();
-            if (this.method === "switch") return this._switch();
-            if (this.method === "iced") return this._iced();
-            return [];
-        },
-
-        _tetsu() {
-            var c = this.coffee,
-                w = this.water;
-            var firstPart = 0.4 * w,
-                secondPart = 0.6 * w;
-            var first = Math.round(
-                { sweet: 2, standard: 3, bright: 4 }[this.taste] * c,
-            );
-            var steps = [
-                { number: 1, time: "0:00", amount: first, accent: "cyan" },
-                {
-                    number: 2,
-                    time: "0:45",
-                    addAmount: Math.round(firstPart - first),
-                    cumulative: Math.round(firstPart),
-                    accent: "cyan",
-                },
-            ];
-            var counts = { light: 1, medium: 2, strong: 3 }[this.strength];
-            var times = ["1:30", "2:15", "2:45"];
-            var each = Math.round(secondPart / counts);
-            var cum = Math.round(firstPart);
-            for (var i = 0; i < counts; i++) {
-                cum += each;
-                steps.push({
-                    number: 3 + i,
-                    time: times[i],
-                    addAmount: each,
-                    cumulative: cum,
-                    accent: "accent",
-                });
-            }
-            return steps;
-        },
-
-        _hoffmann() {
-            var c = this.coffee,
-                w = this.water;
-            var firstPart = 0.6 * w,
-                secondPart = 0.4 * w;
-            var bloom = Math.round(2 * c);
-            return [
-                { number: 1, time: "0:00", amount: bloom, accent: "cyan" },
-                {
-                    number: 2,
-                    time: "0:45",
-                    addAmount: Math.round(firstPart - bloom),
-                    cumulative: Math.round(firstPart),
-                    accent: "cyan",
-                },
-                {
-                    number: 3,
-                    time: "1:15",
-                    timeLabel: "1:15 → 1:45",
-                    addAmount: Math.round(secondPart),
-                    cumulative: Math.round(firstPart + secondPart),
-                    accent: "accent",
-                },
-                {
-                    number: 4,
-                    time: "1:45",
-                    message: "Stir one round, then another in reverse.",
-                },
-                {
-                    number: 5,
-                    message:
-                        "Midway through the drawdown, swirl the V60 to flatten the bed.",
-                },
-            ];
-        },
-
-        _switch() {
-            var w = this.water;
-            return [
-                {
-                    number: 1,
-                    time: "0:00",
-                    amount: w,
-                    message: "Pour all the water. Steep for 2 minutes.",
-                    accent: "cyan",
-                },
-                {
-                    number: 2,
-                    time: "2:00",
-                    message: "Stir, then wait 15 seconds.",
-                },
-                {
-                    number: 3,
-                    time: "2:15",
-                    message: "Open the switch and let it draw down.",
-                },
-            ];
-        },
-
-        _iced() {
-            var c = this.coffee,
-                w = this.water;
-            var ice = Math.round(0.6 * w);
-            var secondPart = 0.4 * w;
-            var bloom = Math.round(3 * c);
-            return [
-                {
-                    number: 1,
-                    time: "0:00",
-                    amount: ice,
-                    message: "Add " + ice + " ml as ice to the carafe.",
-                    accent: "accent",
-                },
-                {
-                    number: 2,
-                    time: "0:00",
-                    amount: bloom,
-                    message: "Bloom with hot water.",
-                    accent: "cyan",
-                },
-                {
-                    number: 3,
-                    time: "2:00",
-                    addAmount: Math.round(secondPart - bloom),
-                    cumulative: bloom + Math.round(secondPart - bloom),
-                    message: "Add the rest in 50 g increments.",
-                    accent: "cyan",
-                },
-            ];
+            var R = (typeof globalThis !== "undefined" && globalThis.V60Recipes) || window.V60Recipes;
+            if (!R) return [];
+            return R.steps({
+                method: this.method,
+                coffee: this.coffee,
+                water: this.water,
+                taste: this.taste,
+                strength: this.strength,
+            });
         },
 
         // ── timer ──
