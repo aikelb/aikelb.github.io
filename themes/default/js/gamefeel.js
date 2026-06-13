@@ -25,6 +25,7 @@
         { id: "scaleCreationAnimation",label: "Spawn scale-up",      category: "Spawn",    hint: "Ships scale up as they appear" },
         { id: "randomCreationDelay",   label: "Staggered spawn",     category: "Spawn",    hint: "Each ship appears on its own beat" },
         { id: "lerpCreationPosition",  label: "Ease into place",     category: "Spawn",    hint: "Ships glide to formation" },
+        { id: "overshootSpawn",        label: "Overshoot",           category: "Spawn",    hint: "Ships spring past, then settle" },
         { id: "randomizeStartPoint",   label: "Scattered origin",    category: "Spawn",    hint: "Ships fly in from random points" },
         { id: "randomScaleSparks",     label: "Spawn sparks",        category: "Spawn",    hint: "Ships flicker in size while forming" },
         { id: "lerpMovement",          label: "Smooth follow",       category: "Motion",   hint: "Ship parts ease, not snap" },
@@ -32,8 +33,10 @@
         { id: "scaleOnDamage",         label: "Hit squash",          category: "Motion",   hint: "Ships pop in size when hit" },
         { id: "highSpeedBullets",      label: "Fast bullets",        category: "Bullets",  hint: "Shots travel quicker" },
         { id: "biggerBullets",         label: "Bigger bullets",      category: "Bullets",  hint: "Chunkier shots with a trail" },
+        { id: "bulletStretch",         label: "Bullet stretch",      category: "Bullets",  hint: "Shots stretch along their path" },
         { id: "superHighSpeedBullets", label: "Hyper bullets",       category: "Bullets",  hint: "Even faster shots" },
         { id: "superWeaponCooler",     label: "Rapid fire",          category: "Bullets",  hint: "Shorter cooldown between shots" },
+        { id: "playerRecoil",          label: "Recoil",              category: "Bullets",  hint: "The ship kicks back when firing" },
         { id: "randomizeBullets",      label: "Spray",               category: "Bullets",  hint: "Shots leave from jittered points" },
         { id: "tripleShot",            label: "Triple shot",         category: "Bullets",  hint: "Three bullets fan out" },
         { id: "fasterCommands",        label: "Faster march",        category: "Enemies",  hint: "Formation steps more often" },
@@ -42,9 +45,14 @@
         { id: "shotEffect",            label: "Muzzle flash",        category: "Particles",hint: "Burst at the cannon" },
         { id: "impactEffect",          label: "Hit sparks",          category: "Particles",hint: "Sparks on every hit" },
         { id: "explosionEffect",       label: "Explosions",          category: "Particles",hint: "Debris burst on kills" },
+        { id: "scorePopups",           label: "Score popups",        category: "Particles",hint: "Points float up on kills" },
         { id: "cameraShake",           label: "Screen shake",        category: "Screen",   hint: "Kills jolt the screen" },
+        { id: "cameraPunch",           label: "Camera punch",        category: "Screen",   hint: "Kills snap-zoom the view" },
+        { id: "screenFlash",           label: "Screen flash",        category: "Screen",   hint: "A white flash on each kill" },
+        { id: "hitStop",               label: "Hit stop",            category: "Screen",   hint: "Time freezes for a beat on kills" },
         { id: "colorizeBg",            label: "Background flash",    category: "Screen",   hint: "Background pulses with color" },
         { id: "shotSound",             label: "Shot sound",          category: "Audio",    hint: "Blip when you fire" },
+        { id: "shotPitch",             label: "Pitch variation",     category: "Audio",    hint: "Shots vary in pitch, less robotic" },
         { id: "impactSound",           label: "Hit sound",           category: "Audio",    hint: "Tick on every hit" },
         { id: "explosionSound",        label: "Explosion sound",     category: "Audio",    hint: "Boom on kills" },
         { id: "creationSound",         label: "Spawn sound",         category: "Audio",    hint: "Chirps as ships form" },
@@ -146,29 +154,51 @@
         canvas.height = Math.round(rect.height * dpr);
     }
 
+    // overshoot easing — settles to 1 at t=1 but springs past on the way (easeOutBack)
+    function easeOutBack(t) {
+        var c1 = 1.70158, c3 = c1 + 1;
+        return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2);
+    }
+
     // ───────────────────────── Game state ─────────────────────────
-    var player, invaders, bullets, particles, shards;
+    var player, invaders, bullets, particles, popups, shards;
     var commander, shake, bgFlash, fireCd, spawnRow;
+    var freeze = 0, punch = 0, flash = 0; // hit-stop, camera-punch, screen-flash
 
     function resetGame() {
-        player = { x: VW / 2, y: VH - 30, w: 34, h: 16, speed: 280 };
+        player = { x: VW / 2, y: VH - 30, w: 34, h: 16, speed: 280, recoil: 0 };
         invaders = [];
         bullets = [];
         particles = [];
+        popups = [];
         shards = [];
         shake = 0;
         bgFlash = 0;
+        freeze = 0;
+        punch = 0;
+        flash = 0;
         fireCd = 0;
         commander = { t: 0, dir: 1, step: 0, spawnIndex: 0, rowsDone: 0 };
         spawnRow = 0;
-        // seed the first few rows
+        spawnFormation();
+    }
+
+    // a full multi-row wave, neatly stacked from the top — used to seed the
+    // game and to refill when the board is cleared (a rapid-fire player can wipe
+    // it fast). Resets the commander so the fresh wave marches from a clean state
+    // instead of dropping single rows that overlap.
+    function spawnFormation() {
         for (var r = 0; r < 4; r++) spawnWave(r % 3, r);
+        commander.t = 0;
+        commander.step = 0;
+        commander.dir = 1;
     }
 
     // Each invader is a cluster of polygon shards orbiting a rig point — this is
     // what makes spawn scale, scatter-on-death and per-shard jitter feel alive,
     // standing in for the Unity FollowerCube rig without literal cubes.
-    var TYPE_COLORS = ["primary", "cyan", "purple"];
+    // teal / red / purple — distinct hues (cyan was too close to the teal primary)
+    var TYPE_COLORS = ["primary", "red", "purple"];
     function makeShardLayout(type) {
         // small symmetric arrangement of offsets (relative to rig centre)
         var base = [
@@ -208,6 +238,7 @@
                 }
                 inv.shards.push({
                     ox: layout[s][0], oy: layout[s][1], // target offset from rig
+                    ix: sx, iy: sy,                     // initial spawn position (for overshoot easing)
                     x: sx, y: sy, scale: on("scaleCreationAnimation") ? 0 : 1,
                     vx: 0, vy: 0, free: false, // free = flung off on death
                     spin: 0, rot: 0,
@@ -284,9 +315,11 @@
         if (!actx) return;
         var hq = on("hqSound");
         if (kind === "shot" && on("shotSound")) {
-            // descending laser "pew" — pitch drops fast; richer mode buzzes a bit
-            pluck(hq ? 1040 : 760, hq ? 240 : 200, hq ? 0.13 : 0.1, hq ? "sawtooth" : "square", 0.05);
-            if (hq) pluck(520, 140, 0.1, "sine", 0.025); // sub layer
+            // descending laser "pew" — pitch drops fast; richer mode buzzes a bit.
+            // shotPitch randomises the pitch so rapid fire stops sounding robotic.
+            var pm = on("shotPitch") ? 0.82 + Math.random() * 0.4 : 1;
+            pluck((hq ? 1040 : 760) * pm, (hq ? 240 : 200) * pm, hq ? 0.13 : 0.1, hq ? "sawtooth" : "square", 0.05);
+            if (hq) pluck(520 * pm, 140 * pm, 0.1, "sine", 0.025); // sub layer
         }
         else if (kind === "impact" && on("impactSound")) pluck(hq ? 520 : 420, hq ? 240 : 200, hq ? 0.12 : 0.09, "sine", 0.06);
         else if (kind === "explosion" && on("explosionSound")) boom(hq ? 0.5 : 0.32, hq ? 0.2 : 0.15, hq ? 1500 : 950);
@@ -337,6 +370,7 @@
         shot(0, 0);
         if (on("tripleShot")) { shot(-0.35, -2); shot(0.35, 2); }
         if (on("shotEffect")) burst(player.x, player.y - 12, 8, palette.yellow, 80, 0.25);
+        if (on("playerRecoil") && !reduceMotion.matches) player.recoil = 6;
         sfx("shot");
     }
 
@@ -356,9 +390,14 @@
 
     function kill(inv) {
         inv.dead = true;
-        // honour reduced-motion: keep the color flash but skip the shake jolt
-        shake += (on("cameraShake") && !reduceMotion.matches) ? 10 : 0;
-        bgFlash = on("colorizeBg") ? (reduceMotion.matches ? 0.5 : 1) : 0;
+        var rm = reduceMotion.matches;
+        // honour reduced-motion: keep colour cues, drop the physical jolts
+        shake += (on("cameraShake") && !rm) ? 10 : 0;
+        bgFlash = on("colorizeBg") ? (rm ? 0.5 : 1) : 0;
+        if (on("cameraPunch") && !rm) punch = Math.min(1.2, punch + 0.6);
+        if (on("screenFlash")) flash = rm ? 0.4 : 1;
+        if (on("hitStop") && !rm) freeze = Math.max(freeze, 0.05);
+        if (on("scorePopups")) popups.push({ x: inv.rigX, y: inv.rigY, life: 0.8, max: 0.8, text: "+" + (inv.type + 1) * 10 });
         if (on("explosionEffect")) burst(inv.rigX, inv.rigY, 22, palette[inv.color] || palette.primary, 160, 0.5);
         sfx("explosion");
         if (on("phisicsDeath")) {
@@ -454,6 +493,8 @@
             v.squash += (1 - v.squash) * Math.min(1, dt * 10);
             var t = Math.min(1, (v.age - v.delay) / 0.55); // spawn progress
             var spawnSpark = on("randomScaleSparks") && t < 1 && Math.random() < 0.15;
+            var overshoot = on("overshootSpawn");
+            var se = overshoot ? easeOutBack(t) : t; // spawn ease (springs past 1)
             for (var s = 0; s < v.shards.length; s++) {
                 var sh = v.shards[s];
                 if (sh.free) {
@@ -463,8 +504,14 @@
                 }
                 var tx = v.rigX + sh.ox, ty = v.rigY + sh.oy;
                 if (on("lerpCreationPosition") && t < 1) {
-                    sh.x += (tx - sh.x) * Math.min(1, dt * 6);
-                    sh.y += (ty - sh.y) * Math.min(1, dt * 6);
+                    if (overshoot) {
+                        // ease from the spawn origin toward the slot, springing past it
+                        sh.x = sh.ix + (tx - sh.ix) * se;
+                        sh.y = sh.iy + (ty - sh.iy) * se;
+                    } else {
+                        sh.x += (tx - sh.x) * Math.min(1, dt * 6);
+                        sh.y += (ty - sh.y) * Math.min(1, dt * 6);
+                    }
                 } else if (on("lerpMovement")) {
                     var ease = Math.min(1, dt * 12);
                     if (on("randomMovementDelay") && Math.random() < 0.04) ease *= 0.2;
@@ -473,8 +520,9 @@
                 } else {
                     sh.x = tx; sh.y = ty;
                 }
-                if (on("scaleCreationAnimation")) sh.scale += (1 - sh.scale) * Math.min(1, dt * 6);
-                else sh.scale = 1;
+                if (on("scaleCreationAnimation")) {
+                    sh.scale = overshoot ? Math.max(0, se) : sh.scale + (1 - sh.scale) * Math.min(1, dt * 6);
+                } else sh.scale = 1;
                 if (spawnSpark) sh.scale = 0.4 + Math.random() * 1.6;
             }
             if (spawnSpark) sfx("spawn");
@@ -501,13 +549,30 @@
             pt.vx *= 0.96; pt.vy *= 0.96;
         }
 
-        // keep at least some ships on screen
-        if (invaders.length < 6) spawnWave(Math.floor(Math.random() * 3), 0);
+        // score popups rise and fade
+        for (var sp2 = popups.length - 1; sp2 >= 0; sp2--) {
+            var po = popups[sp2];
+            po.life -= dt;
+            if (po.life <= 0) { popups.splice(sp2, 1); continue; }
+            po.y -= 26 * dt;
+        }
+
+        // player recoil eases back to rest
+        player.recoil += (0 - player.recoil) * Math.min(1, dt * 12);
+
+        // board cleared (a rapid-fire player wipes it fast) → drop a fresh full
+        // wave rather than single rows, which would spawn on top of each other.
+        // Count only live ships so lingering death shards don't block the refill.
+        var aliveCount = 0;
+        for (var ac = 0; ac < invaders.length; ac++) if (!invaders[ac].dead) aliveCount++;
+        if (aliveCount === 0) spawnFormation();
 
         // screen feedback decay
         shake *= Math.pow(0.001, dt);
         if (shake < 0.05) shake = 0;
         bgFlash *= Math.pow(0.02, dt);
+        punch *= Math.pow(0.0006, dt);   // camera-punch zoom springs back fast
+        flash *= Math.pow(0.00004, dt);  // screen-flash fades very fast
     }
 
     function reflowRows() {
@@ -547,10 +612,12 @@
             ctx.globalAlpha = 1;
         }
 
-        // centre + scale the virtual field, apply shake
-        var offX = (W - VW * S) / 2 + (shake ? (Math.random() - 0.5) * shake : 0);
-        var offY = (H - VH * S) / 2 + (shake ? (Math.random() - 0.5) * shake : 0);
-        ctx.setTransform(view.dpr * S, 0, 0, view.dpr * S, offX * view.dpr, offY * view.dpr);
+        // centre + scale the virtual field, with camera punch (zoom) and shake.
+        // Zoom about the centre by scaling S and re-centring the offsets.
+        var Seff = S * (1 + Math.min(punch, 1.2) * 0.07);
+        var offX = (W - VW * Seff) / 2 + (shake ? (Math.random() - 0.5) * shake : 0);
+        var offY = (H - VH * Seff) / 2 + (shake ? (Math.random() - 0.5) * shake : 0);
+        ctx.setTransform(view.dpr * Seff, 0, 0, view.dpr * Seff, offX * view.dpr, offY * view.dpr);
 
         ctx.globalCompositeOperation = "lighter";
 
@@ -578,7 +645,19 @@
                 ctx.globalAlpha = 1;
             }
             ctx.fillStyle = col; ctx.shadowColor = col; ctx.shadowBlur = 12;
-            ctx.beginPath(); ctx.arc(bu.x, bu.y, bu.big ? 4.5 : 2.5, 0, Math.PI * 2); ctx.fill();
+            var br = bu.big ? 4.5 : 2.5;
+            if (on("bulletStretch")) {
+                // elongate along the direction of travel (fake motion blur)
+                var stretch = 2.2 + (on("superHighSpeedBullets") ? 1.6 : on("highSpeedBullets") ? 0.8 : 0);
+                ctx.save();
+                ctx.translate(bu.x, bu.y);
+                ctx.rotate(Math.atan2(bu.vy, bu.vx));
+                ctx.scale(stretch, 1);
+                ctx.beginPath(); ctx.arc(0, 0, br, 0, Math.PI * 2); ctx.fill();
+                ctx.restore();
+            } else {
+                ctx.beginPath(); ctx.arc(bu.x, bu.y, br, 0, Math.PI * 2); ctx.fill();
+            }
         }
 
         // invaders (shard clusters)
@@ -595,12 +674,35 @@
             }
         }
 
-        // player ship (arrow)
+        // score popups (drawn glowy in the additive pass)
+        if (popups.length) {
+            ctx.textAlign = "center";
+            ctx.font = "600 13px " + "ui-monospace, 'JetBrains Mono', monospace";
+            for (var pp = 0; pp < popups.length; pp++) {
+                var po = popups[pp];
+                ctx.globalAlpha = Math.max(0, Math.min(1, po.life / po.max));
+                ctx.fillStyle = palette.primary;
+                ctx.shadowColor = palette.primary; ctx.shadowBlur = 8;
+                ctx.fillText(po.text, po.x, po.y);
+            }
+            ctx.globalAlpha = 1;
+        }
+
+        // player ship (arrow), nudged down by recoil
         ctx.shadowBlur = 12;
-        poly(player.x, player.y, [[0, -11], [13, 9], [0, 4], [-13, 9]], 1, 0, palette.primary, 14);
+        poly(player.x, player.y + player.recoil, [[0, -11], [13, 9], [0, 4], [-13, 9]], 1, 0, palette.primary, 14);
 
         ctx.globalCompositeOperation = "source-over";
         ctx.shadowBlur = 0;
+
+        // screen flash overlay (full-frame, untransformed)
+        if (flash > 0.02) {
+            ctx.setTransform(view.dpr, 0, 0, view.dpr, 0, 0);
+            ctx.fillStyle = "#ffffff";
+            ctx.globalAlpha = Math.min(0.35, flash * 0.22);
+            ctx.fillRect(0, 0, W, H);
+            ctx.globalAlpha = 1;
+        }
     }
 
     // ───────────────────────── Loop ─────────────────────────
@@ -612,10 +714,17 @@
         var dt = Math.min(0.05, (now - last) / 1000);
         last = now;
         if (bridge.started) {
-            acc += dt * bridge.timeScale;
-            var guard = 0;
-            while (acc >= STEP && guard++ < 8) { update(STEP); acc -= STEP; }
-            if (acc > STEP) acc = 0; // drop backlog instead of spiralling
+            if (freeze > 0) {
+                // hit stop: hold the simulation for a beat (counts down in real time)
+                freeze -= dt;
+                acc = 0;
+            } else {
+                acc += dt * bridge.timeScale;
+                var guard = 0;
+                // bail out of the step loop the instant a kill triggers a freeze
+                while (acc >= STEP && freeze <= 0 && guard++ < 8) { update(STEP); acc -= STEP; }
+                if (acc > STEP) acc = 0; // drop backlog instead of spiralling
+            }
         }
         render();
     }

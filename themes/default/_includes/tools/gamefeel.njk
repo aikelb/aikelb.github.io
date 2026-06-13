@@ -38,7 +38,7 @@
         <div class="gf-row">
             <span class="gf-row-label">time</span>
             <label class="gf-control gf-control--time">
-                <input type="range" class="gf-slider" min="0.1" max="2" step="0.1" :value="timeScale" @input="setTimeScale($event.target.value)" aria-label="Time scale">
+                <input type="range" class="gf-slider" min="0.1" max="2" step="0.1" :value="timeScale" :style="'--gf-fill:' + ((timeScale - 0.1) / 1.9 * 100) + '%'" @input="setTimeScale($event.target.value)" aria-label="Time scale">
                 <span class="gf-time-val" x-text="(+timeScale).toFixed(1) + '×'"></span>
             </label>
         </div>
@@ -53,6 +53,18 @@
                 <button type="button" class="gf-chip gf-chip--toggle" :class="{ 'is-active': ai }" @click="toggleAi()" :aria-pressed="ai.toString()">
                     <span class="gf-toggle-dot" aria-hidden="true"></span>auto-play
                 </button>
+            </div>
+        </div>
+
+        <div class="gf-row gf-row--legend">
+            <span class="gf-row-label">controls</span>
+            <div class="gf-control gf-legend">
+                <span class="gf-keys">
+                    <span class="gf-key-group"><kbd>A</kbd><kbd>D</kbd> move</span>
+                    <span class="gf-key-group"><kbd>space</kbd> fire</span>
+                    <span class="gf-key-group"><kbd>+</kbd><kbd>−</kbd> juice</span>
+                </span>
+                <span class="gf-touch">Drag to move, hold to fire.</span>
             </div>
         </div>
     </div>
@@ -74,6 +86,4 @@
             </div>
         </template>
     </div>
-
-    <p class="gf-legend">Move with <kbd>A</kbd>/<kbd>D</kbd> or the arrows, fire with <kbd>space</kbd>, add or remove juice with <kbd>+</kbd>/<kbd>−</kbd>. On touch, drag to move and hold to fire.</p>
 </div>

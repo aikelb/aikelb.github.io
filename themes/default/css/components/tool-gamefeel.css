@@ -227,9 +227,56 @@
 .gf-slider {
     flex: 1;
     max-width: 240px;
-    accent-color: var(--primary);
+    height: 18px;
+    margin: 0;
+    background: none;
     cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
 }
+.gf-slider:focus { outline: none; }
+/* track */
+.gf-slider::-webkit-slider-runnable-track {
+    height: 4px;
+    border-radius: var(--radius-full);
+    background: linear-gradient(to right, var(--primary) var(--gf-fill, 50%), var(--surface-alt) var(--gf-fill, 50%));
+}
+.gf-slider::-moz-range-track {
+    height: 4px;
+    border-radius: var(--radius-full);
+    background: var(--surface-alt);
+}
+.gf-slider::-moz-range-progress {
+    height: 4px;
+    border-radius: var(--radius-full);
+    background: var(--primary);
+}
+/* thumb */
+.gf-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    margin-top: -5px;
+    border-radius: var(--radius-full);
+    background: var(--primary);
+    border: 2px solid var(--surface);
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--duration-fast) var(--ease-out),
+                box-shadow var(--duration-fast) var(--ease-out);
+}
+.gf-slider::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    border-radius: var(--radius-full);
+    background: var(--primary);
+    border: 2px solid var(--surface);
+    box-shadow: var(--shadow-sm);
+}
+.gf-slider:hover::-webkit-slider-thumb,
+.gf-slider:focus-visible::-webkit-slider-thumb { transform: scale(1.15); box-shadow: 0 0 0 4px var(--accent-soft); }
+.gf-slider:hover::-moz-range-thumb,
+.gf-slider:focus-visible::-moz-range-thumb { box-shadow: 0 0 0 4px var(--accent-soft); }
 
 .gf-time-val {
     font-family: var(--font-mono);
@@ -333,20 +380,37 @@
     box-shadow: 0 0 6px var(--primary);
 }
 
-/* ── Legend ────── */
+/* ── Controls legend (inside the panel) ────── */
 .gf-legend {
-    margin-top: var(--space-l);
-    font-size: var(--text-sm);
-    color: var(--text-secondary);
+    flex-direction: column;
+    gap: var(--space-2xs);
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+}
+.gf-keys {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-2xs) var(--space-s);
+}
+.gf-key-group {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4ch;
+    font-family: var(--font-mono);
 }
 .gf-legend kbd {
     font-family: var(--font-mono);
-    font-size: 0.85em;
+    font-size: 0.8em;
+    color: var(--text-secondary);
     background: var(--code-bg);
     border: 1px solid var(--border);
     border-radius: var(--radius-sm);
     padding: 1px 5px;
+    line-height: 1.4;
 }
+/* touch hint hidden on pointer devices, swapped in on phones */
+.gf-touch { display: none; }
 
 @media (max-width: 560px) {
     .gf-controls {
@@ -358,6 +422,8 @@
     .gf-row-label::before,
     .gf-row-label::after { width: 10px; margin: 0 0.5ch; }
     .gf-row-sep { display: none; }
+    .gf-keys { display: none; }
+    .gf-touch { display: block; }
     .gf-groups {
         grid-template-columns: 1fr 1fr;
         gap: var(--space-s);
@@ -386,21 +452,17 @@
         align-items: start;
     }
     .gf-screen { grid-column: 1; grid-row: 1; }
+    /* match the panel to the game's height and spread its sections to fill */
     .gf-controls {
         grid-column: 2;
         grid-row: 1;
         margin-top: 0;
-        position: sticky;
-        top: var(--space-l);
+        align-self: stretch;
+        justify-content: space-between;
     }
     .gf-groups {
         grid-column: 1 / -1;
         grid-row: 2;
-        margin-top: 0;
-    }
-    .gf-legend {
-        grid-column: 1 / -1;
-        grid-row: 3;
         margin-top: 0;
     }
 }
