@@ -4,9 +4,10 @@
        ═══════════════════════════════════════ */
 
     /* ── Surfaces (washi paper) ────── */
-    --bg:            #F3F1EB;
-    --surface:       #F8F7F2;
-    --surface-alt:   #ECE9E1;
+    --bg:               #F3F1EB;
+    --surface:          #F8F7F2;
+    --surface-alt:      #ECE9E1;
+    --surface-secondary: var(--surface-alt);  /* table header / zebra stripe */
 
     /* ── Text (sumi ink) ───────────── */
     --text:           #1A1A18;

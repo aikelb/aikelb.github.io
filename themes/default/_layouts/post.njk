@@ -1,6 +1,7 @@
 ---
 layout: base
 ---
+{%- if tool %}{% css 'defer' %}{% include '../css/components/tool-' + tool + '.css' ignore missing %}{% endcss %}{% endif %}
 <article class="hentry">
     <header class="entry-header anim-reveal">
         <h1 class="entry-title">{{title}}</h1>
@@ -15,7 +16,7 @@ layout: base
 	        {%- endfor %}
         </ul>
     </header>
-    {%- if tool == 'v60' %}{% include "tools/v60.njk" %}{% endif %}
+    {%- if tool %}{% include "tools/" + tool + ".njk" ignore missing %}{% endif %}
     <div class="entry-content anim-reveal">
         {{ content | safe }}
     </div>
