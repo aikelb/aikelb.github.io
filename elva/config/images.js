@@ -11,6 +11,8 @@ export default (eleventyConfig) => {
         outputdir.outputDir = '.cache/@11ty/img/';
 
         eleventyConfig.on('eleventy.after', () => {
+            // Create the directory if it doesn't exist
+            fs.mkdirSync('.cache/@11ty/img/', { recursive: true });
             fs.cpSync('.cache/@11ty/img/', path.join(eleventyConfig.directories.output, '/assets/img/'), { recursive: true });
         });
     }
