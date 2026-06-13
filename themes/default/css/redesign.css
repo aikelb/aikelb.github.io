@@ -469,16 +469,17 @@ a:hover { color: var(--accent); }
     z-index: 1;
     position: absolute;
     inset: 0;
-    /* moss duotone wash over the grayscale photo so it sits in the palette */
+    /* moss/teal duotone wash so the warm illustration sits in the palette;
+       kept light so the orange fur doesn't turn muddy under the color blend */
     background: var(--primary);
-    opacity: .42;
+    opacity: .30;
     mix-blend-mode: color;
     transition: opacity var(--duration-base) var(--ease-out);
     border-radius: var(--radius-lg);
 }
 
 [data-theme="light"] .metadata-card--environment::before {
-    opacity: .34;
+    opacity: .24;
 }
 
 .metadata-card-bg {
@@ -493,7 +494,7 @@ a:hover { color: var(--accent); }
 
 /* Specificity (0,3,0) beats defer.css's [loading="lazy"].elva-loaded at (0,2,0) */
 .metadata-card.metadata-card--environment .metadata-card-bg {
-    filter: grayscale(85%) brightness(.72) contrast(1.05);
+    filter: grayscale(55%) brightness(.86) contrast(1);
     transition: transform var(--duration-slow) var(--ease-spring),
                 filter var(--duration-slow) var(--ease-out);
 }
@@ -511,12 +512,12 @@ a:hover { color: var(--accent); }
 }
 
 .metadata-card.metadata-card--environment:hover .metadata-card-bg {
-    filter: grayscale(55%) brightness(.8) contrast(1.02);
+    filter: grayscale(10%) brightness(.98) contrast(1.02);
     transform: scale(1.04);
 }
 
 .metadata-card--environment:hover::before {
-    opacity: .16;
+    opacity: .08;
 }
 
 .metadata-card--environment .metadata-card-header,

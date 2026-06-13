@@ -1,3 +1,17 @@
+// Pick a random "office staff" photo on each visit. To add more, just drop the
+// image in /assets/img/ and append its name to the data-cat-pool list in the markup.
+(function () {
+    var el = document.querySelector(".metadata-card-bg[data-cat-pool]");
+    if (!el) return;
+    var pool = (el.dataset.catPool || "")
+        .split(",")
+        .map(function (s) { return s.trim(); })
+        .filter(Boolean);
+    if (pool.length < 2) return;
+    var src = "/assets/img/" + pool[Math.floor(Math.random() * pool.length)] + ".jpg";
+    if (el.getAttribute("src") !== src) el.src = src;
+})();
+
 // Reveal content blocks as they enter the viewport (runs on every page).
 // Above-the-fold blocks reveal immediately, so it doubles as a page-load reveal.
 (function () {
