@@ -17,7 +17,7 @@ describe('random', () => {
 
     // Regression target for plan 005: must terminate when the only item IS the
     // avoided one (currently infinite-loops). Skipped until 005 lands.
-    it.skip('terminates when the collection is just the avoided item', () => {
+    it('terminates when the collection is just the avoided item', () => {
         const coll = [{ url: '/a/' }];
         const out = random(coll, { url: '/a/' });
         expect(out.length).toBe(1);

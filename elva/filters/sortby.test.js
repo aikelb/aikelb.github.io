@@ -18,7 +18,7 @@ describe('sortBy', () => {
     });
 
     // Regression target for plan 004: sortBy must NOT mutate its input.
-    it.skip('does not mutate the input array order', () => {
+    it('does not mutate the input array order', () => {
         const input = make();
         const before = input.map(i => i.data.title);
         sortBy(input, 'date');
