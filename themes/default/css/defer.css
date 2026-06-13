@@ -2,11 +2,11 @@
 
 .skip-link {
 	transform: translateY( -140px );
-	transition: var(--transition-base);
-    padding: var(--space-s-l);
-    background-color: var(--foreground);
-    color: var(--background);
-    font-family: var(--font-headings);
+	transition: all var(--duration-base) var(--ease-out);
+    padding: var(--space-m);
+    background-color: var(--text);
+    color: var(--bg);
+    font-family: var(--font-sans);
     font-weight: 500;
     border-radius: 0;
     width: 100%;
@@ -15,7 +15,7 @@
 }
 
 .skip-link:hover {
-    color: var(--background);
+    color: var(--bg);
 }
 
 .skip-link:focus {
@@ -30,7 +30,7 @@
 .oembed-youtube,
 .oembed-vimeo,
 .oembed-ted {
-    border: 1px solid var(--foreground);
+    border: 1px solid var(--text);
 }
 
 .oembed-youtube lite-youtube {
@@ -60,7 +60,7 @@
 }
 
 .oembed-spotify {
-    border-radius: var(--border-radius);
+    border-radius: var(--radius-md);
 
     iframe {
         display: block;
@@ -89,8 +89,8 @@
 
     .oembed:has(> [loading="lazy"]),
     picture:has(> [loading="lazy"]) {
-        background-color: var(--background-soft);
-        border-radius: var(--border-radius);
+        background-color: var(--surface-alt);
+        border-radius: var(--radius-md);
         position: relative;
     }
 
@@ -107,13 +107,13 @@
         inset: -0.1rem;
         background: conic-gradient(
           from var(--gradient-angle),
-          var(--background-soft),
-          var(--nord10),
-          var(--nord11),
-          var(--nord12),
-          var(--nord13),
-          var(--nord14),
-          var(--background-soft)
+          var(--surface-alt),
+          var(--cyan),
+          var(--red),
+          var(--purple),
+          var(--highlight),
+          var(--green),
+          var(--surface-alt)
         );
         border-radius: inherit;
         animation: rotate 2.5s linear infinite;

@@ -1,6 +1,6 @@
 code[class*="language-"],
 pre[class*="language-"] {
-    color: var(--code-default);
+    color: var(--text);
     background: none;
     font-family: var(--font-mono);
     text-align: left;
@@ -18,25 +18,25 @@ pre[class*="language-"] {
 }
 
 code[class*="language-"] {
-    padding-right: var(--space-s-l);
+    padding-right: var(--space-m);
 }
 
 [class*="language-"]::selection,
 [class*="language-"] *::selection {
-    background: var(--nord13);
-    color: var(--nord0);
+    background: var(--highlight);
+    color: var(--text);
 }
 
 /* code blocks */
 pre[class*="language-"] {
-    padding: var(--space-s-l);
+    padding: var(--space-m);
     overflow: auto;
 }
 
 :not(pre) > code[class*="language-"],
 pre[class*="language-"] {
-    background: var(--code-background);
-    border-radius: var(--border-radius);
+    background: var(--code-bg);
+    border-radius: var(--radius-md);
 }
 
 /* inline code */
@@ -69,11 +69,11 @@ pre[class*="language-"] {
 .token.prolog,
 .token.doctype,
 .token.cdata {
-    color: var(--code-comment);
+    color: var(--text-muted);
 }
 
 .token.punctuation {
-    color: var(--code-tag);
+    color: var(--red);
 }
 
 .token.property,
@@ -81,15 +81,15 @@ pre[class*="language-"] {
 .token.constant,
 .token.symbol,
 .token.deleted {
-    color: var(--code-tag);
+    color: var(--red);
 }
 
 .token.number {
-    color: var(--code-number);
+    color: var(--accent);
 }
 
 .token.boolean {
-    color: var(--code-tag);
+    color: var(--red);
 }
 
 .token.selector,
@@ -98,7 +98,7 @@ pre[class*="language-"] {
 .token.char,
 .token.builtin,
 .token.inserted {
-    color: var(--code-selector);
+    color: var(--purple);
 }
 
 .token.operator,
@@ -107,21 +107,21 @@ pre[class*="language-"] {
 .language-css .token.string,
 .style .token.string,
 .token.variable {
-    color: var(--code-tag);
+    color: var(--red);
 }
 
 .token.atrule,
 .token.attr-value,
 .token.function,
 .token.class-name {
-    color: var(--code-function);
+    color: var(--primary);
 }
 
 .token.keyword {
-    color: var(--code-tag);
+    color: var(--red);
 }
 
 .token.regex,
 .token.important {
-    color: var(--code-regex);
+    color: var(--green);
 }

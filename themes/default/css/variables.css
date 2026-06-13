@@ -83,33 +83,6 @@
     --radius-md:      6px;
     --radius-lg:      8px;
     --radius-full:    9999px;
-
-    /* ── Legacy/compat aliases (consumed by defer.css + syntax.css) ────── */
-    --foreground:      var(--text);
-    --background:      var(--bg);
-    --background-soft: var(--surface-alt);
-    --border-radius:   var(--radius-md);
-    --font-headings:   var(--font-sans);
-    --transition-base: all var(--duration-base) var(--ease-out);
-    --space-s-l:       var(--space-m);
-
-    /* skeleton-gradient + code-selection palette (was Nord) */
-    --nord0:  var(--text);
-    --nord10: var(--cyan);
-    --nord11: var(--red);
-    --nord12: var(--purple);
-    --nord13: var(--highlight);
-    --nord14: var(--green);
-
-    /* ── Code syntax palette (Prism, consumed by syntax.css) ────── */
-    --code-background: var(--code-bg);
-    --code-default:    var(--text);
-    --code-comment:    var(--text-muted);
-    --code-function:   var(--primary);
-    --code-tag:        var(--red);
-    --code-number:     var(--accent);
-    --code-selector:   var(--purple);
-    --code-regex:      var(--green);
 }
 
 /* ── Dark Mode (surgical teal developer-tool aesthetic) ────── */
