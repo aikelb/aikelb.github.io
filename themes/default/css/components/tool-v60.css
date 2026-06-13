@@ -295,4 +295,7 @@
         grid-template-columns: auto 1fr;
     }
     .v60-step-note { grid-column: 1 / -1; }
+    .v60-chip,
+    .v60-seg { padding: 8px var(--space-s); }
+    .v60-method { padding: var(--space-2xs) var(--space-s); }
 }

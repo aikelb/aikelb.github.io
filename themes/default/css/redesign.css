@@ -15,6 +15,7 @@ body {
     font-size: var(--text-base);
     line-height: 1.65;
     min-height: 100vh;
+    min-height: 100dvh;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     letter-spacing: -0.01em;
@@ -36,7 +37,10 @@ body {
 iframe:focus-within,
 :focus:not(:focus-visible) { outline: none; }
 
-:target { scroll-margin-top: 2ex; }
+:target,
+h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {
+    scroll-margin-top: calc(53px + var(--space-s));
+}
 
 hr {
     border-top: 1px solid var(--border);
@@ -1773,9 +1777,10 @@ figure > figcaption {
 }
 
 @media (max-width: 768px) {
-    .header-nav a {
-        padding: 6px 10px;
-    }
+    .header-nav a { padding: 10px 12px; }
+    .theme-toggle { padding: 11px 12px; }
+    .footer-social a { padding: 8px 6px; }
+    .filter-tab { padding: 8px 4px; }
     .page-container { padding: 0 var(--space-s); }
     .section { padding: var(--space-m) 0; }
     .work-entry { max-width: none; }
@@ -1787,6 +1792,29 @@ figure > figcaption {
     .main-content > .hentry,
     .main-content > .posts-list { max-width: none; }
     .entry-title { font-size: var(--text-xl); }
+
+    /* Header: fit name + nav + actions on one row without overflow */
+    .header-inner {
+        gap: var(--space-s);
+        padding: 0 var(--space-s);
+    }
+    .header-branding {
+        display: none;
+    }
+    .header-nav {
+        gap: 0;
+    }
+
+    .post-row {
+        flex-wrap: wrap;
+        row-gap: var(--space-3xs);
+    }
+    .post-row-title { flex: 1 1 100%; }
+}
+
+@media (max-width: 380px) {
+    .header-nav a { padding: 6px 8px; }
+    .header-actions { gap: 0; }
 }
 
 /* ── Toolbox Easter Egg ────────────────── */
@@ -1968,3 +1996,11 @@ figure > figcaption {
 .toolbox-color::-webkit-color-swatch-wrapper { padding: 0; }
 .toolbox-color::-webkit-color-swatch { border: none; border-radius: 3px; }
 .toolbox-color::-moz-color-swatch { border: none; border-radius: 3px; }
+
+@media (hover: none) {
+    .post-row:hover,
+    .work-entry-head:hover,
+    .postlist-link:hover,
+    .posts-more:hover { transform: none; }
+    .post-row::after { opacity: 0.5; transform: none; }
+}
