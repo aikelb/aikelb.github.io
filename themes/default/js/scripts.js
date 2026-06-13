@@ -308,6 +308,66 @@ document.addEventListener("alpine:init", () => {
         },
     }));
 
+    // Gamefeel Invaders — thin control panel adapter. All game logic lives in
+    // gamefeel.js and is reached through window.gamefeel; this just mirrors the
+    // reactive bits the UI binds to and re-renders when the engine changes them.
+    Alpine.data("gamefeel", () => ({
+        level: 0,
+        started: false,
+        timeScale: 1,
+        ai: false,
+        _tick: 0, // bumped to force Alpine to re-read isOn() after engine changes
+        get effects() {
+            return (window.gamefeel && window.gamefeel.effects) || [];
+        },
+        get groups() {
+            var order = [],
+                map = {};
+            this.effects.forEach(function (fx) {
+                if (!map[fx.category]) {
+                    map[fx.category] = { name: fx.category, items: [] };
+                    order.push(map[fx.category]);
+                }
+                map[fx.category].items.push(fx);
+            });
+            return order;
+        },
+        isOn(id) {
+            this._tick; // dependency so toggles re-render
+            return !!(window.gamefeel && window.gamefeel.enabled.has(id));
+        },
+        init() {
+            var self = this;
+            if (!window.gamefeel) return;
+            window.gamefeel.onChange = function () {
+                self.level = window.gamefeel.level;
+                self.started = window.gamefeel.started;
+                self.timeScale = window.gamefeel.timeScale;
+                self.ai = window.gamefeel.ai;
+                self._tick++;
+            };
+        },
+        start() {
+            if (window.gamefeel) window.gamefeel.start();
+        },
+        setLevel(n) {
+            if (window.gamefeel) window.gamefeel.setLevel(n);
+        },
+        toggle(id) {
+            if (window.gamefeel) window.gamefeel.toggle(id);
+        },
+        preset(name) {
+            if (window.gamefeel) window.gamefeel.preset(name);
+        },
+        setTimeScale(v) {
+            this.timeScale = +v;
+            if (window.gamefeel) window.gamefeel.setTimeScale(v);
+        },
+        toggleAi() {
+            if (window.gamefeel) window.gamefeel.toggleAi();
+        },
+    }));
+
     Alpine.store("elva", {
         init() {
             this.theme =

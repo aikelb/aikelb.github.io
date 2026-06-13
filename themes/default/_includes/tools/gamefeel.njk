@@ -1,0 +1,68 @@
+<div class="gf anim-reveal" x-data="gamefeel" x-cloak>
+
+    <!-- Arcade screen -->
+    <div class="gf-screen">
+        <canvas class="gamefeel-canvas" tabindex="0" aria-label="Gamefeel invaders playfield"></canvas>
+        <button type="button" class="gf-overlay" x-show="!started" @click="start()" x-transition.opacity>
+            <span class="gf-overlay-title">Gamefeel Invaders</span>
+            <span class="gf-overlay-hint">click to play · A / D move · space to fire</span>
+            <span class="gf-overlay-cta">▶ start</span>
+        </button>
+    </div>
+
+    <!-- Control panel -->
+    <div class="gf-controls">
+        <div class="gf-row">
+            <span class="gf-row-label">juice</span>
+            <div class="gf-control gf-control--juice">
+                <div class="gf-juice-stepper">
+                    <button type="button" class="gf-step-btn" @click="setLevel(level - 1)" :disabled="level <= 0" aria-label="Remove last effect">−</button>
+                    <span class="gf-step-count"><b x-text="level"></b> / <span x-text="effects.length"></span></span>
+                    <button type="button" class="gf-step-btn" @click="setLevel(level + 1)" :disabled="level >= effects.length" aria-label="Add next effect">+</button>
+                </div>
+                <span class="gf-step-bar" aria-hidden="true"><span class="gf-step-fill" :style="'width:' + (level / effects.length * 100) + '%'"></span></span>
+            </div>
+        </div>
+
+        <div class="gf-row">
+            <span class="gf-row-label">time</span>
+            <label class="gf-control gf-control--time">
+                <input type="range" class="gf-slider" min="0.1" max="2" step="0.1" :value="timeScale" @input="setTimeScale($event.target.value)" aria-label="Time scale">
+                <span class="gf-time-val" x-text="(+timeScale).toFixed(1) + '×'"></span>
+            </label>
+        </div>
+
+        <div class="gf-row">
+            <span class="gf-row-label">presets</span>
+            <div class="gf-control">
+                <button type="button" class="gf-chip" :class="{ 'is-active': level === 0 }" @click="preset('none')">none</button>
+                <button type="button" class="gf-chip" :class="{ 'is-active': level === 10 }" @click="preset('minimal')">minimal</button>
+                <button type="button" class="gf-chip" :class="{ 'is-active': level === effects.length }" @click="preset('full')">full</button>
+                <span class="gf-row-sep" aria-hidden="true"></span>
+                <button type="button" class="gf-chip gf-chip--toggle" :class="{ 'is-active': ai }" @click="toggleAi()" :aria-pressed="ai.toString()">
+                    <span class="gf-toggle-dot" aria-hidden="true"></span>auto-play
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Grouped toggles -->
+    <div class="gf-groups">
+        <template x-for="group in groups" :key="group.name">
+            <div class="gf-group">
+                <span class="gf-group-name" x-text="group.name"></span>
+                <div class="gf-group-toggles">
+                    <template x-for="fx in group.items" :key="fx.id">
+                        <button type="button" class="gf-toggle" :class="{ 'is-active': isOn(fx.id) }"
+                            @click="toggle(fx.id)" :title="fx.hint" :aria-pressed="isOn(fx.id).toString()">
+                            <span class="gf-toggle-dot" aria-hidden="true"></span>
+                            <span x-text="fx.label"></span>
+                        </button>
+                    </template>
+                </div>
+            </div>
+        </template>
+    </div>
+
+    <p class="gf-legend">Move with <kbd>A</kbd>/<kbd>D</kbd> or the arrows, fire with <kbd>space</kbd>, add or remove juice with <kbd>+</kbd>/<kbd>−</kbd>. On touch, drag to move and hold to fire.</p>
+</div>
