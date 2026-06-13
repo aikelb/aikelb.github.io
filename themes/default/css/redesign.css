@@ -1777,8 +1777,8 @@ figure > figcaption {
 }
 
 @media (max-width: 768px) {
-    .header-nav a { padding: 10px 12px; }
-    .theme-toggle { padding: 11px 12px; }
+    .header-nav a { padding: 12px 12px; }
+    .theme-toggle { padding: 11px 12px; min-height: 44px; }
     .footer-social a { padding: 8px 6px; }
     .filter-tab { padding: 8px 4px; }
     .page-container { padding: 0 var(--space-s); }
@@ -1813,7 +1813,7 @@ figure > figcaption {
 }
 
 @media (max-width: 380px) {
-    .header-nav a { padding: 6px 8px; }
+    .header-nav a { padding: 12px 8px; }
     .header-actions { gap: 0; }
 }
 
