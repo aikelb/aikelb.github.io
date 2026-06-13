@@ -8,11 +8,11 @@ export default (eleventyConfig) => {
 
     // cache images for faster builds
     if (process.env.ELEVENTY_RUN_MODE === 'build' && !cdnify) {
+        // Create the cache directory before build starts
+        fs.mkdirSync('.cache/@11ty/img/', { recursive: true });
         outputdir.outputDir = '.cache/@11ty/img/';
 
         eleventyConfig.on('eleventy.after', () => {
-            // Create the directory if it doesn't exist
-            fs.mkdirSync('.cache/@11ty/img/', { recursive: true });
             fs.cpSync('.cache/@11ty/img/', path.join(eleventyConfig.directories.output, '/assets/img/'), { recursive: true });
         });
     }
