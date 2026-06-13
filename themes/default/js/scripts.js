@@ -1,80 +1,121 @@
 // Reveal content blocks as they enter the viewport (runs on every page).
 // Above-the-fold blocks reveal immediately, so it doubles as a page-load reveal.
 (function () {
-    var els = document.querySelectorAll('.anim-reveal');
+    var els = document.querySelectorAll(".anim-reveal");
     if (!els.length) return;
-    if (!('IntersectionObserver' in window)) {
-        els.forEach(function (el) { el.classList.add('is-visible'); });
+    if (!("IntersectionObserver" in window)) {
+        els.forEach(function (el) {
+            el.classList.add("is-visible");
+        });
         return;
     }
-    var observer = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('is-visible');
-                observer.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.05 });
+    var observer = new IntersectionObserver(
+        function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("is-visible");
+                    observer.unobserve(entry.target);
+                }
+            });
+        },
+        { threshold: 0.05 },
+    );
     requestAnimationFrame(function () {
         requestAnimationFrame(function () {
-            els.forEach(function (el) { observer.observe(el); });
+            els.forEach(function (el) {
+                observer.observe(el);
+            });
         });
     });
 })();
 
 // Fade the page out before navigating to another internal page.
 (function () {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    document.addEventListener('click', function (e) {
-        if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-        var a = e.target.closest('a');
-        if (!a || a.target === '_blank' || a.hasAttribute('download')) return;
-        var href = a.getAttribute('href');
-        if (!href || href.charAt(0) === '#' || /^(mailto|tel):/.test(href)) return;
-        if (a.origin !== location.origin) return;               // external
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    document.addEventListener("click", function (e) {
+        if (
+            e.defaultPrevented ||
+            e.button !== 0 ||
+            e.metaKey ||
+            e.ctrlKey ||
+            e.shiftKey ||
+            e.altKey
+        )
+            return;
+        var a = e.target.closest("a");
+        if (!a || a.target === "_blank" || a.hasAttribute("download")) return;
+        var href = a.getAttribute("href");
+        if (!href || href.charAt(0) === "#" || /^(mailto|tel):/.test(href))
+            return;
+        if (a.origin !== location.origin) return; // external
         if (a.pathname === location.pathname && a.hash) return; // same-page anchor
         e.preventDefault();
-        document.documentElement.classList.add('is-leaving');
-        setTimeout(function () { location.href = a.href; }, 220);
+        document.documentElement.classList.add("is-leaving");
+        setTimeout(function () {
+            location.href = a.href;
+        }, 220);
     });
     // restore when returning via the back/forward cache
-    window.addEventListener('pageshow', function (e) {
-        if (e.persisted) document.documentElement.classList.remove('is-leaving');
+    window.addEventListener("pageshow", function (e) {
+        if (e.persisted)
+            document.documentElement.classList.remove("is-leaving");
     });
 })();
 
 // Typing animation: "Hi, I'm " → pause → "Aitor." → pause → delete all → "TL;DR" → blinking cursor
 (function () {
-    var el = document.querySelector('.hero-greeting');
+    var el = document.querySelector(".hero-greeting");
     if (!el) return;
-    el.setAttribute('aria-label', 'TL;DR');
-    var p1a = "Hi, I'm ", p1b = 'Aitor.', p2 = 'TL;DR';
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    el.setAttribute("aria-label", "TL;DR");
+    var p1a = "Hi, I'm ",
+        p1b = "Aitor.",
+        p2 = "TL;DR";
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
         el.innerHTML = p2 + '<span class="cursor" aria-hidden="true"></span>';
         return;
     }
-    el.innerHTML = '<span aria-hidden="true"></span><span class="cursor" aria-hidden="true"></span>';
+    el.innerHTML =
+        '<span aria-hidden="true"></span><span class="cursor" aria-hidden="true"></span>';
     var textEl = el.firstElementChild;
-    var i = 0, state = 'typing1a';
+    var i = 0,
+        state = "typing1a";
     function tick() {
-        if (state === 'typing1a') {
+        if (state === "typing1a") {
             textEl.textContent = p1a.slice(0, ++i);
-            if (i >= p1a.length) { state = 'typing1b'; i = 0; tick(); return; }
+            if (i >= p1a.length) {
+                state = "typing1b";
+                i = 0;
+                tick();
+                return;
+            }
             setTimeout(tick, 65);
-        } else if (state === 'pause1') {
-            state = 'typing1b'; i = 0; tick();
-        } else if (state === 'typing1b') {
+        } else if (state === "pause1") {
+            state = "typing1b";
+            i = 0;
+            tick();
+        } else if (state === "typing1b") {
             textEl.textContent = p1a + p1b.slice(0, ++i);
-            if (i >= p1b.length) { state = 'pause2'; setTimeout(tick, 900); return; }
+            if (i >= p1b.length) {
+                state = "pause2";
+                setTimeout(tick, 900);
+                return;
+            }
             setTimeout(tick, 65);
-        } else if (state === 'pause2') {
-            state = 'deleting'; i = p1a.length + p1b.length; tick();
-        } else if (state === 'deleting') {
+        } else if (state === "pause2") {
+            state = "deleting";
+            i = p1a.length + p1b.length;
+            tick();
+        } else if (state === "deleting") {
             var full = p1a + p1b;
             textEl.textContent = full.slice(0, --i);
-            if (i <= 0) { state = 'typing2'; i = 0; setTimeout(tick, 200); return; }
+            if (i <= 0) {
+                state = "typing2";
+                i = 0;
+                setTimeout(tick, 200);
+                return;
+            }
             setTimeout(tick, 28);
-        } else if (state === 'typing2') {
+        } else if (state === "typing2") {
             textEl.textContent = p2.slice(0, ++i);
             if (i < p2.length) setTimeout(tick, 75);
         }
@@ -82,71 +123,89 @@
     setTimeout(tick, 450);
 })();
 
-document.addEventListener('alpine:init', () => {
-
+document.addEventListener("alpine:init", () => {
     // Toolbox easter egg — tweaks the dot-field background live via window.dotConfig
-    Alpine.data('toolbox', () => ({
+    Alpine.data("toolbox", () => ({
         open: false,
-        spacing:     36,
-        speed:       0.010,
-        minFade:     0.40,
-        parallax:    0.20,
-        intensity:       2.0,
-        color:           '#576257',
-        jitter:          0,
-        waveAngle:       45,
-        pattern:         'grid',
+        spacing: 36,
+        speed: 0.01,
+        minFade: 0.4,
+        parallax: 0.2,
+        intensity: 2.0,
+        color: "#576257",
+        jitter: 0,
+        waveAngle: 45,
+        pattern: "grid",
         pointerStrength: 1.0,
         init() {
             var self = this;
-            var readPrimary = function() {
-                var c = getComputedStyle(document.documentElement).getPropertyValue('--primary').trim();
+            var readPrimary = function () {
+                var c = getComputedStyle(document.documentElement)
+                    .getPropertyValue("--primary")
+                    .trim();
                 return /^#[0-9a-f]{6}$/i.test(c) ? c : null;
             };
             var p = readPrimary();
             if (p) this.color = p;
             // When the theme switches, clear any color override and sync to the new primary
-            new MutationObserver(function() {
+            new MutationObserver(function () {
                 if (window.dotConfig) window.dotConfig.color = null;
                 var p2 = readPrimary();
                 if (p2) self.color = p2;
-            }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+            }).observe(document.documentElement, {
+                attributes: true,
+                attributeFilter: ["data-theme"],
+            });
         },
         sync() {
             var c = window.dotConfig;
             if (!c) return;
-            c.spacing         = +this.spacing;
-            c.speed           = +this.speed;
-            c.minFade         = +this.minFade;
-            c.parallax        = +this.parallax;
-            c.intensity       = +this.intensity;
-            c.color           = this.color || null;
-            c.jitter          = +this.jitter;
-            c.waveAngle       = +this.waveAngle;
-            c.pattern         = this.pattern;
+            c.spacing = +this.spacing;
+            c.speed = +this.speed;
+            c.minFade = +this.minFade;
+            c.parallax = +this.parallax;
+            c.intensity = +this.intensity;
+            c.color = this.color || null;
+            c.jitter = +this.jitter;
+            c.waveAngle = +this.waveAngle;
+            c.pattern = this.pattern;
             c.pointerStrength = +this.pointerStrength;
         },
         reset() {
-            this.spacing         = 36;
-            this.speed           = 0.010;
-            this.minFade         = 0.40;
-            this.parallax        = 0.20;
-            this.intensity       = 2.0;
-            this.jitter          = 0;
-            this.waveAngle       = 45;
-            this.pattern         = 'grid';
+            this.spacing = 36;
+            this.speed = 0.01;
+            this.minFade = 0.4;
+            this.parallax = 0.2;
+            this.intensity = 2.0;
+            this.jitter = 0;
+            this.waveAngle = 45;
+            this.pattern = "grid";
             this.pointerStrength = 1.0;
-            var c = getComputedStyle(document.documentElement).getPropertyValue('--primary').trim();
-            this.color = /^#[0-9a-f]{6}$/i.test(c) ? c : '#576257';
+            var c = getComputedStyle(document.documentElement)
+                .getPropertyValue("--primary")
+                .trim();
+            this.color = /^#[0-9a-f]{6}$/i.test(c) ? c : "#576257";
         },
     }));
 
-    Alpine.data('observation', () => {
+    Alpine.data("observation", () => {
         const quotes = [
-            { label: 'Observation #01', text: 'The hardest part of software<br>isn\'t writing code.<br>It\'s making complexity feel simple.' },
-            { label: 'Observation #02', text: 'The hardest systems to maintain<br>are usually the easiest to start.' },
-            { label: 'Observation #03', text: 'Good architecture is often<br>the result of limitations,<br>not freedom.' },
-            { label: 'Observation #04', text: 'Performance is a feature<br>users feel before<br>they understand.' },
+            {
+                label: "Observation #01",
+                text: "The hardest part of software<br>isn't writing code.<br>It's making complexity feel simple.",
+            },
+            {
+                label: "Observation #02",
+                text: "The hardest systems to maintain<br>are usually the easiest to start.",
+            },
+            {
+                label: "Observation #03",
+                text: "Good architecture is often<br>the result of limitations,<br>not freedom.",
+            },
+            {
+                label: "Observation #04",
+                text: "Performance is a feature<br>users feel before<br>they understand.",
+            },
         ];
         const pick = quotes[Math.floor(Math.random() * quotes.length)];
         return {
@@ -155,29 +214,259 @@ document.addEventListener('alpine:init', () => {
         };
     });
 
+    // V60 pour-over calculator — linked dose/ratio/water, per-method pour steps, brew timer
+    Alpine.data("v60", () => ({
+        coffee: 15,
+        water: 250,
+        ratio: 250 / 15,
+        method: "tetsu",
+        taste: "standard",
+        strength: "strong",
+        elapsed: 0,
+        running: false,
+        _timer: null,
 
-    Alpine.store('elva', {
+        methods: [
+            { id: "tetsu", label: "Tetsu 4-6" },
+            { id: "hoffmann", label: "Hoffmann" },
+            { id: "switch", label: "Hario Switch" },
+            { id: "iced", label: "Iced" },
+        ],
+
+        // ── linked inputs ──
+        setCoffee(v) {
+            v = Math.max(0, +v || 0);
+            this.coffee = v;
+            this.water = Math.round(v * this.ratio);
+        },
+        setRatio(v) {
+            v = Math.max(0, +v || 0);
+            this.ratio = v;
+            this.water = Math.round(v * this.coffee);
+        },
+        setWater(v) {
+            v = Math.max(0, +v || 0);
+            this.water = v;
+            this.ratio = this.coffee ? v / this.coffee : 0;
+        },
+
+        // ── recipes ──
+        get steps() {
+            if (this.method === "tetsu") return this._tetsu();
+            if (this.method === "hoffmann") return this._hoffmann();
+            if (this.method === "switch") return this._switch();
+            if (this.method === "iced") return this._iced();
+            return [];
+        },
+
+        _tetsu() {
+            var c = this.coffee,
+                w = this.water;
+            var firstPart = 0.4 * w,
+                secondPart = 0.6 * w;
+            var first = Math.round(
+                { sweet: 2, standard: 3, bright: 4 }[this.taste] * c,
+            );
+            var steps = [
+                { number: 1, time: "0:00", amount: first, accent: "cyan" },
+                {
+                    number: 2,
+                    time: "0:45",
+                    addAmount: Math.round(firstPart - first),
+                    cumulative: Math.round(firstPart),
+                    accent: "cyan",
+                },
+            ];
+            var counts = { light: 1, medium: 2, strong: 3 }[this.strength];
+            var times = ["1:30", "2:15", "2:45"];
+            var each = Math.round(secondPart / counts);
+            var cum = Math.round(firstPart);
+            for (var i = 0; i < counts; i++) {
+                cum += each;
+                steps.push({
+                    number: 3 + i,
+                    time: times[i],
+                    addAmount: each,
+                    cumulative: cum,
+                    accent: "accent",
+                });
+            }
+            return steps;
+        },
+
+        _hoffmann() {
+            var c = this.coffee,
+                w = this.water;
+            var firstPart = 0.6 * w,
+                secondPart = 0.4 * w;
+            var bloom = Math.round(2 * c);
+            return [
+                { number: 1, time: "0:00", amount: bloom, accent: "cyan" },
+                {
+                    number: 2,
+                    time: "0:45",
+                    addAmount: Math.round(firstPart - bloom),
+                    cumulative: Math.round(firstPart),
+                    accent: "cyan",
+                },
+                {
+                    number: 3,
+                    time: "1:15",
+                    timeLabel: "1:15 → 1:45",
+                    addAmount: Math.round(secondPart),
+                    cumulative: Math.round(firstPart + secondPart),
+                    accent: "accent",
+                },
+                {
+                    number: 4,
+                    time: "1:45",
+                    message: "Stir one round, then another in reverse.",
+                },
+                {
+                    number: 5,
+                    message:
+                        "Midway through the drawdown, swirl the V60 to flatten the bed.",
+                },
+            ];
+        },
+
+        _switch() {
+            var w = this.water;
+            return [
+                {
+                    number: 1,
+                    time: "0:00",
+                    amount: w,
+                    message: "Pour all the water. Steep for 2 minutes.",
+                    accent: "cyan",
+                },
+                {
+                    number: 2,
+                    time: "2:00",
+                    message: "Stir, then wait 15 seconds.",
+                },
+                {
+                    number: 3,
+                    time: "2:15",
+                    message: "Open the switch and let it draw down.",
+                },
+            ];
+        },
+
+        _iced() {
+            var c = this.coffee,
+                w = this.water;
+            var ice = Math.round(0.6 * w);
+            var secondPart = 0.4 * w;
+            var bloom = Math.round(3 * c);
+            return [
+                {
+                    number: 1,
+                    time: "0:00",
+                    amount: ice,
+                    message: "Add " + ice + " ml as ice to the carafe.",
+                    accent: "accent",
+                },
+                {
+                    number: 2,
+                    time: "0:00",
+                    amount: bloom,
+                    message: "Bloom with hot water.",
+                    accent: "cyan",
+                },
+                {
+                    number: 3,
+                    time: "2:00",
+                    addAmount: Math.round(secondPart - bloom),
+                    cumulative: bloom + Math.round(secondPart - bloom),
+                    message: "Add the rest in 50 g increments.",
+                    accent: "cyan",
+                },
+            ];
+        },
+
+        // ── timer ──
+        parseTime(t) {
+            if (!t) return null;
+            var m = /^(\d+):(\d{1,2})/.exec(t);
+            return m ? +m[1] * 60 + +m[2] : null;
+        },
+        get currentIndex() {
+            if (!this.running && this.elapsed === 0) return -1;
+            var idx = -1,
+                self = this;
+            this.steps.forEach(function (s, i) {
+                var sec = self.parseTime(s.time);
+                if (sec !== null && self.elapsed >= sec) idx = i;
+            });
+            return idx;
+        },
+        get elapsedLabel() {
+            var m = Math.floor(this.elapsed / 60),
+                s = this.elapsed % 60;
+            return m + ":" + String(s).padStart(2, "0");
+        },
+        toggleTimer() {
+            if (this.running) {
+                this.stopTimer();
+                return;
+            }
+            var self = this;
+            this.running = true;
+            this._timer = setInterval(function () {
+                self.elapsed++;
+            }, 1000);
+        },
+        stopTimer() {
+            this.running = false;
+            if (this._timer) {
+                clearInterval(this._timer);
+                this._timer = null;
+            }
+        },
+        resetTimer() {
+            this.stopTimer();
+            this.elapsed = 0;
+        },
+    }));
+
+    Alpine.store("elva", {
         init() {
-            this.theme = localStorage.getItem('theme') === null ? window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light' : localStorage.getItem('theme')
-            this.scrollPosition = window.scrollY
+            this.theme =
+                localStorage.getItem("theme") === null
+                    ? window.matchMedia("(prefers-color-scheme: dark)").matches
+                        ? "dark"
+                        : "light"
+                    : localStorage.getItem("theme");
+            this.scrollPosition = window.scrollY;
 
-            document.querySelectorAll('[loading="lazy"]').forEach(element => {
+            document.querySelectorAll('[loading="lazy"]').forEach((element) => {
                 const animateIn = () => {
-                    element.classList.add('elva-loaded');
+                    element.classList.add("elva-loaded");
                 };
-                (element.complete) ? animateIn() : element.addEventListener('load', animateIn);
+                element.complete
+                    ? animateIn()
+                    : element.addEventListener("load", animateIn);
             });
         },
         theme: null,
         scrollPosition: 0,
         scrollPercent: 0,
         themeToggle() {
-            (this.theme === 'light') ? this.theme = 'dark' : this.theme = 'light'
-            localStorage.setItem('theme', this.theme)
+            this.theme === "light"
+                ? (this.theme = "dark")
+                : (this.theme = "light");
+            localStorage.setItem("theme", this.theme);
         },
         scrollPositionUpdate() {
-            this.scrollPosition = window.scrollY
-            this.scrollPercent = Math.round(((document.body.scrollTop || document.documentElement.scrollTop) / ( document.documentElement.scrollHeight - document.documentElement.clientHeight )) * 100)
-        }
-    })
-})
+            this.scrollPosition = window.scrollY;
+            this.scrollPercent = Math.round(
+                ((document.body.scrollTop ||
+                    document.documentElement.scrollTop) /
+                    (document.documentElement.scrollHeight -
+                        document.documentElement.clientHeight)) *
+                    100,
+            );
+        },
+    });
+});

@@ -13,6 +13,8 @@ layout: base
         <button type="button" class="filter-tab" :class="{ 'filter-tab--active': notesFilter === 'all' }" @click="notesFilter = 'all'">[Notes]</button>
         <span class="filter-sep" aria-hidden="true">·</span>
         <button type="button" class="filter-tab" :class="{ 'filter-tab--active': notesFilter === 'slides' }" @click="notesFilter = 'slides'">[Slides]</button>
+        <span class="filter-sep" aria-hidden="true">·</span>
+        <button type="button" class="filter-tab" :class="{ 'filter-tab--active': notesFilter === 'tool' }" @click="notesFilter = 'tool'">[Tools]</button>
     </header>
     {% set postslist = collections._posts | languageFilter | sortBy('date', true) %}
     <ul class="postlist">

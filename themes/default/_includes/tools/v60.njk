@@ -1,0 +1,96 @@
+<div class="v60 anim-reveal" x-data="v60" x-cloak>
+
+    <!-- Dose / ratio / water -->
+    <div class="v60-inputs">
+        <label class="v60-field">
+            <span class="v60-field-label">Coffee</span>
+            <span class="v60-input-wrap">
+                <input type="number" min="0" inputmode="decimal" :value="coffee" @input="setCoffee($event.target.value)">
+                <span class="v60-unit">g</span>
+            </span>
+        </label>
+        <label class="v60-field">
+            <span class="v60-field-label">Ratio</span>
+            <span class="v60-input-wrap">
+                <span class="v60-unit v60-unit--lead">1:</span>
+                <input type="number" min="0" step="0.5" inputmode="decimal" :value="(+ratio.toFixed(1))" @input="setRatio($event.target.value)">
+            </span>
+        </label>
+        <label class="v60-field">
+            <span class="v60-field-label">Water</span>
+            <span class="v60-input-wrap">
+                <input type="number" min="0" inputmode="decimal" :value="water" @input="setWater($event.target.value)">
+                <span class="v60-unit">ml</span>
+            </span>
+        </label>
+    </div>
+
+    <!-- Quick ratio presets -->
+    <div class="v60-presets">
+        <span class="v60-presets-label">presets</span>
+        <template x-for="r in [15, 16, 16.7, 17, 18]" :key="r">
+            <button type="button" class="v60-chip" :class="{ 'is-active': Math.abs(ratio - r) < 0.05 }" @click="setRatio(r)" x-text="'1:' + r"></button>
+        </template>
+    </div>
+
+    <!-- Method tabs -->
+    <div class="v60-methods">
+        <template x-for="m in methods" :key="m.id">
+            <button type="button" class="v60-method" :class="{ 'is-active': method === m.id }" @click="method = m.id" x-text="m.label"></button>
+        </template>
+    </div>
+
+    <!-- Tetsu taste + strength selectors -->
+    <div class="v60-selectors" x-show="method === 'tetsu'" x-transition>
+        <div class="v60-selector">
+            <span class="v60-selector-label">taste</span>
+            <div class="v60-segment">
+                <template x-for="t in ['sweet', 'standard', 'bright']" :key="t">
+                    <button type="button" class="v60-seg" :class="{ 'is-active': taste === t }" @click="taste = t" x-text="t"></button>
+                </template>
+            </div>
+        </div>
+        <div class="v60-selector">
+            <span class="v60-selector-label">body</span>
+            <div class="v60-segment">
+                <template x-for="s in ['light', 'medium', 'strong']" :key="s">
+                    <button type="button" class="v60-seg" :class="{ 'is-active': strength === s }" @click="strength = s" x-text="s"></button>
+                </template>
+            </div>
+        </div>
+    </div>
+
+    <!-- Brew timer -->
+    <div class="v60-timer">
+        <button type="button" class="v60-timer-btn" @click="toggleTimer()" :aria-label="running ? 'Pause timer' : 'Start timer'">
+            <svg x-show="!running" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+            <svg x-show="running" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+            <span x-text="running ? 'Pause' : 'Brew'"></span>
+        </button>
+        <span class="v60-clock" x-text="elapsedLabel"></span>
+        <button type="button" class="v60-timer-reset" @click="resetTimer()" x-show="elapsed > 0 || running">reset</button>
+    </div>
+
+    <!-- Pour steps -->
+    <ol class="v60-steps">
+        <template x-for="(step, i) in steps" :key="method + '-' + i">
+            <li class="v60-step" :class="{ 'is-current': i === currentIndex, ['accent-' + (step.accent || 'cyan')]: true }">
+                <span class="v60-step-badge">
+                    <span class="v60-step-num" x-text="step.number"></span>
+                    <span class="v60-step-time" x-text="step.timeLabel || step.time || ''"></span>
+                </span>
+                <span class="v60-step-amounts">
+                    <template x-if="'addAmount' in step">
+                        <span class="v60-step-add" x-text="'+' + step.addAmount + ' ml'"></span>
+                    </template>
+                    <template x-if="'cumulative' in step || 'amount' in step">
+                        <span class="v60-step-total" x-text="('cumulative' in step ? step.cumulative : step.amount) + ' ml'"></span>
+                    </template>
+                </span>
+                <template x-if="step.message">
+                    <span class="v60-step-note" x-text="step.message"></span>
+                </template>
+            </li>
+        </template>
+    </ol>
+</div>

@@ -15,6 +15,7 @@ layout: base
 	        {%- endfor %}
         </ul>
     </header>
+    {%- if tool == 'v60' %}{% include "tools/v60.njk" %}{% endif %}
     <div class="entry-content anim-reveal">
         {{ content | safe }}
     </div>

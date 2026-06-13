@@ -43,6 +43,7 @@
         {% css 'main' %}{% include '../css/redesign.css' %}{% endcss -%}
         {% css 'defer' %}{% include '../css/defer.css' %}{% endcss -%}
         {% css 'defer' %}{% include '../css/components/syntax.css' %}{% endcss -%}
+        {% css 'defer' %}{% include '../css/components/tool-v60.css' %}{% endcss -%}
 	    <style>{% getBundle 'css' %}</style>
 	    <link rel="stylesheet" href="{% getBundleFileUrl 'css', 'main' %}?v={% version %}">
 	    <link rel="stylesheet" href="{% getBundleFileUrl 'css', 'defer' %}?v={% version %}" fetchpriority="low">

@@ -1,0 +1,298 @@
+/* ═══════════════════════════════════════
+   V60 brewing tool
+   ═══════════════════════════════════════ */
+
+.v60 {
+    margin-top: var(--space-l);
+    margin-bottom: var(--space-xl);
+    font-family: var(--font-sans);
+    color: var(--text);
+}
+
+/* ── Dose / ratio / water ────── */
+.v60-inputs {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-s);
+}
+
+.v60-field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xs);
+}
+
+.v60-field-label {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+}
+
+.v60-input-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.4ch;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 0 var(--space-xs);
+    transition: border-color var(--duration-fast) var(--ease-out);
+}
+
+.v60-input-wrap:focus-within { border-color: var(--primary); }
+
+.v60-input-wrap input {
+    flex: 1;
+    width: 100%;
+    min-width: 0;
+    border: 0;
+    background: none;
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: var(--text-lg);
+    padding: var(--space-2xs) 0;
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+
+.v60-input-wrap input::-webkit-outer-spin-button,
+.v60-input-wrap input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.v60-input-wrap input:focus { outline: none; }
+
+.v60-unit {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+}
+.v60-unit--lead { order: -1; }
+
+/* ── Ratio presets ────── */
+.v60-presets {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-2xs);
+    margin-top: var(--space-s);
+}
+
+.v60-presets-label {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    margin-right: var(--space-2xs);
+}
+
+.v60-chip {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-full);
+    padding: 2px var(--space-xs);
+    cursor: pointer;
+    transition: color var(--duration-fast) var(--ease-out),
+                border-color var(--duration-fast) var(--ease-out);
+}
+.v60-chip:hover { color: var(--primary); border-color: var(--primary); }
+.v60-chip.is-active {
+    color: var(--bg);
+    background: var(--primary);
+    border-color: var(--primary);
+}
+
+/* ── Method tabs ────── */
+.v60-methods {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2xs);
+    margin-top: var(--space-l);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: var(--space-s);
+}
+
+.v60-method {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    background: none;
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    padding: var(--space-3xs) var(--space-xs);
+    cursor: pointer;
+    transition: color var(--duration-fast) var(--ease-out),
+                background var(--duration-fast) var(--ease-out);
+}
+.v60-method:hover { color: var(--primary); }
+.v60-method.is-active { color: var(--bg); background: var(--primary); }
+
+/* ── Tetsu selectors ────── */
+.v60-selectors {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-l);
+    margin-top: var(--space-s);
+}
+
+.v60-selector { display: flex; align-items: center; gap: var(--space-2xs); }
+
+.v60-selector-label {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+}
+
+.v60-segment { display: flex; gap: var(--space-3xs); }
+
+.v60-seg {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 2px 7px;
+    cursor: pointer;
+    text-transform: capitalize;
+    transition: color var(--duration-fast) var(--ease-out),
+                border-color var(--duration-fast) var(--ease-out);
+}
+.v60-seg:hover { color: var(--primary); }
+.v60-seg.is-active {
+    color: var(--primary);
+    border-color: color-mix(in srgb, var(--primary) 50%, var(--border));
+}
+
+/* ── Timer ────── */
+.v60-timer {
+    display: flex;
+    align-items: center;
+    gap: var(--space-s);
+    margin-top: var(--space-l);
+}
+
+.v60-timer-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6ch;
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--bg);
+    background: var(--primary);
+    border: 1px solid var(--primary);
+    border-radius: var(--radius-md);
+    padding: var(--space-2xs) var(--space-s);
+    cursor: pointer;
+    transition: background var(--duration-fast) var(--ease-out);
+}
+.v60-timer-btn:hover { background: var(--primary-hover); border-color: var(--primary-hover); }
+
+.v60-clock {
+    font-family: var(--font-mono);
+    font-size: var(--text-xl);
+    color: var(--text);
+    font-variant-numeric: tabular-nums;
+}
+
+.v60-timer-reset {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    background: none;
+    border: 0;
+    cursor: pointer;
+}
+.v60-timer-reset:hover { color: var(--primary); }
+
+/* ── Pour steps ────── */
+.v60-steps {
+    list-style: none;
+    margin: var(--space-m) 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xs);
+}
+
+.v60-step {
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+    align-items: center;
+    gap: var(--space-s);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent-step);
+    border-radius: var(--radius-md);
+    padding: var(--space-xs) var(--space-s);
+    box-shadow: var(--shadow-sm);
+    transition: border-color var(--duration-fast) var(--ease-out),
+                box-shadow var(--duration-fast) var(--ease-out),
+                transform var(--duration-fast) var(--ease-out);
+}
+
+.v60-step.accent-cyan   { --accent-step: var(--cyan); }
+.v60-step.accent-accent { --accent-step: var(--accent); }
+
+.v60-step.is-current {
+    border-color: var(--accent-step);
+    box-shadow: 0 0 0 1px var(--accent-step), var(--shadow-md);
+    transform: translateX(2px);
+}
+
+.v60-step-badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1px;
+    min-width: 3.2em;
+}
+
+.v60-step-num {
+    display: grid;
+    place-items: center;
+    width: 1.9em;
+    height: 1.9em;
+    border-radius: var(--radius-full);
+    background: var(--accent-step);
+    color: var(--bg);
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    font-weight: 600;
+}
+
+.v60-step-time {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    white-space: nowrap;
+}
+
+.v60-step-amounts {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6ch;
+    font-family: var(--font-mono);
+    white-space: nowrap;
+}
+
+.v60-step-add { font-size: var(--text-sm); color: var(--text-muted); }
+
+.v60-step-total {
+    font-size: var(--text-lg);
+    color: var(--text);
+    font-weight: 600;
+}
+
+.v60-step-note {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+@media (max-width: 560px) {
+    .v60-inputs { grid-template-columns: 1fr; }
+    .v60-step {
+        grid-template-columns: auto 1fr;
+    }
+    .v60-step-note { grid-column: 1 / -1; }
+}
