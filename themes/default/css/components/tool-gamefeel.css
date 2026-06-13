@@ -134,6 +134,40 @@
     gap: var(--space-s);
 }
 
+/* ── Next-effect preview ────── */
+.gf-next {
+    margin: var(--space-2xs) 0 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    line-height: 1.4;
+}
+.gf-next-key {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+.gf-next-name {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--primary);
+}
+.gf-next-hint {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    max-width: 24ch;
+}
+.gf-next--done {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+}
+
 .gf-row-sep {
     width: 1px;
     align-self: stretch;
@@ -330,4 +364,43 @@
         margin-top: var(--space-m);
     }
     .gf-toggle { padding: var(--space-2xs); }
+}
+
+/* ── Wide screens: break out of the text column and go two-up ──────
+   The tool lives in a ~680px article column. On wide viewports we widen it
+   (centered on the viewport via the margin-left/translateX breakout trick) and
+   lay it out as a grid: large game on the left, control panel as a sticky
+   sidebar top-right, effect toggles full-width below. */
+@media (min-width: 1080px) {
+    .gf {
+        /* widen past the ~680px article column and re-centre on the viewport.
+           Centre with margins, not transform — .gf is an .anim-reveal element
+           and the reveal animation already owns `transform`. */
+        width: min(1060px, 95vw);
+        max-width: none;
+        margin-left: calc(50% - min(1060px, 95vw) / 2);
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 320px;
+        column-gap: var(--space-l);
+        row-gap: var(--space-l);
+        align-items: start;
+    }
+    .gf-screen { grid-column: 1; grid-row: 1; }
+    .gf-controls {
+        grid-column: 2;
+        grid-row: 1;
+        margin-top: 0;
+        position: sticky;
+        top: var(--space-l);
+    }
+    .gf-groups {
+        grid-column: 1 / -1;
+        grid-row: 2;
+        margin-top: 0;
+    }
+    .gf-legend {
+        grid-column: 1 / -1;
+        grid-row: 3;
+        margin-top: 0;
+    }
 }

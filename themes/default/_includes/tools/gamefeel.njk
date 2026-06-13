@@ -21,6 +21,17 @@
                     <button type="button" class="gf-step-btn" @click="setLevel(level + 1)" :disabled="level >= effects.length" aria-label="Add next effect">+</button>
                 </div>
                 <span class="gf-step-bar" aria-hidden="true"><span class="gf-step-fill" :style="'width:' + (level / effects.length * 100) + '%'"></span></span>
+
+                <template x-if="level < effects.length">
+                    <p class="gf-next">
+                        <span class="gf-next-key">next +</span>
+                        <span class="gf-next-name" x-text="effects[level].label"></span>
+                        <span class="gf-next-hint" x-text="effects[level].hint"></span>
+                    </p>
+                </template>
+                <template x-if="level >= effects.length">
+                    <p class="gf-next gf-next--done">every effect is on</p>
+                </template>
             </div>
         </div>
 
