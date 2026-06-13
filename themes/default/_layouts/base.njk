@@ -80,6 +80,8 @@
 
     <body class="{% set space = joiner(" ") -%}{% for tag in ta -%}{{ space() }}{{ tag | slugify }}{% endfor -%}">
 
+        <a class="skip-link" href="#main">Skip to content</a>
+
         <!-- Drifting dot-field background -->
         <canvas class="bg-dots" aria-hidden="true"></canvas>
 
@@ -162,7 +164,7 @@
         </header>
 
         <!-- Main Content -->
-        <main class="main-content">
+        <main class="main-content" id="main">
             {{ content | safe }}
         </main>
 
