@@ -13,7 +13,8 @@
     "start": "rimraf dist && npx @11ty/eleventy --serve",
     "clean": "rimraf dist",
     "debug": "DEBUG=Eleventy* npm run dev",
-    "benchmark": "DEBUG=Eleventy:Benchmark* npm run build:prod"
+    "benchmark": "DEBUG=Eleventy:Benchmark* npm run build:prod",
+    "test": "vitest run"
   },
   "bugs": {
     "url": "https://github.com/aikelb/elva/issues"
@@ -43,6 +44,7 @@
     "@11ty/eleventy-plugin-rss": "^3.0.0",
     "@11ty/eleventy-plugin-syntaxhighlight": "^5.0.2",
     "@alpinejs/intersect": "^3.15.11",
+    "@sindresorhus/slugify": "^2.2.1",
     "alpinejs": "^3.15.11",
     "browserslist": "^4.28.2",
     "cheerio": "^1.2.0",
@@ -50,6 +52,7 @@
     "html-minifier-terser": "^7.2.0",
     "lightningcss": "^1.32.0",
     "lodash.get": "^4.4.2",
+    "markdown-it": "^14.1.0",
     "markdown-it-anchor": "^9.2.0",
     "markdown-it-attrs": "^4.3.1",
     "markdown-it-image-figures": "^2.1.1",
@@ -60,10 +63,11 @@
     "markdown-it-table-of-contents": "^1.2.0",
     "mime-types": "^3.0.2",
     "node-html-to-image": "^5.0.0",
+    "nunjucks": "^3.2.4",
     "rimraf": "^6.1.3",
-    "terser": "^5.46.1",
-    "markdown-it": "^14.1.0",
-    "@sindresorhus/slugify": "^2.2.1",
-    "nunjucks": "^3.2.4"
+    "terser": "^5.46.1"
+  },
+  "devDependencies": {
+    "vitest": "^4.1.8"
   }
 }
