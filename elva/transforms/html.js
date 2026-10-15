@@ -14,7 +14,9 @@ export default eleventyConfig => {
                 removeScriptTypeAttributes: true,
                 removeStyleLinkTypeAttributes: true,
                 minifyCSS: true,
-                minifyJS: true
+                // single quotes: preventAttributesEscaping would otherwise let terser's
+                // double quotes end on* attributes early (e.g. the font preload onload)
+                minifyJS: { format: { quote_style: 1 } }
             });
         }
         return content;
