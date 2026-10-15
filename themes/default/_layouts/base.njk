@@ -179,6 +179,9 @@
         {% js 'defer' %}{% include '../js/v60-recipes.cjs' %}{% endjs -%}
         {% js 'defer' %}{% include '../js/scripts.js' %}{% endjs -%}
         <script src="{% getBundleFileUrl 'js', 'defer' %}?v={% version %}" defer></script>
+        {%- if eleventy.env.runMode == "build" %}
+        <script src="https://neatstats.net/view.js"></script>
+        {%- endif %}
 
 
     </body>
