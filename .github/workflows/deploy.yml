@@ -25,7 +25,9 @@ jobs:
           path: .cache/@11ty/img/
           key: eleventy-img-cache-${{ hashFiles('pnpm-lock.yaml') }}
       - uses: actions/configure-pages@v6
-      - run: pnpm run build
+      - run: pnpm run build:prod
+        env:
+          URL: https://aitorlozano.com
       - uses: actions/upload-pages-artifact@v5
         with:
           path: ./dist
