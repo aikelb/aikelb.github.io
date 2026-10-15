@@ -9,12 +9,12 @@
     "node": ">=22.12"
   },
   "scripts": {
-    "build": "rimraf dist && npx @11ty/eleventy",
-    "build:prod": "export NODE_ENV=production && rimraf dist && npx @11ty/eleventy",
-    "build:stage": "export NODE_ENV=staging && rimraf dist && npx @11ty/eleventy",
+    "build": "pnpm run clean && npx @11ty/eleventy",
+    "build:prod": "export NODE_ENV=production && pnpm run clean && npx @11ty/eleventy",
+    "build:stage": "export NODE_ENV=staging && pnpm run clean && npx @11ty/eleventy",
     "dev": "npx @11ty/eleventy --watch --serve --incremental",
-    "start": "rimraf dist && npx @11ty/eleventy --serve",
-    "clean": "rimraf dist",
+    "start": "pnpm run clean && npx @11ty/eleventy --serve",
+    "clean": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\"",
     "debug": "DEBUG=Eleventy* npm run dev",
     "benchmark": "DEBUG=Eleventy:Benchmark* npm run build:prod",
     "test": "vitest run"
@@ -65,7 +65,6 @@
     "markdown-it-table-of-contents": "^1.2.0",
     "mime-types": "^3.0.2",
     "nunjucks": "^3.2.4",
-    "rimraf": "^6.1.3",
     "terser": "^5.51.2"
   },
   "devDependencies": {
