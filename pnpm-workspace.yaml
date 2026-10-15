@@ -2,3 +2,6 @@ onlyBuiltDependencies:
   - esbuild
   - puppeteer
   - sharp
+
+overrides:
+  handlebars: ^4.7.10
