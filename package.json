@@ -5,6 +5,9 @@
   "private": true,
   "type": "module",
   "packageManager": "pnpm@10.24.0",
+  "engines": {
+    "node": ">=22.12"
+  },
   "scripts": {
     "build": "rimraf dist && npx @11ty/eleventy",
     "build:prod": "export NODE_ENV=production && rimraf dist && npx @11ty/eleventy",
