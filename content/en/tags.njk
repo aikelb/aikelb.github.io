@@ -9,7 +9,9 @@
     before: function(paginationData, fullData) {
       return paginationData.filter(collectionTag => {
         let taggedInLanguage = fullData.collections[collectionTag].filter(item => item.page.lang === fullData.lang);
-        return taggedInLanguage.length > 0 && !collectionTag.startsWith('_');
+        // skip private tags, Eleventy's built-in "all" and the tag pages' own collections
+        let isInternal = collectionTag === 'all' || collectionTag === 'tag' || collectionTag.startsWith('tag-');
+        return taggedInLanguage.length > 0 && !collectionTag.startsWith('_') && !isInternal;
       });
     }
   },
