@@ -169,6 +169,7 @@ export default async function(eleventyConfig) {
     eleventyConfig.addPassthroughCopy({'./content/assets/img': './assets/img'});
     eleventyConfig.addPassthroughCopy({[`./themes/${theme}/fonts`]: './assets/fonts'});
     eleventyConfig.addPassthroughCopy({'./content/assets/files': './assets/files'});
+    eleventyConfig.addPassthroughCopy({'./content/.well-known': './.well-known'});
 
     // Markdown ----------------------------------------
 
